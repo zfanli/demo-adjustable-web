@@ -12,7 +12,8 @@ Demonstrate an adjustable web UI.
     - [ ] dispatch actions
   - [x] JSS? Or other CSS preprocessor?
     - [x] ~~follow antd to use less as css preprocessor (cannot use less until eject...)~~
-    - [x] use sass instead
+    - [x] use sass instead ~~(for common definition)~~
+    - [x] ~~use react-jss for normally use (cannot work smoothly with typescript now)~~
 - [ ] Animation library - react-spring
   - [ ] basic usage for recall
   - [ ] Alternatives - react-motion (maybe)
@@ -84,6 +85,25 @@ The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Structure
+
+```text
+Root
+  [DIR] public - for public resources
+  [DIR] src - for sources
+    [DIR] components - for all components
+    [DIR] css - for all css resources
+    [DIR] locales - for localize strings
+    [DIR] views - for layouts
+    App.tsx - for manage route of entire app
+    config.json - for configure app
+    index.tsx - the entry of app
+    store.ts - for manage sate of entire app
+    type.ts - for common type interfaces
+  .env - customize env variable
+  ...
+```
 
 ## Related Links
 
