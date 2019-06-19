@@ -1,3 +1,35 @@
 {
-  "defaultLang": "en"
+  "defaultLang": "en",
+  "en": {
+    "userInfo": {
+      "name": "David Steven",
+      "id": "ID100001234567890",
+      "birthday": "2019/06/19",
+      "phoneNumber": "(fake) 123456789",
+      "lastLoginDate": "2019/06/19 12:00",
+      "address": "Somewhere on the earth.",
+      "email": "david@email.com",
+      "level": 31,
+      "otherMessage1": "This is messages 1.",
+      "otherMessage2": "This is messages 2.",
+      "otherMessage3": "This is messages 3.",
+      "otherMessage4": "This is messages 4."
+    }
+  },
+  "jp": {
+    "userInfo": {
+      "name": "五十嵐　拓哉",
+      "id": "ID100001234567890",
+      "birthday": "2019/06/19",
+      "phoneNumber": "(fake) 123456789",
+      "lastLoginDate": "2019/06/19 12:00",
+      "address": "このユーザーは地球上のどこかで住んでいます。",
+      "email": "igarashi@email.com",
+      "level": 31,
+      "otherMessage1": "これがメッセージ１です。",
+      "otherMessage2": "これがメッセージ２です。",
+      "otherMessage3": "これがメッセージ３です。",
+      "otherMessage4": "これがメッセージ４です。"
+    }
+  }
 }
