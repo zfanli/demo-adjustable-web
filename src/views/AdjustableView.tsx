@@ -4,10 +4,10 @@ import Footer from '../components/Footer';
 
 const AdjustableView: React.FC = () => {
   return (
-    <div className="adjustable-view">
+    <>
       <Header />
       <Footer />
-    </div>
+    </>
   );
 };
 
