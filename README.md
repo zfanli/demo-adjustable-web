@@ -8,6 +8,8 @@ Demonstrate an adjustable web UI.
   - [ ] use typescript
   - [ ] router for cover other situations
   - [ ] redux for integrate configurations
+  - [x] JSS? Or other CSS preprocessor?
+    - [x] follow antd to use less as css preprocessor
 - [ ] Animation library - react-spring
   - [ ] basic usage for recall
   - [ ] Alternatives - react-motion (maybe)
@@ -19,6 +21,9 @@ Demonstrate an adjustable web UI.
   - [ ] maybe table view because rowspan can merge cells across line
   - [ ] but flex is more flexible to layout
 - [ ] Tool - UI Component Library for fast start
+  - [ ] antd
+    - [ ] layout
+    - [ ] components
 - [ ] Working Flow
   - [ ] statics version web
     - [ ] `Header` component
@@ -39,8 +44,8 @@ Demonstrate an adjustable web UI.
 - [ ] Fixed Header and Footer on the top and bottom
 - [ ] Adjustable Panels on the center
   - [ ] 5 panels
-  - [ ] 1 ot them should be 2x large
-  - [ ] other 4 panels should be same size
+  - [ ] 1 of them should be 2x large
+  - [ ] other 4 panels should be the same size
   - [ ] draggable and resizable
   - [ ] collapsible from panel to icon
   - [ ] expandable from icon to panel
