@@ -8,8 +8,11 @@ Demonstrate an adjustable web UI.
   - [ ] use typescript
   - [ ] router for cover other situations
   - [ ] redux for integrate configurations
+    - [x] read data (Provider and connect)
+    - [ ] dispatch actions
   - [x] JSS? Or other CSS preprocessor?
-    - [x] follow antd to use less as css preprocessor
+    - [x] ~~follow antd to use less as css preprocessor (cannot use less until eject...)~~
+    - [x] use sass instead
 - [ ] Animation library - react-spring
   - [ ] basic usage for recall
   - [ ] Alternatives - react-motion (maybe)
@@ -25,6 +28,9 @@ Demonstrate an adjustable web UI.
     - [ ] layout
     - [ ] components
 - [ ] Working Flow
+  - [ ] build workspace
+    - [x] dependencies
+    - [ ] base configs
   - [ ] statics version web
     - [ ] `Header` component
     - [ ] `Content` component
