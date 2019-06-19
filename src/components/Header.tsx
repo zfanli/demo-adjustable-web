@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Header: React.FC<Props> = (props: Props) => {
-  return <header>{props.header}</header>;
+  return <header className="header">{props.header}</header>;
 };
 
 export default connect(

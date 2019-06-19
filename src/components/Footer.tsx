@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Footer: React.FC<Props> = (props: Props) => {
-  return <footer>{props.footer}</footer>;
+  return <footer className="footer">{props.footer}</footer>;
 };
 
 export default connect(

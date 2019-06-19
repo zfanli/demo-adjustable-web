@@ -1,3 +1,9 @@
+@mixin for-header-and-footer {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+}
+
 body {
   box-sizing: border-box;
   margin: 0;
@@ -7,4 +13,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  .header {
+    @include for-header-and-footer();
+  }
+
+  .footer {
+    @include for-header-and-footer();
+  }
 }
