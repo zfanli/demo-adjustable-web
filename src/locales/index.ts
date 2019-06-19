@@ -1,5 +1,5 @@
-import en from './en.json';
-import jp from './jp.json';
+import en from './locales/en.json';
+import jp from './locales/jp.json';
 import { Locale } from '../type.js';
 
 // export language strings
