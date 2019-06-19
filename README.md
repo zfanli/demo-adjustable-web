@@ -1,44 +1,81 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# demo-adjustable-web
 
-## Available Scripts
+Demonstrate an adjustable web UI.
 
-In the project directory, you can run:
+## TODOs
 
-### `npm start`
+- [ ] Base on React > v16
+  - [ ] use typescript
+  - [ ] router for cover other situations
+  - [ ] redux for integrate configurations
+- [ ] Animation library - react-spring
+  - [ ] basic usage for recall
+  - [ ] Alternatives - react-motion (maybe)
+  - [ ] ~~Alternatives - animated (perhaps not)~~
+- [ ] Topics - Debounce & Throttle for best performance
+  - [ ] debounce
+  - [ ] throttle
+- [ ] Thinking - How to layout? Flex or Table?
+  - [ ] maybe table view because rowspan can merge cells across line
+  - [ ] but flex is more flexible to layout
+- [ ] Tool - UI Component Library for fast start
+- [ ] Working Flow
+  - [ ] statics version web
+    - [ ] `Header` component
+    - [ ] `Content` component
+    - [ ] `Footer` component
+    - [ ] `Panel` component
+    - [ ] extract configs to file
+    - [ ] loading configs to redux store
+  - [ ] add interaction to it
+    - [ ] refactor `Panel` to be sortable
+    - [ ] refactor `Panel` to be draggable
+    - [ ] refactor `Panel` to be resizable
+    - [ ] refactor `Panel` to be collapsible
+    - [ ] refactor `Panel` to be expandable
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**REQUIREMENTS**
 
-The page will reload if you make edits.<br>
+- [ ] Fixed Header and Footer on the top and bottom
+- [ ] Adjustable Panels on the center
+  - [ ] 5 panels
+  - [ ] 1 ot them should be 2x large
+  - [ ] other 4 panels should be same size
+  - [ ] draggable and resizable
+  - [ ] collapsible from panel to icon
+  - [ ] expandable from icon to panel
+  - [ ] scrollable inside panel
+
+## Commands
+
+### `npm start` or `yarn start`
+
+Runs the app in the development mode.
+
+The page will reload if you make edits.
+
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm test` or `yarn test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner in the interactive watch mode.
 
-### `npm run build`
+~~But no test now!~~
 
-Builds the app for production to the `build` folder.<br>
+### `npm run build` or `yarn build`
+
+Builds the app for production to the `build` folder.
+
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
+The build is minified and the filenames include the hashes.
+
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Related Links
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [React documentation](https://reactjs.org/).
