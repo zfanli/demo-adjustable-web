@@ -1,18 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { State } from '../type';
 
-interface Props {
-  footer: String;
-}
-
-const Footer: React.FC<Props> = (props: Props) => {
-  return <footer className="footer">{props.footer}</footer>;
+const Footer: React.FC = () => {
+  // get footer string from store
+  const footer = useSelector((state: State) => state.locale.footer);
+  return <footer className="footer">{footer}</footer>;
 };
 
-export default connect(
-  (state: State) => ({
-    footer: state.locale.footer,
-  }),
-  null
-)(Footer);
+export default Footer;
