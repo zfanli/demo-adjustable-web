@@ -1,14 +1,16 @@
 import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import AdjustableView from './views/AdjustableView';
 import './css/common.scss';
 
+// This App component is for handle route of entire application.
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Header />
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        <Route path="/" exact component={AdjustableView} />
+      </div>
+    </Router>
   );
 };
 
