@@ -1,3 +1,12 @@
 .av-content {
   flex-grow: 1;
+  flex-shrink: 0;
+  position: relative;
+
+  .panel {
+    height: 0;
+    overflow: auto;
+    position: absolute;
+    background-color: #eee;
+  }
 }

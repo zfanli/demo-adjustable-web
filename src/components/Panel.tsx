@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { CSSProperties } from 'react'
 
-const Panel: React.FC = () => {
-  return <section className="panel">Panel</section>;
-};
+interface Props {
+  style: CSSProperties
+}
 
-export default Panel;
+const Panel: React.FC<Props> = (props: Props) => {
+  return (
+    <section className="panel" style={props.style}>
+      Panel
+    </section>
+  )
+}
+
+export default Panel
