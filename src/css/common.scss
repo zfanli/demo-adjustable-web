@@ -2,6 +2,7 @@
   min-height: 100px;
   display: flex;
   align-items: center;
+  background-color: #eee;
 }
 
 body {
@@ -14,11 +15,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  .header {
-    @include for-header-and-footer();
-  }
+  #root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 600px;
 
-  .footer {
-    @include for-header-and-footer();
+    .header {
+      @include for-header-and-footer();
+    }
+
+    .footer {
+      @include for-header-and-footer();
+    }
   }
 }
