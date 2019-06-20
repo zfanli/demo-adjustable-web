@@ -1,15 +1,15 @@
 // main state
 export interface State {
-  locale: Locale;
+  locale: Locale
 }
 
 // localize object
 export interface Locale {
-  [k: string]: string;
+  [k: string]: string
 }
 
 // base action
 export interface BaseAction {
-  type: string;
-  payload: {};
+  type: string
+  payload: {}
 }

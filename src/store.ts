@@ -1,20 +1,20 @@
-import { createStore } from 'redux';
-import { State, BaseAction } from './type';
-import { locales } from './locales';
-import config from './config.json';
+import { createStore } from 'redux'
+import { State, BaseAction } from './type'
+import { locales } from './locales'
+import config from './config.json'
 
 // define default locale if does not exist
-const lang: string = config.defaultLang ? config.defaultLang : 'en';
+const lang: string = config.defaultLang ? config.defaultLang : 'en'
 
 // initialize state
 const initState: State = {
   locale: locales[lang],
-};
+}
 
 // reducer
 function reducer(state = initState, action: BaseAction): State {
-  return state;
+  return state
 }
 
 // export store
-export default createStore(reducer);
+export default createStore(reducer)
