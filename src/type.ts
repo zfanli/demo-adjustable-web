@@ -1,6 +1,7 @@
 // main state
 export interface State {
   locale: Locale
+  panelKeys: string[]
 }
 
 // localize object

@@ -9,6 +9,7 @@ const lang: string = config.defaultLang ? config.defaultLang : 'en'
 // initialize state
 const initState: State = {
   locale: locales[lang],
+  panelKeys: config.panelKeys,
 }
 
 // reducer

@@ -31,5 +31,12 @@
       "otherMessage3": "これがメッセージ３です。",
       "otherMessage4": "これがメッセージ４です。"
     }
-  }
+  },
+  "panelKeys": [
+    "userInfo",
+    "otherInfo",
+    "fixedMenu",
+    "dynamicMenu",
+    "speechToTextPanel"
+  ]
 }
