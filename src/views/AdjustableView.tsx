@@ -1,6 +1,6 @@
 import React, { useRef, useState, useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { animated as a, useTransition } from 'react-spring'
+import { animated, useTransition } from 'react-spring'
 import { throttle, range } from 'lodash'
 
 import Header from '../components/Header'
@@ -92,9 +92,7 @@ function calculatePositions(panelSizes: ExtendSize[], margin: number) {
 }
 
 const AdjustableView: React.FC = () => {
-  /**
-   * A ref object for fetch size info of content box.
-   */
+  // A ref object for fetch size info of content box.
   const av = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ width: 0, height: 0 })
 
@@ -112,8 +110,10 @@ const AdjustableView: React.FC = () => {
         setSize({ width, height })
       }
     }
+
     // Throttle control for optimized performance.
     const handler = throttle(resizeHandler, 200)
+
     // Listening to resize event.
     window.addEventListener('resize', handler)
 
@@ -168,10 +168,47 @@ const AdjustableView: React.FC = () => {
    */
   const panels = calculatePositions(initialPanels, margin)
 
-  /**
-   * Panel keys.
-   */
+  // Panel keys.
   const keys = useSelector((state: State) => state.panelKeys)
+
+  // Flatten array and bind keys.
+  const flatPanels = panels.flat().map((p, i) => ({
+    key: keys[i],
+    height: p.height,
+    width: p.width,
+    left: p.left,
+    top: p.top,
+  }))
+
+  // Wrap Panel to animated element.
+  const AnimatedPanel = animated(Panel)
+
+  // Create animation props.
+  const transitions = useTransition(flatPanels, panel => panel.key, {
+    // From is the state before display.
+    from: ({ height, width, top, left }) => ({
+      height,
+      width,
+      top,
+      left,
+      opacity: 0,
+    }),
+    // This state use to transition from `from` to display.
+    enter: ({ height, width, top, left }) => ({
+      height,
+      width,
+      top,
+      left,
+      opacity: 1,
+    }),
+    // Apply while update ocurred.
+    update: ({ height, width, top, left }) => ({ height, width, top, left }),
+    // Apply when component is to be unmounted.
+    leave: { height: 0, opacity: 0 },
+    // Config, adjust tension to change speed.
+    config: { mass: 5, tension: 1000, friction: 100 },
+    trail: 25,
+  })
 
   return (
     <>
@@ -185,10 +222,10 @@ const AdjustableView: React.FC = () => {
           marginRight: margin,
         }}
       >
-        {panels.flat().map((s, i) => (
-          <Panel key={keys[i]} style={s}>
+        {transitions.map(({ props, key }, i) => (
+          <AnimatedPanel key={key} style={props}>
             {keys[i]}
-          </Panel>
+          </AnimatedPanel>
         ))}
       </div>
       <Footer />
