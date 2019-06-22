@@ -1,7 +1,7 @@
-import React, { useRef, useState, useLayoutEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { animated, useTransition } from 'react-spring'
-import { throttle, range } from 'lodash'
+import { debounce, range } from 'lodash'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -94,14 +94,30 @@ function calculatePositions(panelSizes: ExtendSize[], margin: number) {
 const AdjustableView: React.FC = () => {
   // A ref object for fetch size info of content box.
   const av = useRef<HTMLDivElement>(null)
-  const [size, setSize] = useState({ width: 0, height: 0 })
+
+  /**
+   * Set margins.
+   *
+   * Margin to control whitespace between each panel,
+   * but note, each panel will only apply top and left margins,
+   * for convenience, the content box will apply bottom and right margins.
+   *
+   * const [margin, setMargin] = useState(10) // not needed now
+   */
+  const margin = 10
+
+  // Calculate initial size.
+  const [size, setSize] = useState({
+    width: window.innerWidth - margin,
+    height: window.innerHeight - 200 - margin,
+  })
 
   // debug only, remove before build.
   console.log(size)
 
   // Update size info when the window is resized.
   // Use layout effect because it should determine its size before be showed.
-  useLayoutEffect(() => {
+  useEffect(() => {
     // Create handler for resize event.
     const resizeHandler = () => {
       if (av && av.current) {
@@ -112,7 +128,7 @@ const AdjustableView: React.FC = () => {
     }
 
     // Throttle control for optimized performance.
-    const handler = throttle(resizeHandler, 200)
+    const handler = debounce(resizeHandler, 200)
 
     // Listening to resize event.
     window.addEventListener('resize', handler)
@@ -127,17 +143,6 @@ const AdjustableView: React.FC = () => {
   }, [])
 
   /**
-   * Set margins.
-   *
-   * Margin to control whitespace between each panel,
-   * but note, each panel will only apply top and left margins,
-   * for convenience, the content box will apply bottom and right margins.
-   *
-   * const [margin, setMargin] = useState(10) // not needed now
-   */
-  const margin = 10
-
-  /**
    * Initial panel size,
    * 5 panels in total, list in a 2x3 grid,
    * 4 of them are the same size, rest 1 is double size (height only),
@@ -150,8 +155,10 @@ const AdjustableView: React.FC = () => {
    * ```
    */
   const initialPanels = range(5).map((_, i) => {
+    // Position of the largest one
     if (i === 2) {
       let p = calculateInitialPanelSize(size, margin)
+      // Double the height
       p.maxHeight = p.maxHeight * 2
       p.height = p.maxHeight - margin
       return p
@@ -170,6 +177,8 @@ const AdjustableView: React.FC = () => {
 
   // Panel keys.
   const keys = useSelector((state: State) => state.panelKeys)
+  // Panel names.
+  const panelNames = useSelector((state: State) => state.locale.panels)
 
   // Flatten array and bind keys.
   const flatPanels = panels.flat().map((p, i) => ({
@@ -180,27 +189,12 @@ const AdjustableView: React.FC = () => {
     top: p.top,
   }))
 
-  // Wrap Panel to animated element.
-  const AnimatedPanel = animated(Panel)
-
   // Create animation props.
   const transitions = useTransition(flatPanels, panel => panel.key, {
     // From is the state before display.
-    from: ({ height, width, top, left }) => ({
-      height,
-      width,
-      top,
-      left,
-      opacity: 0,
-    }),
+    from: ({ height, width, top, left }) => ({ height, width, top, left }),
     // This state use to transition from `from` to display.
-    enter: ({ height, width, top, left }) => ({
-      height,
-      width,
-      top,
-      left,
-      opacity: 1,
-    }),
+    enter: ({ height, width, top, left }) => ({ height, width, top, left }),
     // Apply while update ocurred.
     update: ({ height, width, top, left }) => ({ height, width, top, left }),
     // Apply when component is to be unmounted.
@@ -223,9 +217,9 @@ const AdjustableView: React.FC = () => {
         }}
       >
         {transitions.map(({ props, key }, i) => (
-          <AnimatedPanel key={key} style={props}>
-            {keys[i]}
-          </AnimatedPanel>
+          <Panel key={key} style={props} title={panelNames[i]}>
+            <div>test</div>
+          </Panel>
         ))}
       </div>
       <Footer />
