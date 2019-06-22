@@ -2,6 +2,11 @@
 export interface State {
   locale: Locale
   panelKeys: string[]
+  margin: number
+  contentBoxSize: {
+    width: number
+    height: number
+  }
 }
 
 // localize object
@@ -12,5 +17,25 @@ export interface Locale {
 // base action
 export interface BaseAction {
   type: string
-  payload: {}
+  payload: {
+    [k: string]: any
+  }
+}
+
+// Base for store element size info.
+export interface Size {
+  width: number
+  height: number
+}
+
+// Base for store panel size info.
+export interface ExtendSize extends Size {
+  maxWidth: number
+  maxHeight: number
+}
+
+// Advanced type for store panel size info and position.
+export interface SizeWithPosition extends ExtendSize {
+  left: number
+  top: number
 }
