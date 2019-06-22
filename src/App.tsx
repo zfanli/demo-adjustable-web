@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import AdjustableView from './views/AdjustableView'
 import NotFound from './views/NotFound'
+
+import 'antd/dist/antd.css'
 import './css/common.scss'
 
 // This App component is for handle route of entire application.
