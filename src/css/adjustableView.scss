@@ -8,5 +8,18 @@
     overflow: auto;
     position: absolute;
     background-color: #eee;
+    transform: translate3d(0, 0, 0);
+
+    .panel-header {
+      display: flex;
+      cursor: move;
+      border-bottom: 1px solid #ddd;
+      line-height: 2rem;
+      padding: 0 0.5rem;
+
+      // .panel-title {
+
+      // }
+    }
   }
 }
