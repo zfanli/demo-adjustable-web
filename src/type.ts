@@ -7,6 +7,16 @@ export interface State {
     width: number
     height: number
   }
+  panelSizes: ExtendSize[]
+  flatPanels: FlatPanel[]
+}
+
+export interface FlatPanel {
+  key: string
+  height: number
+  width: number
+  left: number
+  top: number
 }
 
 // localize object

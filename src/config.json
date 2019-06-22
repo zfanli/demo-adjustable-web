@@ -39,5 +39,7 @@
     "dynamicMenu",
     "speechToTextPanel"
   ],
-  "margin": 10
+  "margin": 10,
+  "headerHeight": 100,
+  "footerHeight": 100
 }

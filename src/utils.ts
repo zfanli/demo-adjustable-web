@@ -32,7 +32,11 @@ export function calculateInitialPanelSize(size: Size, margin: number) {
  * Calculate positions of all panels.
  * @param panelSizes panel size list
  */
-export function calculatePositions(panelSizes: ExtendSize[], margin: number) {
+export function calculatePositions(
+  panelSizes: ExtendSize[],
+  margin: number,
+  keys: string[]
+) {
   let panels: SizeWithPosition[][] = new Array(2)
 
   panelSizes.forEach((ps, index) => {
@@ -54,5 +58,11 @@ export function calculatePositions(panelSizes: ExtendSize[], margin: number) {
     }
   })
 
-  return panels
+  return panels.flat().map((p, i) => ({
+    key: keys[i],
+    height: p.height,
+    width: p.width,
+    left: p.left,
+    top: p.top,
+  }))
 }
