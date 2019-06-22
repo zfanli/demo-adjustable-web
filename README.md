@@ -5,8 +5,8 @@ Demonstrate an adjustable web UI.
 ## TODOs
 
 - [ ] Base on React > v16
-  - [ ] use typescript
-  - [ ] router for cover other situations
+  - [x] use typescript
+  - [x] router for cover other situations
   - [ ] redux for integrate configurations
     - [x] read data (Provider and connect)
     - [ ] dispatch actions
@@ -15,12 +15,12 @@ Demonstrate an adjustable web UI.
     - [x] use sass instead ~~(for common definition)~~
     - [x] ~~use react-jss for normally use (cannot work smoothly with typescript now)~~
 - [ ] Animation library - react-spring
-  - [ ] basic usage for recall
-  - [ ] Alternatives - react-motion (maybe)
-  - [ ] ~~Alternatives - animated (perhaps not)~~
+  - [x] basic usage for recall
+  - [x] ~~Alternatives - react-motion (maybe not)~~
+  - [x] ~~Alternatives - animated (perhaps not)~~
 - [ ] Topics - Debounce & Throttle for best performance
-  - [ ] debounce
-  - [ ] throttle
+  - [x] debounce (only usage)
+  - [x] throttle (usage only)
 - [ ] Thinking - How to layout? Flex or Table?
   - [ ] maybe table view because rowspan can merge cells across line
   - [ ] but flex is more flexible to layout
@@ -29,16 +29,16 @@ Demonstrate an adjustable web UI.
     - [ ] layout
     - [ ] components
 - [ ] Working Flow
-  - [ ] build workspace
+  - [x] build workspace
     - [x] dependencies
-    - [ ] base configs
-  - [ ] statics version web
-    - [ ] `Header` component
-    - [ ] `Content` component
-    - [ ] `Footer` component
-    - [ ] `Panel` component
-    - [ ] extract configs to file
-    - [ ] loading configs to redux store
+    - [x] base configs
+  - [x] statics version web
+    - [x] `Header` component just a placeholder
+    - [x] `Content` component for layout, actually named `AdjustableView`
+    - [x] `Footer` component just a placeholder
+    - [x] `Panel` component also just a placholder
+    - [x] extract configs to file
+    - [x] loading configs to redux store
   - [ ] add interaction to it
     - [ ] refactor `Panel` to be sortable
     - [ ] refactor `Panel` to be draggable
@@ -48,11 +48,11 @@ Demonstrate an adjustable web UI.
 
 **REQUIREMENTS**
 
-- [ ] Fixed Header and Footer on the top and bottom
+- [x] Fixed Header and Footer on the top and bottom
 - [ ] Adjustable Panels on the center
-  - [ ] 5 panels
-  - [ ] 1 of them should be 2x large
-  - [ ] other 4 panels should be the same size
+  - [x] 5 panels
+  - [x] 1 of them should be 2x large
+  - [x] other 4 panels should be the same size
   - [ ] draggable and resizable
   - [ ] collapsible from panel to icon
   - [ ] expandable from icon to panel
