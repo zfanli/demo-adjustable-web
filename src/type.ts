@@ -6,7 +6,7 @@ export interface State {
 
 // localize object
 export interface Locale {
-  [k: string]: string
+  [k: string]: string | string[]
 }
 
 // base action

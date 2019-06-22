@@ -1,4 +1,11 @@
 {
   "header": "This is a header.",
-  "footer": "This is a footer."
+  "footer": "This is a footer.",
+  "panels": [
+    "User Information",
+    "Reply Information",
+    "Fixed Menu",
+    "Dynamic Menu",
+    "Conversation"
+  ]
 }
