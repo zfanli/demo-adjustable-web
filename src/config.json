@@ -38,5 +38,6 @@
     "fixedMenu",
     "dynamicMenu",
     "speechToTextPanel"
-  ]
+  ],
+  "margin": 10
 }
