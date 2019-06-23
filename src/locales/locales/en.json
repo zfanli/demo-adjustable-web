@@ -1,6 +1,6 @@
 {
-  "header": "This is a header.",
-  "footer": "This is a footer.",
+  "header": "This is a header placeholder.",
+  "footer": "This is a footer placeholder. This is a footer placeholder. This is a footer placeholder.",
   "panels": [
     "User Information",
     "Reply Information",
