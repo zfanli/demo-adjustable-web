@@ -37,7 +37,7 @@ export function calculatePositions(
   margin: number,
   keys: string[]
 ) {
-  let panels: SizeWithPosition[][] = new Array(2)
+  let panels: SizeWithPosition[] = []
 
   panelSizes.forEach((ps, index) => {
     // Get panel col number.
@@ -46,19 +46,14 @@ export function calculatePositions(
     const col = index > 2 ? index - 3 : index
     const row = index > 2 ? 1 : 0
 
-    // Initialize array when needed
-    if (!panels[col]) {
-      panels[col] = []
-    }
-
-    panels[col][row] = {
+    panels.push({
       ...ps,
       left: ps.maxWidth * col + margin,
       top: ps.maxHeight * row + margin,
-    }
+    })
   })
 
-  return panels.flat().map((p, i) => ({
+  return panels.map((p, i) => ({
     key: keys[i],
     height: p.height,
     width: p.width,
