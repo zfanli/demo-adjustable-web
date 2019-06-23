@@ -9,6 +9,7 @@ interface Props {
   title: string
   children: any
   trueKey: string
+  bind: {}
 }
 
 const Panel: React.FC<Props> = (props: Props) => {
