@@ -44,11 +44,14 @@ Demonstrate an adjustable web UI.
       - [x] ~~try without gesture hook, just handle on mouse down events, faster with gesture~~
       - [x] if cannot work, use gesture instead (done)
     - [ ] refactor `Panel` to be sortable
+      - [ ] refactor to move gestures into container
+      - [ ] define order algorithms
     - [ ] refactor `Panel` to be resizable
     - [ ] refactor `Panel` to be collapsible
     - [ ] refactor `Panel` to be expandable
   - [ ] Styles UI
     - [ ] base styles after draggable done
+    - [ ] fill fake data
     - [ ] improve UI after sortable done
 
 **REQUIREMENTS**
