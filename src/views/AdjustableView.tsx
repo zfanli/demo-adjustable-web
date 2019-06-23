@@ -9,7 +9,7 @@ import Panel from '../components/Panel'
 
 import { setSize, setFlatPanels } from '../actions'
 import { State, FlatPanel } from '../type'
-import { calculateMinHeight, calculatePositions } from '../utils'
+import { calculatePositions } from '../utils'
 
 import '../css/adjustableView.scss'
 
@@ -89,7 +89,6 @@ const AdjustableView: React.FC = () => {
         ref={av}
         className="av-content"
         style={{
-          ...calculateMinHeight(size.width),
           marginBottom: margin,
           marginRight: margin,
         }}
