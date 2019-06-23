@@ -61,6 +61,7 @@ const initState: State = {
   contentBoxSize: defaultSize,
   panelSizes: initialPanels,
   flatPanels: [],
+  shadowSizeWhileDragging: config.shadowSizeWhileDragging,
 }
 
 // Alias.

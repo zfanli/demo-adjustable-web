@@ -9,6 +9,7 @@ export interface State {
   }
   panelSizes: ExtendSize[]
   flatPanels: FlatPanel[]
+  shadowSizeWhileDragging: number
 }
 
 export interface FlatPanel {
