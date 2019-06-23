@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useTransition } from 'react-spring'
+import { useTransition, useSprings } from 'react-spring'
+import { useGesture } from 'react-use-gesture'
 import { debounce } from 'lodash'
 
 import Header from '../components/Header'
@@ -67,6 +68,50 @@ const AdjustableView: React.FC = () => {
   // Panel names.
   const panelNames = useSelector((state: State) => state.locale.panels)
 
+  const shadowSize = useSelector(
+    (state: State) => state.shadowSizeWhileDragging
+  )
+
+  const getStyledPositions = (
+    panels: FlatPanel[],
+    isSort?: boolean,
+    down?: boolean,
+    originalIndex?: number,
+    delta?: number[]
+  ) => (index: number) =>
+    down && index === originalIndex && delta
+      ? {
+          // Dragging styles
+          x: panels[index].left + delta[0],
+          y: panels[index].top + delta[0],
+          scale: 1.1,
+          zIndex: 10,
+          boxShadow: `0 0 ${shadowSize}px 0 #999`,
+          immediate: (name: string) =>
+            !isSort && (name === 'zIndex' || name === 'x' || name === 'y'),
+        }
+      : {
+          // Normal styles
+          x: panels[index].left,
+          y: panels[index].top,
+          scale: 1,
+          zIndex: 0,
+          boxShadow: '0 0 5px 0 #ddd',
+          immediate: () => false,
+        }
+
+  const [springs, setSprings] = useSprings(
+    flatPanels.length,
+    getStyledPositions(flatPanels)
+  )
+
+  const bind = useGesture(({ args: [originalIndex], down, delta }) => {
+    console.log(delta)
+    // setSprings(
+    //   getStyledPositions(flatPanels, false, down, originalIndex, delta)
+    // )
+  })
+
   // Create animation props.
   const transitions = useTransition(flatPanels, panel => panel.key, {
     // From is the state before display.
@@ -99,6 +144,7 @@ const AdjustableView: React.FC = () => {
             style={props}
             title={panelNames[i]}
             trueKey={keys[i]}
+            bind={bind(i)}
           >
             <div>test</div>
           </Panel>
