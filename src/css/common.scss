@@ -4,7 +4,8 @@
   flex-shrink: 0;
   flex-grow: 0;
   align-items: center;
-  background-color: #eee;
+  background-color: #4e7383;
+  color: #fff;
 }
 
 body {
@@ -16,6 +17,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f4f4f4;
+  overflow: hidden;
 
   #root {
     display: flex;
@@ -24,10 +27,13 @@ body {
 
     .header {
       @include for-header-and-footer();
+      font-size: 1.5rem;
+      padding-left: 1rem;
     }
 
     .footer {
       @include for-header-and-footer();
+      justify-content: center;
     }
   }
 }
