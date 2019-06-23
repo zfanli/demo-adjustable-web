@@ -36,15 +36,20 @@ Demonstrate an adjustable web UI.
     - [x] `Header` component just a placeholder
     - [x] `Content` component for layout, actually named `AdjustableView`
     - [x] `Footer` component just a placeholder
-    - [x] `Panel` component also just a placholder
+    - [x] `Panel` component also just a placeholder
     - [x] extract configs to file
     - [x] loading configs to redux store
   - [ ] add interaction to it
+    - [x] refactor `Panel` to be draggable
+      - [x] ~~try without gesture hook, just handle on mouse down events, faster with gesture~~
+      - [x] if cannot work, use gesture instead (done)
     - [ ] refactor `Panel` to be sortable
-    - [ ] refactor `Panel` to be draggable
     - [ ] refactor `Panel` to be resizable
     - [ ] refactor `Panel` to be collapsible
     - [ ] refactor `Panel` to be expandable
+  - [ ] Styles UI
+    - [ ] base styles after draggable done
+    - [ ] improve UI after sortable done
 
 **REQUIREMENTS**
 
