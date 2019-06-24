@@ -57,8 +57,9 @@ Demonstrate an adjustable web UI.
     - [ ] fill fake data
     - [ ] improve UI after sortable done
   - [ ] Menu
-    - [ ] switch between sortable view and not sortable view
-    - [ ] display languages (en or jp)
+    - [x] switch between sortable view and not sortable view
+    - [x] display languages (en or jp)
+    - [ ] other settings
 
 **REQUIREMENTS**
 
