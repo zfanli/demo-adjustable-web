@@ -108,20 +108,17 @@ export function handleSizeChange(
   lastSize: Size,
   margin: number
 ) {
-  const newPositions = getCurrentPositions(windowSize, margin)
-  const lastPositions = getCurrentPositions(lastSize, margin)
+  const newPositions = packagePanels(windowSize, margin)
 
-  newPositions.forEach((panel, index) => {
-    panel.top -= lastPositions[index].top
-    panel.left -= lastPositions[index].left
-  })
+  const heightRatio = windowSize.height / lastSize.height
+  const widthRatio = windowSize.width / lastSize.width
 
-  // Position and size changes relatively.
+  // Change relative positions and sizes.
   panels.forEach((panel, index) => {
     panel.width = newPositions[index].width
     panel.height = newPositions[index].height
-    panel.top += newPositions[index].top
-    panel.left += newPositions[index].left
+    panel.top *= heightRatio
+    panel.left *= widthRatio
   })
 
   return panels

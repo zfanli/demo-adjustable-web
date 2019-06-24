@@ -7,7 +7,6 @@ import config from './config.json'
 
 // define default locale if does not exist
 const lang: string = config.defaultLang ? config.defaultLang : 'en'
-
 // Hold margin.
 const { margin, headerHeight, footerHeight } = config
 // Calculate default size.
@@ -37,7 +36,7 @@ function reducer(state = initState, action: BaseAction): State {
     // For handle window resize.
     case SET_SIZE:
       const contentBoxSize = action.payload.size
-      // Change position and size relatively.
+      // Change relative positions and sizes.
       const flatPanels = handleSizeChange(
         state.flatPanels,
         contentBoxSize,
