@@ -4,26 +4,27 @@ Demonstrate an adjustable web UI.
 
 ## TODOs
 
-- [ ] Base on React > v16
+- [x] Base on React > v16
   - [x] use typescript
   - [x] router for cover other situations
-  - [ ] redux for integrate configurations
+  - [x] redux for integrate configurations
     - [x] read data (Provider and connect)
-    - [ ] dispatch actions
+    - [x] dispatch actions
   - [x] JSS? Or other CSS preprocessor?
     - [x] ~~follow antd to use less as css preprocessor (cannot use less until eject...)~~
     - [x] use sass instead ~~(for common definition)~~
     - [x] ~~use react-jss for normally use (cannot work smoothly with typescript now)~~
-- [ ] Animation library - react-spring
+- [x] Animation library - react-spring
   - [x] basic usage for recall
   - [x] ~~Alternatives - react-motion (maybe not)~~
   - [x] ~~Alternatives - animated (perhaps not)~~
-- [ ] Topics - Debounce & Throttle for best performance
+- [x] Topics - Debounce & Throttle for best performance
   - [x] debounce (only usage)
   - [x] throttle (usage only)
-- [ ] Thinking - How to layout? Flex or Table?
-  - [ ] maybe table view because rowspan can merge cells across line
-  - [ ] but flex is more flexible to layout
+- [x] Thinking - How to layout? Flex or Table?
+  - [x] ~~maybe table view because rowspan can merge cells across line~~
+  - [x] ~~but flex is more flexible to layout~~
+  - [x] layout with absolute position
 - [ ] Tool - UI Component Library for fast start
   - [ ] antd
     - [ ] layout
@@ -44,7 +45,9 @@ Demonstrate an adjustable web UI.
       - [x] ~~try without gesture hook, just handle on mouse down events, faster with gesture~~
       - [x] if cannot work, use gesture instead (done)
     - [ ] refactor `Panel` to be sortable
-      - [ ] refactor to move gestures into container
+      - [x] refactor to move gestures into container
+        - [x] move gestures into container
+        - [x] adjust resize actions
       - [ ] define order algorithms
     - [ ] refactor `Panel` to be resizable
     - [ ] refactor `Panel` to be collapsible
