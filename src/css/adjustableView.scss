@@ -14,15 +14,31 @@
 
     .panel-header {
       display: flex;
-      cursor: move;
       border-bottom: 1px solid #ddd;
       line-height: 2rem;
-      padding: 0 0.5rem;
       font-weight: bold;
 
-      // .panel-title {
+      .panel-title {
+        padding: 0 0.5rem;
+        cursor: grab;
+        flex-grow: 1;
+      }
 
-      // }
+      .panel-buttons {
+        padding: 0 0.5rem;
+
+        button {
+          background-color: #fff;
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          outline: none;
+
+          &:hover {
+            color: #03a9f4;
+          }
+        }
+      }
     }
   }
 }
