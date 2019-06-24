@@ -1,5 +1,5 @@
 {
-  "header": "This is a header placeholder.",
+  "header": "This is a header placeholder",
   "footer": "This is a footer placeholder. This is a footer placeholder. This is a footer placeholder.",
   "panels": [
     "User Information",
@@ -7,5 +7,6 @@
     "Conversation",
     "Reply Information",
     "Dynamic Menu"
-  ]
+  ],
+  "sortable": "Sortable"
 }
