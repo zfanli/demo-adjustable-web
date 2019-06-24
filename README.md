@@ -53,6 +53,9 @@ Demonstrate an adjustable web UI.
     - [ ] base styles after draggable done
     - [ ] fill fake data
     - [ ] improve UI after sortable done
+  - [ ] Menu
+    - [ ] switch between sortable view and not sortable view
+    - [ ] display languages (en or jp)
 
 **REQUIREMENTS**
 
