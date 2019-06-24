@@ -35,7 +35,7 @@ const AdjustableView: React.FC = () => {
   )
 
   // Function to get current positions of each panel, and styling moving action.
-  const getStyledPositions = (
+  function getStyledPositions(
     // For get position from, directly from store.
     panels: FlatPanel[],
     // For sortable support, moving animations should apply while sorting.
@@ -45,35 +45,37 @@ const AdjustableView: React.FC = () => {
     // For identify which panel is in dragging.
     originalIndex?: number
     // Return function: (index: number) => ({ props }) for setSprings use.
-  ) => (index: number) =>
-    down && index === originalIndex
-      ? {
-          // Dragging styles
-          x: panels[index].left,
-          y: panels[index].top,
-          scale: 1.1,
-          zIndex: 10,
-          boxShadow: `0 0 ${shadowSize}px 0 rgba(0,0,0,.3)`,
-          width: panels[index].width,
-          height: panels[index].height,
-          immediate: (name: string) =>
-            !isSort && (name === 'zIndex' || name === 'x' || name === 'y'),
-          config: { mass: 5, tension: 1000, friction: 100 },
-          trail: 25,
-        }
-      : {
-          // Normal styles
-          x: panels[index].left,
-          y: panels[index].top,
-          scale: 1,
-          zIndex: 0,
-          boxShadow: '0 0 5px 0 rgba(0,0,0,.1)',
-          width: panels[index].width,
-          height: panels[index].height,
-          immediate: () => false,
-          config: { mass: 5, tension: 1000, friction: 100 },
-          trail: 25,
-        }
+  ) {
+    return (index: number) =>
+      down && index === originalIndex
+        ? {
+            // Dragging styles
+            x: panels[index].left,
+            y: panels[index].top,
+            scale: 1.1,
+            zIndex: 10,
+            boxShadow: `0 0 ${shadowSize}px 0 rgba(0,0,0,.3)`,
+            width: panels[index].width,
+            height: panels[index].height,
+            immediate: (name: string) =>
+              !isSort && (name === 'zIndex' || name === 'x' || name === 'y'),
+            config: { mass: 5, tension: 1000, friction: 100 },
+            trail: 25,
+          }
+        : {
+            // Normal styles
+            x: panels[index].left,
+            y: panels[index].top,
+            scale: 1,
+            zIndex: 0,
+            boxShadow: '0 0 5px 0 rgba(0,0,0,.1)',
+            width: panels[index].width,
+            height: panels[index].height,
+            immediate: () => false,
+            config: { mass: 5, tension: 1000, friction: 100 },
+            trail: 25,
+          }
+  }
 
   // Generate animation props to move panels smoothly.
   const [springs, setSprings] = useSprings(
@@ -99,6 +101,10 @@ const AdjustableView: React.FC = () => {
     { event: { capture: true, passive: false } }
   )
 
+  function updateSprings() {
+    setSprings(getStyledPositions(flatPanels, true) as any)
+  }
+
   // Update size info when the window is resized.
   // Use layout effect because it should determine its size before be showed.
   useEffect(() => {
@@ -108,6 +114,7 @@ const AdjustableView: React.FC = () => {
         const width = av.current.offsetWidth
         const height = av.current.offsetHeight
         dispatch(setSize({ width, height }))
+        updateSprings()
       }
     }
 

@@ -16,15 +16,17 @@ const defaultSize = {
   height: window.innerHeight - headerHeight - footerHeight - margin,
 }
 
+const initialPanels = calculatePositions(defaultSize, margin, config.panelKeys)
+
 /**
- * Create initial state
+ * Create initial state.
  */
 const initState: State = {
   locale: locales[lang],
   panelKeys: config.panelKeys,
   margin: margin,
   contentBoxSize: defaultSize,
-  flatPanels: calculatePositions(defaultSize, margin, config.panelKeys),
+  flatPanels: initialPanels,
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
 }
 
