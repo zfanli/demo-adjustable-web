@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
 import { State, BaseAction } from './type'
-import { calculatePositions } from './utils'
+import { getCurrentPositions, handleSizeChange } from './utils'
 import { SET_SIZE, SET_DRAGGING_POSITION } from './actions'
 import { locales } from './locales'
 import config from './config.json'
@@ -16,51 +16,48 @@ const defaultSize = {
   height: window.innerHeight - headerHeight - footerHeight - margin,
 }
 
-const initialPanels = calculatePositions(defaultSize, margin, config.panelKeys)
-
-/**
- * Create initial state.
- */
+// Create initial state.
 const initState: State = {
   locale: locales[lang],
   panelKeys: config.panelKeys,
   margin: margin,
   contentBoxSize: defaultSize,
-  flatPanels: initialPanels,
+  flatPanels: getCurrentPositions(defaultSize, margin, config.panelKeys),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
 }
 
 // Alias.
 const assign = Object.assign
 
-/**
- * Reducers.
- */
+// Reducers.
 function reducer(state = initState, action: BaseAction): State {
   switch (action.type) {
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
     // For handle window resize.
     case SET_SIZE:
       const contentBoxSize = action.payload.size
-      const flatPanels = calculatePositions(
+      // Change position and size relatively.
+      const flatPanels = handleSizeChange(
+        state.flatPanels,
         contentBoxSize,
-        state.margin,
-        state.panelKeys
+        state.contentBoxSize,
+        state.margin
       )
       return assign(state, { contentBoxSize, flatPanels })
-
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
     // For handle panel dragging.
     case SET_DRAGGING_POSITION:
       const index = action.payload.index
       if (typeof index !== 'undefined') {
         const targetPanel = state.flatPanels[index]
         if (targetPanel) {
-          // Save temp position when does not exist.
-          // Temp position is for store last position,
-          // while dragging is happening,
-          // it will need the last position to calculate the current position out.
-          // The temp position should be set to `null` if dragging is end.
-          // Because when next dragging is happening,
-          // the temp position is expect to be null to initialize with target panel's position.
+          // Save temp position if not exist.
+          // The temp position is for store last position.
+          // The last position will be needed to calculate the current position
+          // out. The temp position should be set to `null` at the end of drag.
           if (!targetPanel.tempLeft || !targetPanel.tempTop) {
             targetPanel.tempLeft = targetPanel.left
             targetPanel.tempTop = targetPanel.top
@@ -68,14 +65,14 @@ function reducer(state = initState, action: BaseAction): State {
 
           // Calculate new position.
           // Always calculate the position with temp position,
-          // to avoid unexpected motion.
+          // to avoid unexpected position changes.
           const p = action.payload.position
           targetPanel.left = targetPanel.tempLeft + p[0]
           targetPanel.top = targetPanel.tempTop + p[1]
 
           // Make a copy of flatPanels.
           const flatPanels = state.flatPanels.slice()
-          // Set moving panel.
+          // Set panel's motion.
           flatPanels[index] = targetPanel
 
           // Reset temp position when moving end.
@@ -88,6 +85,8 @@ function reducer(state = initState, action: BaseAction): State {
         }
       }
       return state
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
 
     default:
       return state

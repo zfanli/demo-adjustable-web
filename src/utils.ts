@@ -1,19 +1,12 @@
 import { range } from 'lodash'
-import { Size, SizeWithPosition } from './type'
+import { Size, SizeWithPosition, FlatPanel, ExtendSize } from './type'
 
 /**
- * Calculate min-height of content box.
- * @param width box width
+ * Get current panel size, calculate by current window size.
+ * @param size
+ * @param margin
  */
-export function calculateMinHeight(width: number) {
-  return { minHeight: width / 3 }
-}
-
-/**
- * Calculate base size of panel.
- * @param size content box size
- */
-export function calculateInitialPanelSize(size: Size, margin: number) {
+function getCurrentPanelSize(size: Size, margin: number) {
   const [maxWidth, maxHeight] = [
     Math.ceil(size.width / 3),
     Math.ceil(size.height / 2),
@@ -30,26 +23,36 @@ export function calculateInitialPanelSize(size: Size, margin: number) {
 }
 
 /**
- * Calculate positions of all panels.
+ * Packaging panels' sizes.
+ * @param windowSize
+ * @param margin
  */
-export function calculatePositions(
-  windowSize: Size,
-  margin: number,
-  keys: string[]
-) {
-  const panelSizes = range(5).map((_, i) => {
+function packagePanels(windowSize: Size, margin: number) {
+  return range(5).map((_, i) => {
     // Position of the largest one
     if (i === 2) {
-      let p = calculateInitialPanelSize(windowSize, margin)
+      let p = getCurrentPanelSize(windowSize, margin)
       // Double the height
       p.maxHeight = p.maxHeight * 2
       p.height = p.maxHeight - margin
       return p
     } else {
-      return calculateInitialPanelSize(windowSize, margin)
+      return getCurrentPanelSize(windowSize, margin)
     }
   })
+}
 
+/**
+ * Get position by sizes.
+ * @param panelSizes
+ * @param margin
+ * @param keys
+ */
+function getPositionsBySizes(
+  panelSizes: ExtendSize[],
+  margin: number,
+  keys: string[] = []
+) {
   let panels: SizeWithPosition[] = []
 
   panelSizes.forEach((ps, index) => {
@@ -74,3 +77,55 @@ export function calculatePositions(
     top: p.top,
   }))
 }
+
+// ----------------------------------------------------------------------------
+// --------------------------- EXPORT START -----------------------------------
+
+/**
+ * Get current positions.
+ * @param windowSize
+ * @param margin
+ * @param keys
+ */
+export function getCurrentPositions(
+  windowSize: Size,
+  margin: number,
+  keys?: string[]
+) {
+  const panelSizes = packagePanels(windowSize, margin)
+  return getPositionsBySizes(panelSizes, margin, keys)
+}
+
+/**
+ * Handle position and size changes while window resize.
+ * @param panels
+ * @param windowSize
+ * @param margin
+ */
+export function handleSizeChange(
+  panels: FlatPanel[],
+  windowSize: Size,
+  lastSize: Size,
+  margin: number
+) {
+  const newPositions = getCurrentPositions(windowSize, margin)
+  const lastPositions = getCurrentPositions(lastSize, margin)
+
+  newPositions.forEach((panel, index) => {
+    panel.top -= lastPositions[index].top
+    panel.left -= lastPositions[index].left
+  })
+
+  // Position and size changes relatively.
+  panels.forEach((panel, index) => {
+    panel.width = newPositions[index].width
+    panel.height = newPositions[index].height
+    panel.top += newPositions[index].top
+    panel.left += newPositions[index].left
+  })
+
+  return panels
+}
+
+// ---------------------------- EXPORT END ------------------------------------
+// ----------------------------------------------------------------------------
