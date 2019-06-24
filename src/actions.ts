@@ -21,3 +21,21 @@ export function setDraggingPosition(
     payload: { position, index, moving },
   }
 }
+
+export const SET_LOCALE = 'SET_LOCALE'
+
+export function setLocale(locale: string): BaseAction {
+  return {
+    type: SET_LOCALE,
+    payload: { locale },
+  }
+}
+
+export const SET_SORTABLE = 'SET_SORTABLE'
+
+export function setSortable(sortable: boolean): BaseAction {
+  return {
+    type: SET_SORTABLE,
+    payload: { sortable },
+  }
+}

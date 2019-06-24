@@ -9,6 +9,7 @@ export interface State {
   }
   flatPanels: FlatPanel[]
   shadowSizeWhileDragging: number
+  sortable: boolean
 }
 
 export interface FlatPanel {

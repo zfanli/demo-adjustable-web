@@ -1,7 +1,12 @@
 import { createStore } from 'redux'
 import { State, BaseAction } from './type'
 import { getCurrentPositions, handleSizeChange } from './utils'
-import { SET_SIZE, SET_DRAGGING_POSITION } from './actions'
+import {
+  SET_SIZE,
+  SET_DRAGGING_POSITION,
+  SET_LOCALE,
+  SET_SORTABLE,
+} from './actions'
 import { locales } from './locales'
 import config from './config.json'
 
@@ -23,6 +28,7 @@ const initState: State = {
   contentBoxSize: defaultSize,
   flatPanels: getCurrentPositions(defaultSize, margin, config.panelKeys),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
+  sortable: true,
 }
 
 // Alias.
@@ -34,6 +40,7 @@ function reducer(state = initState, action: BaseAction): State {
     // ------------------------------------------------------------------------
     // ------------------------ START SECTION ---------------------------------
     // For handle window resize.
+
     case SET_SIZE:
       const contentBoxSize = action.payload.size
       // Change relative positions and sizes.
@@ -44,10 +51,12 @@ function reducer(state = initState, action: BaseAction): State {
         state.margin
       )
       return assign(state, { contentBoxSize, flatPanels })
+
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
     // ------------------------ START SECTION ---------------------------------
     // For handle panel dragging.
+
     case SET_DRAGGING_POSITION:
       const index = action.payload.index
       if (typeof index !== 'undefined') {
@@ -84,6 +93,25 @@ function reducer(state = initState, action: BaseAction): State {
         }
       }
       return state
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Change locale.
+
+    case SET_LOCALE:
+      const locale = locales[action.payload.locale]
+      return assign(state, { locale })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Change sortable.
+
+    case SET_SORTABLE:
+      const sortable = action.payload.sortable
+      return assign(state, { sortable })
+
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
 

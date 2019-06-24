@@ -29,11 +29,30 @@ body {
       @include for-header-and-footer();
       font-size: 1.5rem;
       padding-left: 1rem;
+
+      .header-buttons {
+        margin-left: auto;
+        margin-right: 1rem;
+
+        button {
+          background-color: transparent;
+          cursor: pointer;
+          outline: none;
+          border: none;
+          margin: 0 0.5rem;
+        }
+      }
     }
 
     .footer {
       @include for-header-and-footer();
       justify-content: center;
+    }
+  }
+
+  .sortable-switch {
+    button {
+      margin-left: 1rem;
     }
   }
 }
