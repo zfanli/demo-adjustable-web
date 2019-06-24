@@ -7,7 +7,6 @@ export interface State {
     width: number
     height: number
   }
-  panelSizes: ExtendSize[]
   flatPanels: FlatPanel[]
   shadowSizeWhileDragging: number
 }
@@ -18,6 +17,8 @@ export interface FlatPanel {
   width: number
   left: number
   top: number
+  tempLeft?: number | null
+  tempTop?: number | null
 }
 
 // localize object

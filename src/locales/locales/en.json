@@ -3,9 +3,9 @@
   "footer": "This is a footer placeholder. This is a footer placeholder. This is a footer placeholder.",
   "panels": [
     "User Information",
-    "Reply Information",
     "Fixed Menu",
-    "Dynamic Menu",
-    "Conversation"
+    "Conversation",
+    "Reply Information",
+    "Dynamic Menu"
   ]
 }

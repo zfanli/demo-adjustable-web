@@ -1,4 +1,5 @@
-import { Size, ExtendSize, SizeWithPosition } from './type'
+import { range } from 'lodash'
+import { Size, SizeWithPosition } from './type'
 
 /**
  * Calculate min-height of content box.
@@ -30,13 +31,25 @@ export function calculateInitialPanelSize(size: Size, margin: number) {
 
 /**
  * Calculate positions of all panels.
- * @param panelSizes panel size list
  */
 export function calculatePositions(
-  panelSizes: ExtendSize[],
+  windowSize: Size,
   margin: number,
   keys: string[]
 ) {
+  const panelSizes = range(5).map((_, i) => {
+    // Position of the largest one
+    if (i === 2) {
+      let p = calculateInitialPanelSize(windowSize, margin)
+      // Double the height
+      p.maxHeight = p.maxHeight * 2
+      p.height = p.maxHeight - margin
+      return p
+    } else {
+      return calculateInitialPanelSize(windowSize, margin)
+    }
+  })
+
   let panels: SizeWithPosition[] = []
 
   panelSizes.forEach((ps, index) => {

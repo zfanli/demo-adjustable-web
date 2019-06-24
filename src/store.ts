@@ -1,8 +1,7 @@
 import { createStore } from 'redux'
-import { range } from 'lodash'
-import { State, BaseAction, ExtendSize, Size } from './type'
-import { calculateInitialPanelSize } from './utils'
-import { SET_SIZE, SET_FLAT_PANELS } from './actions'
+import { State, BaseAction } from './type'
+import { calculatePositions } from './utils'
+import { SET_SIZE, SET_DRAGGING_POSITION } from './actions'
 import { locales } from './locales'
 import config from './config.json'
 
@@ -10,46 +9,12 @@ import config from './config.json'
 const lang: string = config.defaultLang ? config.defaultLang : 'en'
 
 // Hold margin.
-const margin = config.margin
+const { margin, headerHeight, footerHeight } = config
 // Calculate default size.
 const defaultSize = {
-  width: window.innerWidth - config.margin,
-  height:
-    window.innerHeight -
-    config.headerHeight -
-    config.footerHeight -
-    config.margin,
+  width: window.innerWidth - margin,
+  height: window.innerHeight - headerHeight - footerHeight - margin,
 }
-
-/**
- * Calculate panel size,
- * 5 panels in total, list in a 2x3 grid,
- * 4 of them are the same size, rest 1 is double size (height only),
- * just like: [<normal>, <normal>, <large>, <normal>, <normal>].
- *
- * Layout as:
- * ```
- * <normal1>  <normal2>  <large3 part1>
- * <normal4>  <normal5>  <large3 part2>
- * ```
- */
-function getAllPanelSizes(windowSize: Size, margin: number): ExtendSize[] {
-  return range(5).map((_, i) => {
-    // Position of the largest one
-    if (i === 2) {
-      let p = calculateInitialPanelSize(windowSize, margin)
-      // Double the height
-      p.maxHeight = p.maxHeight * 2
-      p.height = p.maxHeight - margin
-      return p
-    } else {
-      return calculateInitialPanelSize(windowSize, margin)
-    }
-  })
-}
-
-// Initialize.
-const initialPanels = getAllPanelSizes(defaultSize, margin)
 
 /**
  * Create initial state
@@ -59,8 +24,7 @@ const initState: State = {
   panelKeys: config.panelKeys,
   margin: margin,
   contentBoxSize: defaultSize,
-  panelSizes: initialPanels,
-  flatPanels: [],
+  flatPanels: calculatePositions(defaultSize, margin, config.panelKeys),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
 }
 
@@ -72,14 +36,56 @@ const assign = Object.assign
  */
 function reducer(state = initState, action: BaseAction): State {
   switch (action.type) {
+    // For handle window resize.
     case SET_SIZE:
       const contentBoxSize = action.payload.size
-      const panelSizes = getAllPanelSizes(contentBoxSize, state.margin)
-      return assign(state, { contentBoxSize, panelSizes })
+      const flatPanels = calculatePositions(
+        contentBoxSize,
+        state.margin,
+        state.panelKeys
+      )
+      return assign(state, { contentBoxSize, flatPanels })
 
-    case SET_FLAT_PANELS:
-      const flatPanels = action.payload.panels
-      return assign(state, { flatPanels })
+    // For handle panel dragging.
+    case SET_DRAGGING_POSITION:
+      const index = action.payload.index
+      if (typeof index !== 'undefined') {
+        const targetPanel = state.flatPanels[index]
+        if (targetPanel) {
+          // Save temp position when does not exist.
+          // Temp position is for store last position,
+          // while dragging is happening,
+          // it will need the last position to calculate the current position out.
+          // The temp position should be set to `null` if dragging is end.
+          // Because when next dragging is happening,
+          // the temp position is expect to be null to initialize with target panel's position.
+          if (!targetPanel.tempLeft || !targetPanel.tempTop) {
+            targetPanel.tempLeft = targetPanel.left
+            targetPanel.tempTop = targetPanel.top
+          }
+
+          // Calculate new position.
+          // Always calculate the position with temp position,
+          // to avoid unexpected motion.
+          const p = action.payload.position
+          targetPanel.left = targetPanel.tempLeft + p[0]
+          targetPanel.top = targetPanel.tempTop + p[1]
+
+          // Make a copy of flatPanels.
+          const flatPanels = state.flatPanels.slice()
+          // Set moving panel.
+          flatPanels[index] = targetPanel
+
+          // Reset temp position when moving end.
+          if (!action.payload.moving) {
+            targetPanel.tempLeft = null
+            targetPanel.tempTop = null
+          }
+
+          return assign(state, { flatPanels })
+        }
+      }
+      return state
 
     default:
       return state

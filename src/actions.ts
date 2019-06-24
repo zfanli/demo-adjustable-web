@@ -1,4 +1,4 @@
-import { BaseAction, Size, FlatPanel } from './type'
+import { BaseAction, Size } from './type'
 
 export const SET_SIZE = 'SET_SIZE'
 
@@ -9,11 +9,15 @@ export function setSize(size: Size): BaseAction {
   }
 }
 
-export const SET_FLAT_PANELS = 'SET_FLAT_PANELS'
+export const SET_DRAGGING_POSITION = 'SET_DRAGGING_POSITION'
 
-export function setFlatPanels(panels: FlatPanel[]): BaseAction {
+export function setDraggingPosition(
+  position: number[],
+  index: number,
+  moving: boolean
+): BaseAction {
   return {
-    type: SET_FLAT_PANELS,
-    payload: { panels },
+    type: SET_DRAGGING_POSITION,
+    payload: { position, index, moving },
   }
 }

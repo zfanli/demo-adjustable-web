@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useTransition, useSprings } from 'react-spring'
+import { useSprings, interpolate } from 'react-spring'
 import { useGesture } from 'react-use-gesture'
 import { debounce } from 'lodash'
 
@@ -8,9 +8,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Panel from '../components/Panel'
 
-import { setSize, setFlatPanels } from '../actions'
+import { setSize, setDraggingPosition } from '../actions'
 import { State, FlatPanel } from '../type'
-import { calculatePositions } from '../utils'
 
 import '../css/adjustableView.scss'
 
@@ -20,13 +19,85 @@ const AdjustableView: React.FC = () => {
 
   // Margins.
   const margin = useSelector((state: State) => state.margin)
-
-  // Get initial size.
-  const size = useSelector((state: State) => state.contentBoxSize)
+  // Dispatcher.
   const dispatch = useDispatch()
 
-  // debug only, remove before build.
-  console.log(size)
+  // Get panels position info.
+  const flatPanels: FlatPanel[] = useSelector(
+    (state: State) => state.flatPanels
+  )
+
+  // Panel names.
+  const panelNames = useSelector((state: State) => state.locale.panels)
+  // Styling shadow while in dragging, this shadow size is configured at `config.json`.
+  const shadowSize = useSelector(
+    (state: State) => state.shadowSizeWhileDragging
+  )
+
+  // Function to get current positions of each panel, and styling moving action.
+  const getStyledPositions = (
+    // For get position from, directly from store.
+    panels: FlatPanel[],
+    // For sortable support, moving animations should apply while sorting.
+    isSort?: boolean,
+    // Is now dragging? For fires dragging animations.
+    down?: boolean,
+    // For identify which panel is in dragging.
+    originalIndex?: number
+    // Return function: (index: number) => ({ props }) for setSprings use.
+  ) => (index: number) =>
+    down && index === originalIndex
+      ? {
+          // Dragging styles
+          x: panels[index].left,
+          y: panels[index].top,
+          scale: 1.1,
+          zIndex: 10,
+          boxShadow: `0 0 ${shadowSize}px 0 rgba(0,0,0,.3)`,
+          width: panels[index].width,
+          height: panels[index].height,
+          immediate: (name: string) =>
+            !isSort && (name === 'zIndex' || name === 'x' || name === 'y'),
+          config: { mass: 5, tension: 1000, friction: 100 },
+          trail: 25,
+        }
+      : {
+          // Normal styles
+          x: panels[index].left,
+          y: panels[index].top,
+          scale: 1,
+          zIndex: 0,
+          boxShadow: '0 0 5px 0 rgba(0,0,0,.1)',
+          width: panels[index].width,
+          height: panels[index].height,
+          immediate: () => false,
+          config: { mass: 5, tension: 1000, friction: 100 },
+          trail: 25,
+        }
+
+  // Generate animation props to move panels smoothly.
+  const [springs, setSprings] = useSprings(
+    flatPanels.length,
+    getStyledPositions(flatPanels, true)
+  )
+
+  const bind = useGesture(
+    ({ args: [originalIndex], down, delta, last, event }) => {
+      // Prevent text selection while dragging.
+      !last && event && event.preventDefault()
+      // Dispatch dragging event to calculate current position.
+      dispatch(setDraggingPosition(delta, originalIndex, down))
+      // Use current position to move panel smoothly.
+      setSprings(getStyledPositions(
+        flatPanels,
+        false,
+        down,
+        originalIndex
+      ) as any) // cast to any to suppress tiresome ts type error
+    },
+    // Configure to enable operation on event directly.
+    { event: { capture: true, passive: false } }
+  )
 
   // Update size info when the window is resized.
   // Use layout effect because it should determine its size before be showed.
@@ -55,78 +126,6 @@ const AdjustableView: React.FC = () => {
     }
   }, [dispatch])
 
-  // Get panel sizes.
-  const panelSizes = useSelector((state: State) => state.panelSizes)
-
-  // Panel keys.
-  const keys = useSelector((state: State) => state.panelKeys)
-  // Get panels position info.
-  const flatPanels: FlatPanel[] = calculatePositions(panelSizes, margin, keys)
-  // Store for further use.
-  dispatch(setFlatPanels(flatPanels))
-
-  // Panel names.
-  const panelNames = useSelector((state: State) => state.locale.panels)
-
-  const shadowSize = useSelector(
-    (state: State) => state.shadowSizeWhileDragging
-  )
-
-  const getStyledPositions = (
-    panels: FlatPanel[],
-    isSort?: boolean,
-    down?: boolean,
-    originalIndex?: number,
-    delta?: number[]
-  ) => (index: number) =>
-    down && index === originalIndex && delta
-      ? {
-          // Dragging styles
-          x: panels[index].left + delta[0],
-          y: panels[index].top + delta[0],
-          scale: 1.1,
-          zIndex: 10,
-          boxShadow: `0 0 ${shadowSize}px 0 #999`,
-          immediate: (name: string) =>
-            !isSort && (name === 'zIndex' || name === 'x' || name === 'y'),
-        }
-      : {
-          // Normal styles
-          x: panels[index].left,
-          y: panels[index].top,
-          scale: 1,
-          zIndex: 0,
-          boxShadow: '0 0 5px 0 #ddd',
-          immediate: () => false,
-        }
-
-  const [springs, setSprings] = useSprings(
-    flatPanels.length,
-    getStyledPositions(flatPanels)
-  )
-
-  const bind = useGesture(({ args: [originalIndex], down, delta }) => {
-    console.log(delta)
-    // setSprings(
-    //   getStyledPositions(flatPanels, false, down, originalIndex, delta)
-    // )
-  })
-
-  // Create animation props.
-  const transitions = useTransition(flatPanels, panel => panel.key, {
-    // From is the state before display.
-    from: ({ height, width, top, left }) => ({ height, width, top, left }),
-    // This state use to transition from `from` to display.
-    enter: ({ height, width, top, left }) => ({ height, width, top, left }),
-    // Apply while update ocurred.
-    update: ({ height, width, top, left }) => ({ height, width, top, left }),
-    // Apply when component is to be unmounted.
-    leave: { height: 0, opacity: 0 },
-    // Config, adjust tension to change speed.
-    config: { mass: 5, tension: 1000, friction: 100 },
-    trail: 25,
-  })
-
   return (
     <>
       <Header />
@@ -138,12 +137,17 @@ const AdjustableView: React.FC = () => {
           marginRight: margin,
         }}
       >
-        {transitions.map(({ props, key }, i) => (
+        {springs.map(({ x, y, scale, ...rest }, i) => (
           <Panel
-            key={key}
-            style={props}
+            key={i}
+            style={{
+              transform: interpolate(
+                [x, y, scale],
+                (x, y, s) => `translate3d(${x}px,${y}px,0) scale(${s})`
+              ),
+              ...rest,
+            }}
             title={panelNames[i]}
-            trueKey={keys[i]}
             bind={bind(i)}
           >
             <div>test</div>
