@@ -14,46 +14,49 @@ const Header: React.FC = () => {
     dispatch(setLocale(e.key))
   }
 
-  const i18nMenu = (
-    <Menu onClick={handleI18nMenuClick}>
-      <Menu.Item key="jp">JP</Menu.Item>
-      <Menu.Item key="en">EN</Menu.Item>
-    </Menu>
-  )
-
   const [settingsVisible, setSettingsVisible] = useState(false)
 
   const sortableText = useSelector((state: State) => state.locale.sortable)
 
-  const handleSettingsVisibleChange = (flag: boolean) =>
+  const handleSettingsVisibleChange = (flag: boolean) => {
     setSettingsVisible(flag)
+  }
 
   const handleSortableSwitchChange = (checked: boolean) => {
     dispatch(setSortable(checked))
   }
 
-  const settingsMenu = (
-    <Menu>
-      <Menu.Item key="1">
-        <label className="sortable-switch">
-          {sortableText}
-          <Switch defaultChecked onChange={handleSortableSwitchChange} />
-        </label>
-      </Menu.Item>
-    </Menu>
-  )
-
   return (
     <header className="header">
       <div className="header-title">{header}</div>
       <div className="header-buttons">
-        <Dropdown overlay={i18nMenu} trigger={['click']}>
+        <Dropdown
+          overlay={
+            <Menu onClick={handleI18nMenuClick}>
+              <Menu.Item key="jp">JP</Menu.Item>
+              <Menu.Item key="en">EN</Menu.Item>
+            </Menu>
+          }
+          trigger={['click']}
+        >
           <button>
             <Icon type="global" />
           </button>
         </Dropdown>
         <Dropdown
-          overlay={settingsMenu}
+          overlay={
+            <Menu>
+              <Menu.Item key="1">
+                <label className="sortable-switch">
+                  {sortableText}
+                  <Switch
+                    defaultChecked
+                    onChange={handleSortableSwitchChange}
+                  />
+                </label>
+              </Menu.Item>
+            </Menu>
+          }
           trigger={['click']}
           visible={settingsVisible}
           onVisibleChange={handleSettingsVisibleChange}
