@@ -1,6 +1,11 @@
 import { createStore } from 'redux'
 import { State, BaseAction } from './type'
-import { getCurrentPositions, handleSizeChange } from './utils'
+import {
+  getCurrentPositions,
+  handleSizeChange,
+  getCookie,
+  setCookie,
+} from './utils'
 import {
   SET_SIZE,
   SET_DRAGGING_POSITION,
@@ -30,6 +35,22 @@ const initState: State = {
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
   sortable: true,
 }
+
+// ----------------------------------------------------------------------------
+// --------------------------- START SECTION ----------------------------------
+// Retrieve data from cookies.
+
+// Get data from cookies.
+const langFromCookie = getCookie('lang')
+
+// Set data if exists.
+if (langFromCookie) initState.locale = locales[langFromCookie]
+
+// Set cookies if not exists.
+if (!langFromCookie) setCookie('lang', lang)
+
+// ---------------------------- END SECTION -----------------------------------
+// ----------------------------------------------------------------------------
 
 // Alias.
 const assign = Object.assign
@@ -101,6 +122,7 @@ function reducer(state = initState, action: BaseAction): State {
 
     case SET_LOCALE:
       const locale = locales[action.payload.locale]
+      setCookie('lang', action.payload.locale)
       return assign(state, { locale })
 
     // ------------------------- END SECTION ----------------------------------
@@ -110,6 +132,7 @@ function reducer(state = initState, action: BaseAction): State {
 
     case SET_SORTABLE:
       const sortable = action.payload.sortable
+      setCookie('sortable', sortable)
       return assign(state, { sortable })
 
     // ------------------------- END SECTION ----------------------------------

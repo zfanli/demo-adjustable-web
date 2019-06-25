@@ -124,5 +124,28 @@ export function handleSizeChange(
   return panels
 }
 
+/**
+ * Set cookie.
+ * @param key
+ * @param value
+ */
+export function setCookie(key: string, value: string) {
+  document.cookie = `${key}=${value};`
+}
+
+/**
+ * Get cookie.
+ * @param key
+ */
+export function getCookie(key: string) {
+  const cookies = document.cookie
+  let coo: { [k: string]: string } = {}
+  cookies.split(';').forEach(p => {
+    const pair = p.split('=')
+    coo[pair[0].trim()] = pair[1].trim()
+  })
+  return coo[key]
+}
+
 // ---------------------------- EXPORT END ------------------------------------
 // ----------------------------------------------------------------------------
