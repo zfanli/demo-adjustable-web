@@ -2,39 +2,39 @@
   "defaultLang": "en",
   "en": {
     "userInfo": {
-      "name": "David Steven",
-      "id": "ID100001234567890",
-      "birthday": "2019/06/19",
-      "phoneNumber": "(fake) 123456789",
-      "lastLoginDate": "2019/06/19 12:00",
-      "address": "Somewhere on the earth.",
-      "email": "david@email.com",
-      "level": 31,
-      "otherMessage1": "This is messages 1.",
-      "otherMessage2": "This is messages 2.",
-      "otherMessage3": "This is messages 3.",
-      "otherMessage4": "This is messages 4."
+      "Name": "David Steven",
+      "ID": "ID100001234567890",
+      "Birthday": "2019/06/19",
+      "Phone Number": "(fake) 123456789",
+      "Last Login": "2019/06/19 12:00",
+      "Address": "Somewhere on the earth.",
+      "Email": "david@email.com",
+      "Level": 31,
+      "Other Info 1": "This is messages 1.",
+      "Other Info 2": "This is messages 2.",
+      "Other info 3": "This is messages 3.",
+      "Other info 4": "This is messages 4."
     }
   },
   "jp": {
     "userInfo": {
-      "name": "五十嵐　拓哉",
-      "id": "ID100001234567890",
-      "birthday": "2019/06/19",
-      "phoneNumber": "(fake) 123456789",
-      "lastLoginDate": "2019/06/19 12:00",
-      "address": "このユーザーは地球上のどこかで住んでいます。",
-      "email": "igarashi@email.com",
-      "level": 31,
-      "otherMessage1": "これがメッセージ１です。",
-      "otherMessage2": "これがメッセージ２です。",
-      "otherMessage3": "これがメッセージ３です。",
-      "otherMessage4": "これがメッセージ４です。"
+      "名前": "五十嵐　拓哉",
+      "ID": "ID100001234567890",
+      "生年月日": "2019/06/19",
+      "携帯番号": "(fake) 123456789",
+      "前回ログイン": "2019/06/19 12:00",
+      "住所": "このユーザーは地球上のどこかで住んでいます。",
+      "電子メール": "igarashi@email.com",
+      "レベル": 31,
+      "他の情報１": "これがメッセージ１です。",
+      "他の情報２": "これがメッセージ２です。",
+      "他の情報３": "これがメッセージ３です。",
+      "他の情報４": "これがメッセージ４です。"
     }
   },
   "panelKeys": [
     "userInfo",
-    "otherInfo",
+    "replyInfo",
     "fixedMenu",
     "dynamicMenu",
     "speechToTextPanel"
