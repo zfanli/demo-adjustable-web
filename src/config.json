@@ -1,37 +1,5 @@
 {
   "defaultLang": "en",
-  "en": {
-    "userInfo": {
-      "Name": "David Steven",
-      "ID": "ID100001234567890",
-      "Birthday": "2019/06/19",
-      "Phone Number": "(fake) 123456789",
-      "Last Login": "2019/06/19 12:00",
-      "Address": "Somewhere on the earth.",
-      "Email": "david@email.com",
-      "Level": 31,
-      "Other Info 1": "This is messages 1.",
-      "Other Info 2": "This is messages 2.",
-      "Other info 3": "This is messages 3.",
-      "Other info 4": "This is messages 4."
-    }
-  },
-  "jp": {
-    "userInfo": {
-      "名前": "五十嵐　拓哉",
-      "ID": "ID100001234567890",
-      "生年月日": "2019/06/19",
-      "携帯番号": "(fake) 123456789",
-      "前回ログイン": "2019/06/19 12:00",
-      "住所": "このユーザーは地球上のどこかで住んでいます。",
-      "電子メール": "igarashi@email.com",
-      "レベル": 31,
-      "他の情報１": "これがメッセージ１です。",
-      "他の情報２": "これがメッセージ２です。",
-      "他の情報３": "これがメッセージ３です。",
-      "他の情報４": "これがメッセージ４です。"
-    }
-  },
   "panelKeys": [
     "userInfo",
     "replyInfo",
