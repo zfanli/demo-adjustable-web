@@ -8,5 +8,6 @@
     "Reply Information",
     "Dynamic Menu"
   ],
-  "sortable": "Sortable"
+  "sortable": "Sortable",
+  "resetPosition": "Reset Position"
 }
