@@ -7,17 +7,25 @@ import { debounce } from 'lodash'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Panel from '../components/Panel'
+import InformationList from '../components/InformationList'
 
 import { setSize, setDraggingPosition, turnOffAnimation } from '../actions'
 import { State, FlatPanel } from '../type'
 
 import '../css/adjustableView.scss'
+import { getFakeDataOfUserInfo } from '../utils'
 
 const AdjustableView: React.FC = () => {
+  // --------------------------------------------------------------------------
+  // -------------------------- START SECTION ---------------------------------
+  // Preparations. Get/Set data.
+
   // A ref object of content box for further use.
   const av = useRef<HTMLDivElement>(null)
   // Margins.
   const margin = useSelector((state: State) => state.margin)
+  // Lang.
+  const lang = useSelector((state: State) => state.lang)
   // Edit content box margins.
   const contentBoxMargins = { marginBottom: margin, marginRight: margin }
   // Dispatcher.
@@ -26,12 +34,15 @@ const AdjustableView: React.FC = () => {
   const flatPanels = useSelector((state: State) => state.flatPanels)
   // Panel names.
   const panelNames = useSelector((state: State) => state.locale.panels)
+  // Panel keys.
+  const panelKeys = useSelector((state: State) => state.panelKeys)
   // Styling shadow while in dragging,
   // this shadow size is configured at `config.json`.
   const shadowSize = useSelector(
     (state: State) => state.shadowSizeWhileDragging
   )
 
+  // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
   // -------------------------- START SECTION ---------------------------------
   // Function to get current positions of each panel, and styling moving action.
@@ -105,6 +116,8 @@ const AdjustableView: React.FC = () => {
   //
   // There is a `triggerAnimation` flag for handle state changes which should
   // trigger a transition animation.
+  //
+  // Set it to false after animation is performed.
 
   const triggerAnimation = useSelector((state: State) => state.triggerAnimation)
   if (triggerAnimation) {
@@ -173,7 +186,17 @@ const AdjustableView: React.FC = () => {
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
+  // -------------------------- START SECTION ---------------------------------
+  // Preparation for panels' content.
 
+  const panelChildren = {
+    [panelKeys[0]]: (
+      <InformationList information={getFakeDataOfUserInfo(lang, 9)} />
+    ),
+  }
+
+  // --------------------------- END SECTION ----------------------------------
+  // --------------------------------------------------------------------------
   return (
     <>
       <Header />
@@ -191,7 +214,7 @@ const AdjustableView: React.FC = () => {
             title={panelNames[i]}
             bind={bind(i)}
           >
-            <div>test</div>
+            {panelChildren[panelKeys[i]]}
           </Panel>
         ))}
       </div>

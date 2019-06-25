@@ -1,5 +1,6 @@
 // main state
 export interface State {
+  lang: string
   locale: Locale
   panelKeys: string[]
   margin: number
@@ -12,6 +13,10 @@ export interface State {
   sortable: boolean
   triggerAnimation?: boolean
   backupFlatPanels?: FlatPanel[]
+}
+
+export interface PlainObject {
+  [k: string]: string | number
 }
 
 export interface FlatPanel {

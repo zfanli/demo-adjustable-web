@@ -15,10 +15,16 @@ import {
   TURN_OFF_ANIMATION,
 } from './actions'
 import { locales } from './locales'
-import config from './config.json'
+import configFile from './config.json'
 
+// ----------------------------------------------------------------------------
+// --------------------------- START SECTION ----------------------------------
+// Preparation.
+
+// Cast config to any.
+const config: any = configFile as any
 // define default locale if does not exist
-const lang: string = config.defaultLang ? config.defaultLang : 'en'
+let lang: string = config.defaultLang ? config.defaultLang : 'en'
 // Hold margin.
 const { margin, headerHeight, footerHeight } = config
 // Calculate default size.
@@ -27,18 +33,7 @@ const defaultSize = {
   height: window.innerHeight - headerHeight - footerHeight - margin,
 }
 
-// Create initial state.
-const initState: State = {
-  locale: locales[lang],
-  panelKeys: config.panelKeys,
-  margin: margin,
-  contentBoxSize: defaultSize,
-  flatPanels: getCurrentPositions(defaultSize, margin, config.panelKeys),
-  shadowSizeWhileDragging: config.shadowSizeWhileDragging,
-  sortable: true,
-  triggerAnimation: false,
-}
-
+// ---------------------------- END SECTION -----------------------------------
 // ----------------------------------------------------------------------------
 // --------------------------- START SECTION ----------------------------------
 // Retrieve data from cookies.
@@ -47,13 +42,32 @@ const initState: State = {
 const langFromCookie = getCookie('lang')
 
 // Set data if exists.
-if (langFromCookie) initState.locale = locales[langFromCookie]
+if (langFromCookie) lang = langFromCookie
 
 // Set cookies if not exists.
 if (!langFromCookie) setCookie('lang', lang)
 
 // ---------------------------- END SECTION -----------------------------------
 // ----------------------------------------------------------------------------
+// --------------------------- START SECTION ----------------------------------
+// Create initial state.
+
+const initState: State = {
+  lang,
+  locale: locales[lang],
+  panelKeys: config.panelKeys,
+  margin,
+  contentBoxSize: defaultSize,
+  flatPanels: getCurrentPositions(defaultSize, margin, config.panelKeys),
+  shadowSizeWhileDragging: config.shadowSizeWhileDragging,
+  sortable: true,
+  triggerAnimation: false,
+}
+
+// ---------------------------- END SECTION -----------------------------------
+// ----------------------------------------------------------------------------
+// --------------------------- START SECTION ----------------------------------
+// Packaging reducers.
 
 // Alias.
 const assign = Object.assign
@@ -128,9 +142,12 @@ function reducer(state = initState, action: BaseAction): State {
     // Change locale.
 
     case SET_LOCALE:
-      const locale = locales[action.payload.locale]
-      setCookie('lang', action.payload.locale)
-      return assign(state, { locale })
+      const locale = action.payload.locale
+      setCookie('lang', locale)
+      return assign(state, {
+        locale: locales[locale],
+        lang: locale,
+      })
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
@@ -201,6 +218,9 @@ function reducer(state = initState, action: BaseAction): State {
       return state
   }
 }
+
+// ---------------------------- END SECTION -----------------------------------
+// ----------------------------------------------------------------------------
 
 // export store
 export default createStore(reducer)

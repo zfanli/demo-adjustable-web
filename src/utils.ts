@@ -78,6 +78,25 @@ function getPositionsBySizes(
   }))
 }
 
+/**
+ * Create test information data.
+ *
+ * E.g. -> createInformationData('Test', 2)
+ *
+ * Get:
+ *  - (Info 1): Test 1
+ *  - (Info 2): Test 2
+ * @param base
+ * @param count
+ */
+function createInformationData(base: string, count: number) {
+  let result: { [k: string]: string } = {}
+  range(count).forEach((_, i) => {
+    result[`(Info ${i + 1})`] = `${base} ${i + 1}`
+  })
+  return result
+}
+
 // ----------------------------------------------------------------------------
 // --------------------------- EXPORT START -----------------------------------
 
@@ -147,6 +166,21 @@ export function getCookie(key: string) {
     }
   })
   return coo[key]
+}
+
+/**
+ * Get fake data of user info.
+ * @param lang
+ * @param length
+ */
+export function getFakeDataOfUserInfo(lang: string, length: number) {
+  let base: string
+  if (lang === 'jp') {
+    base = 'テストユーザー情報テストテスト'
+  } else {
+    base = 'Test User Information. Test Test.'
+  }
+  return createInformationData(base, length)
 }
 
 // ---------------------------- EXPORT END ------------------------------------
