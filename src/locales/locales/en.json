@@ -1,6 +1,6 @@
 {
-  "header": "This is a header placeholder",
-  "footer": "This is a footer placeholder. This is a footer placeholder. This is a footer placeholder.",
+  "header": "Assistant Menu (Information)",
+  "footer": "Assistant messages or marketing messages or other messages.",
   "panels": [
     "User Information",
     "Fixed Menu",
