@@ -55,11 +55,22 @@ Demonstrate an adjustable web UI.
   - [ ] Styles UI
     - [ ] base styles after draggable done
     - [ ] fill fake data
+      - [ ] fixed menu has only 6 items
+      - [ ] dynamic menu has 5
+      - [ ] reply info is scrollable
     - [ ] improve UI after sortable done
   - [ ] Menu
     - [x] switch between sortable view and not sortable view
     - [x] display languages (en or jp)
+    - [x] reset panels' position when un-sortable
     - [ ] other settings
+  - [ ] Speech to Text API
+    - [ ] start bind to button
+    - [ ] need to pass a keywords array
+    - [ ] and a api key to start
+    - [ ] send a callback to handle data changes
+    - [ ] get an object as parameter contains conversation and keyword feedback
+    - [ ] stop bind to button
 
 **REQUIREMENTS**
 
