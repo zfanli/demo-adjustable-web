@@ -39,3 +39,21 @@ export function setSortable(sortable: boolean): BaseAction {
     payload: { sortable },
   }
 }
+
+export const RESET_PANELS_POSITION = 'RESET_PANELS_POSITION'
+
+export function resetPanelsPosition(): BaseAction {
+  return {
+    type: RESET_PANELS_POSITION,
+    payload: {},
+  }
+}
+
+export const TURN_OFF_ANIMATION = 'TURN_OFF_ANIMATION'
+
+export function turnOffAnimation(): BaseAction {
+  return {
+    type: TURN_OFF_ANIMATION,
+    payload: {},
+  }
+}

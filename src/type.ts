@@ -10,6 +10,8 @@ export interface State {
   flatPanels: FlatPanel[]
   shadowSizeWhileDragging: number
   sortable: boolean
+  triggerAnimation?: boolean
+  backupFlatPanels?: FlatPanel[]
 }
 
 export interface FlatPanel {

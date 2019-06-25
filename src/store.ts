@@ -11,6 +11,8 @@ import {
   SET_DRAGGING_POSITION,
   SET_LOCALE,
   SET_SORTABLE,
+  RESET_PANELS_POSITION,
+  TURN_OFF_ANIMATION,
 } from './actions'
 import { locales } from './locales'
 import config from './config.json'
@@ -34,6 +36,7 @@ const initState: State = {
   flatPanels: getCurrentPositions(defaultSize, margin, config.panelKeys),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
   sortable: true,
+  triggerAnimation: false,
 }
 
 // ----------------------------------------------------------------------------
@@ -71,7 +74,11 @@ function reducer(state = initState, action: BaseAction): State {
         state.contentBoxSize,
         state.margin
       )
-      return assign(state, { contentBoxSize, flatPanels })
+      return assign(state, {
+        contentBoxSize,
+        flatPanels,
+        triggerAnimation: true,
+      })
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
@@ -132,8 +139,61 @@ function reducer(state = initState, action: BaseAction): State {
 
     case SET_SORTABLE:
       const sortable = action.payload.sortable
-      setCookie('sortable', sortable)
-      return assign(state, { sortable })
+
+      console.log(sortable)
+
+      // State changes from un-sortable to sortable.
+      // All panels should reset their position,
+      // and store current position as a backup for further use.
+      if (sortable) {
+        return assign(state, {
+          sortable,
+          flatPanels: getCurrentPositions(
+            state.contentBoxSize,
+            state.margin,
+            state.panelKeys
+          ),
+          triggerAnimation: true,
+        })
+      } else {
+        // State changes from sortable to un-sortable.
+        // Use backup position if does exist.
+        if (state.backupFlatPanels) {
+          return assign(state, {
+            flatPanels: state.backupFlatPanels,
+            backupFlatPanels: null,
+            triggerAnimation: true,
+          })
+        }
+        // Or do nothing but just set sortable flag if does not exist.
+        return assign(state, { sortable })
+      }
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Reset panels position to initial state.
+
+    case RESET_PANELS_POSITION:
+      return assign(state, {
+        flatPanels: getCurrentPositions(
+          state.contentBoxSize,
+          state.margin,
+          state.panelKeys
+        ),
+        triggerAnimation: true,
+      })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Turn off animation flag after performed.
+
+    case TURN_OFF_ANIMATION:
+      return assign(state, {
+        triggerAnimation: false,
+      })
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------

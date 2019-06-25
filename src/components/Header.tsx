@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Icon, Menu, Dropdown, Switch } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
 import { State } from '../type'
-import { setLocale, setSortable } from '../actions'
+import { setLocale, setSortable, resetPanelsPosition } from '../actions'
 
 const Header: React.FC = () => {
   // get header string from store
@@ -17,6 +17,7 @@ const Header: React.FC = () => {
   const [settingsVisible, setSettingsVisible] = useState(false)
 
   const sortableText = useSelector((state: State) => state.locale.sortable)
+  const resetText = useSelector((state: State) => state.locale.resetPosition)
 
   const handleSettingsVisibleChange = (flag: boolean) => {
     setSettingsVisible(flag)
@@ -24,6 +25,11 @@ const Header: React.FC = () => {
 
   const handleSortableSwitchChange = (checked: boolean) => {
     dispatch(setSortable(checked))
+  }
+
+  const handleResetPosition = () => {
+    setSettingsVisible(false)
+    dispatch(resetPanelsPosition())
   }
 
   return (
@@ -54,6 +60,10 @@ const Header: React.FC = () => {
                     onChange={handleSortableSwitchChange}
                   />
                 </label>
+              </Menu.Item>
+              <Menu.Item onClick={handleResetPosition}>
+                <Icon type="appstore" />
+                {resetText}
               </Menu.Item>
             </Menu>
           }

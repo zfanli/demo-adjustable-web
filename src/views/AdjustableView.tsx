@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSprings, interpolate } from 'react-spring'
 import { useGesture } from 'react-use-gesture'
@@ -8,7 +8,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Panel from '../components/Panel'
 
-import { setSize, setDraggingPosition } from '../actions'
+import { setSize, setDraggingPosition, turnOffAnimation } from '../actions'
 import { State, FlatPanel } from '../type'
 
 import '../css/adjustableView.scss'
@@ -95,25 +95,21 @@ const AdjustableView: React.FC = () => {
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
   // -------------------------- START SECTION ---------------------------------
-  // This block is only for handle window resizes.
-  // It seems not available to do any transition animation inside useEffect
-  // hook, there are tiresome errors.
-  // This is just for deal with resize event temporarily,
-  // there should be a good way to handle it gracefully, but anyway,
-  // it just work.
+  // Trigger transition animation manually.
   //
-  // To handle window resizes, create a local size for store previous size,
-  // and do transition only when the current size and local size are
-  // different.
+  // Trigger animation in these situations:
+  //
+  //  - Window resized
+  //  - Reset button clicked
+  //  - Trigger to sortable view
+  //
+  // There is a `triggerAnimation` flag for handle state changes which should
+  // trigger a transition animation.
 
-  // Get content box size from store.
-  const size = useSelector((state: State) => state.contentBoxSize)
-  // Create a state to store content box size locally.
-  const [boxSize, setBoxSize] = useState(size)
-  // Check if the size was changed, resize the panel and
-  if (size.height !== boxSize.height || size.width !== boxSize.width) {
-    setSprings(getStyledPositions(flatPanels, true) as any)
-    setBoxSize(size)
+  const triggerAnimation = useSelector((state: State) => state.triggerAnimation)
+  if (triggerAnimation) {
+    setSprings(getStyledPositions(flatPanels) as any)
+    dispatch(turnOffAnimation())
   }
 
   // --------------------------- END SECTION ----------------------------------
