@@ -141,8 +141,10 @@ export function getCookie(key: string) {
   const cookies = document.cookie
   let coo: { [k: string]: string } = {}
   cookies.split(';').forEach(p => {
-    const pair = p.split('=')
-    coo[pair[0].trim()] = pair[1].trim()
+    if (p) {
+      const pair = p.split('=')
+      coo[pair[0].trim()] = pair[1].trim()
+    }
   })
   return coo[key]
 }
