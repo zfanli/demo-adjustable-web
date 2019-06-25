@@ -140,8 +140,6 @@ function reducer(state = initState, action: BaseAction): State {
     case SET_SORTABLE:
       const sortable = action.payload.sortable
 
-      console.log(sortable)
-
       // State changes from un-sortable to sortable.
       // All panels should reset their position,
       // and store current position as a backup for further use.
@@ -153,6 +151,7 @@ function reducer(state = initState, action: BaseAction): State {
             state.margin,
             state.panelKeys
           ),
+          backupFlatPanels: state.flatPanels,
           triggerAnimation: true,
         })
       } else {
