@@ -26,7 +26,11 @@ const Panel: React.FC<Props> = (props: Props) => {
         </div>
         <div className="panel-buttons">
           <button onClick={triggerCollapsed}>
-            {collapsed ? <Icon type="down" /> : <Icon type="up" />}
+            {collapsed ? (
+              <Icon type="vertical-align-bottom" />
+            ) : (
+              <Icon type="vertical-align-top" />
+            )}
           </button>
           <button onClick={triggerPinned}>
             {pinned ? (
@@ -40,7 +44,7 @@ const Panel: React.FC<Props> = (props: Props) => {
           </button>
         </div>
       </header>
-      {props.children}
+      <div className="panel-content">{props.children}</div>
     </a.div>
   )
 }
