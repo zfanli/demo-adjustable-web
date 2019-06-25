@@ -57,4 +57,15 @@ body {
       margin-left: 1rem;
     }
   }
+
+  .information-list {
+    width: 100%;
+    line-height: 1.5rem;
+    min-height: 100%;
+
+    .information-list-label {
+      width: 20%;
+      padding: 0 0.5rem;
+    }
+  }
 }

@@ -11,6 +11,9 @@
     transform: translate3d(0, 0, 0);
     box-shadow: 0 0 5px 0 #ddd;
     border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
     .panel-header {
       display: flex;
@@ -39,6 +42,12 @@
           }
         }
       }
+    }
+
+    .panel-content {
+      flex-grow: 1;
+      overflow: auto;
+      padding: 0.5rem 0;
     }
   }
 }
