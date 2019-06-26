@@ -9,7 +9,7 @@ import Footer from '../components/Footer'
 import Panel from '../components/Panel'
 import InformationList from '../components/InformationList'
 
-import { setSize, setDraggingPosition, turnOffAnimation } from '../actions'
+import { setSize, setDraggingPosition } from '../actions'
 import { State, PanelWithPosition } from '../type'
 
 import '../css/adjustableView.scss'
@@ -41,6 +41,9 @@ const AdjustableView: React.FC = () => {
   const shadowSize = useSelector(
     (state: State) => state.shadowSizeWhileDragging
   )
+  // For animation.
+  const animationIndex = useSelector((state: State) => state.animationIndex)
+  const isDraggingDown = useSelector((state: State) => state.isDraggingDown)
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
@@ -60,17 +63,17 @@ const AdjustableView: React.FC = () => {
     originalIndex?: number
     // Return function: (index: number) => ({ props }) for setSprings use.
   ) {
-    return (index: number) =>
-      down && index === originalIndex
+    return panels.map((p, index) =>
+      down && originalIndex === index
         ? {
             // Dragging styles
-            x: panels[index].left,
-            y: panels[index].top,
+            x: p.left,
+            y: p.top,
             scale: 1.05,
             zIndex: 10,
             boxShadow: `0 0 ${shadowSize}px 0 rgba(0,0,0,.3)`,
-            width: panels[index].width,
-            height: panels[index].height,
+            width: p.width,
+            height: p.height,
             immediate: (name: string) =>
               name === 'zIndex' || name === 'x' || name === 'y',
             config: { mass: 5, tension: 1000, friction: 100 },
@@ -78,17 +81,18 @@ const AdjustableView: React.FC = () => {
           }
         : {
             // Normal styles
-            x: panels[index].left,
-            y: panels[index].top,
+            x: p.left,
+            y: p.top,
             scale: 1,
             zIndex: 0,
             boxShadow: '0 0 5px 0 rgba(0,0,0,.1)',
-            width: panels[index].width,
-            height: panels[index].height,
+            width: p.width,
+            height: p.height,
             immediate: () => false,
             config: { mass: 5, tension: 1000, friction: 100 },
             trail: 25,
           }
+    )
   }
 
   // --------------------------- END SECTION ----------------------------------
@@ -98,32 +102,10 @@ const AdjustableView: React.FC = () => {
   // Initialize with the length of panels' count,
   // and styling as specified styles.
 
-  const [springs, setSprings] = useSprings(
+  const springs = useSprings(
     panels.length,
-    getStyledPositions(panels, true)
+    getStyledPositions(panels, isDraggingDown, animationIndex)
   )
-
-  // --------------------------- END SECTION ----------------------------------
-  // --------------------------------------------------------------------------
-  // -------------------------- START SECTION ---------------------------------
-  // Trigger transition animation manually.
-  //
-  // Trigger animation in these situations:
-  //
-  //  - Window resized
-  //  - Reset button clicked
-  //  - Trigger to sortable view
-  //
-  // There is a `triggerAnimation` flag for handle state changes which should
-  // trigger a transition animation.
-  //
-  // Set it to false after animation is performed.
-
-  const triggerAnimation = useSelector((state: State) => state.triggerAnimation)
-  if (triggerAnimation) {
-    setSprings(getStyledPositions(panels) as any)
-    dispatch(turnOffAnimation())
-  }
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
@@ -138,9 +120,6 @@ const AdjustableView: React.FC = () => {
       !last && event && event.preventDefault()
       // Dispatch current position.
       dispatch(setDraggingPosition(delta, originalIndex, down))
-      // Use current position to move panel smoothly.
-      // Cast to any to suppress tiresome type error.
-      setSprings(getStyledPositions(panels, down, originalIndex) as any)
     },
     // Configure to enable operation on event directly.
     { event: { capture: true, passive: false } }
@@ -210,7 +189,8 @@ const AdjustableView: React.FC = () => {
             style={{
               transform: interpolate(
                 [x, y, scale],
-                (x, y, s) => `translate3d(${x}px,${y}px,0) scale(${s})`
+                (x: any, y: any, s: any) =>
+                  `translate3d(${x}px,${y}px,0) scale(${s})`
               ),
               ...rest,
             }}

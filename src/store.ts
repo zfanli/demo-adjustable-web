@@ -13,7 +13,6 @@ import {
   SET_LOCALE,
   SET_SORTABLE,
   RESET_PANELS_POSITION,
-  TURN_OFF_ANIMATION,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -65,7 +64,6 @@ export const initState: State = {
   order: cloneDeep(initialPanels),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
   sortable: true,
-  triggerAnimation: false,
 }
 
 // ---------------------------- END SECTION -----------------------------------
@@ -98,7 +96,6 @@ export function reducer(state = initState, action: BaseAction): State {
         containerSize,
         panels: resizePanels,
         order: resizeOrder,
-        triggerAnimation: true,
       })
 
     // ------------------------- END SECTION ----------------------------------
@@ -139,7 +136,11 @@ export function reducer(state = initState, action: BaseAction): State {
           // Set panel's motion.
           panels[index] = targetPanel
 
-          return assign(state, { panels, triggerAnimation: !moving })
+          return assign(state, {
+            panels,
+            animationIndex: index,
+            isDraggingDown: moving,
+          })
         }
       }
       return state
@@ -177,7 +178,6 @@ export function reducer(state = initState, action: BaseAction): State {
             state.panelKeys
           ),
           panelsBackup: cloneDeep(state.panels),
-          triggerAnimation: true,
         })
       } else {
         // State changes from sortable to un-sortable.
@@ -186,7 +186,6 @@ export function reducer(state = initState, action: BaseAction): State {
           return assign(state, {
             panels: state.panelsBackup,
             panelsBackup: null,
-            triggerAnimation: true,
           })
         }
         // Or do nothing but just set sortable flag if does not exist.
@@ -210,17 +209,6 @@ export function reducer(state = initState, action: BaseAction): State {
       return assign(state, {
         panels: resetPanels,
         order: resetOrder,
-        triggerAnimation: true,
-      })
-
-    // ------------------------- END SECTION ----------------------------------
-    // ------------------------------------------------------------------------
-    // ------------------------ START SECTION ---------------------------------
-    // Turn off animation flag after performed.
-
-    case TURN_OFF_ANIMATION:
-      return assign(state, {
-        triggerAnimation: false,
       })
 
     // ------------------------- END SECTION ----------------------------------

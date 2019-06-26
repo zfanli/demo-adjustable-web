@@ -48,12 +48,3 @@ export function resetPanelsPosition(): BaseAction {
     payload: {},
   }
 }
-
-export const TURN_OFF_ANIMATION = 'TURN_OFF_ANIMATION'
-
-export function turnOffAnimation(): BaseAction {
-  return {
-    type: TURN_OFF_ANIMATION,
-    payload: {},
-  }
-}
