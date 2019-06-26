@@ -5,6 +5,7 @@ import {
   handleSizeChange,
   getCookie,
   setCookie,
+  handleReset,
 } from './utils'
 import {
   SET_SIZE,
@@ -59,8 +60,8 @@ const initState: State = {
   panelKeys: config.panelKeys,
   margin,
   containerSize: defaultSize,
-  panels: initialPanels,
-  order: initialPanels,
+  panels: initialPanels.slice(),
+  order: initialPanels.slice(),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
   sortable: true,
   triggerAnimation: false,
@@ -84,15 +85,18 @@ function reducer(state = initState, action: BaseAction): State {
     case SET_SIZE:
       const containerSize = action.payload.size
       // Change relative positions and sizes.
-      const panels = handleSizeChange(
+      const [resizePanels, resizeOrder] = handleSizeChange(
         state.panels,
+        state.order,
         containerSize,
         state.containerSize,
-        state.margin
+        state.margin,
+        state.sortable
       )
       return assign(state, {
         containerSize,
-        panels,
+        panels: resizePanels,
+        order: resizeOrder,
         triggerAnimation: true,
       })
 
@@ -104,7 +108,7 @@ function reducer(state = initState, action: BaseAction): State {
     case SET_DRAGGING_POSITION:
       const index = action.payload.index
       if (typeof index !== 'undefined') {
-        const targetPanel = state.panels[index]
+        const targetPanel = state.panels.slice()[index]
         if (targetPanel) {
           // Save temp position if not exist.
           // The temp position is for store last position.
@@ -122,16 +126,16 @@ function reducer(state = initState, action: BaseAction): State {
           targetPanel.left = targetPanel.tempLeft + p[0]
           targetPanel.top = targetPanel.tempTop + p[1]
 
-          // Make a copy of panels.
-          const panels = state.panels.slice()
-          // Set panel's motion.
-          panels[index] = targetPanel
-
           // Reset temp position when moving end.
           if (!action.payload.moving) {
             targetPanel.tempLeft = null
             targetPanel.tempTop = null
           }
+
+          // Make a copy of panels.
+          const panels = state.panels.slice()
+          // Set panel's motion.
+          panels[index] = targetPanel
 
           return assign(state, { panels })
         }
@@ -170,7 +174,7 @@ function reducer(state = initState, action: BaseAction): State {
             state.margin,
             state.panelKeys
           ),
-          panelsBackup: state.panels,
+          panelsBackup: state.panels.slice(),
           triggerAnimation: true,
         })
       } else {
@@ -178,7 +182,7 @@ function reducer(state = initState, action: BaseAction): State {
         // Use backup position if does exist.
         if (state.panelsBackup) {
           return assign(state, {
-            panels: state.panelsBackup,
+            panels: state.panelsBackup.slice(),
             panelsBackup: null,
             triggerAnimation: true,
           })
@@ -194,12 +198,16 @@ function reducer(state = initState, action: BaseAction): State {
     // Reset panels position to initial state.
 
     case RESET_PANELS_POSITION:
+      let [resetPanels, resetOrder] = handleReset(
+        state.panels,
+        state.order,
+        state.containerSize,
+        state.margin
+      )
+
       return assign(state, {
-        flatPanels: getCurrentPositions(
-          state.containerSize,
-          state.margin,
-          state.panelKeys
-        ),
+        panels: resetPanels,
+        order: resetOrder,
         triggerAnimation: true,
       })
 
@@ -225,4 +233,8 @@ function reducer(state = initState, action: BaseAction): State {
 // ----------------------------------------------------------------------------
 
 // export store
-export default createStore(reducer)
+export default createStore(
+  reducer,
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+)

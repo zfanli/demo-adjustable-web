@@ -1,3 +1,52 @@
+/******************************************************************************
+ * Utils mainly for deal with panels' size and position.
+ *
+ * The process flow about position:
+ *
+ *  (For initial display)
+ *  - Get size by window size
+ *  - Packaging panels array
+ *    - set largest panel flag for convert direction use
+ *  - Get position information by panels array
+ *    - change direction from column to row
+ *    - calculate position by new direction
+ *  - Store the result as `panels` and `order` to the state
+ *  - Display panels by the `panels` field
+ *
+ *  (For resort - only in sortable mode)
+ *  - Resort event ocurred
+ *  - Use `order` field to get the `from` and `to` index
+ *  - Get the new order
+ *  - Get position information by new order
+ *    - ...same process with initial display
+ *  - Map sizes and positions from `order` to `panels`
+ *  - Update new `panels` and `order` to the state
+ *  - Refresh the view
+ *
+ *  (For window resize)
+ *  - Resize event ocurred
+ *  - Update size of container
+ *  - Update sizes in `order`
+ *  - Map sizes from `order` to `panels`
+ *    - update to relative position if in un-sortable mode
+ *    - update to absolute position if in sortable mode
+ *  - Update new `panels` and `order` to the state
+ *  - Refresh the view
+ *
+ *  (For position reset)
+ *  - Reset event ocurred
+ *  - Reset `order`'s positions
+ *  - Map sizes from `order` to `panels`
+ *  - Update new `panels` and `order` to the state
+ *  - Refresh the view
+ *
+ *  (*) `panels`'s order is fixed
+ *  (*) `order` is a mirror of `panels`, its order can be changed
+ *  (*) when `order` is changed, map the changes to `panels` by keys
+ *      for re-rendering
+ *
+ *****************************************************************************/
+
 import { range } from 'lodash'
 import { Size, SizeWithPosition, PanelWithPosition, ExtendSize } from './type'
 
@@ -68,7 +117,11 @@ function convertToRowDirection(largest: number) {
 }
 
 /**
- * Get position by sizes.
+ * Get position by order.
+ *
+ * This function does not need to know the order of each panel,
+ * it just find the largest one, and determines the pattern,
+ * then, gets its position.
  * @param order
  * @param margin
  * @param keys
@@ -108,6 +161,7 @@ function getPositionsBySizes(
     width: p.width,
     left: p.left,
     top: p.top,
+    largest: p.largest,
   }))
 }
 
@@ -130,6 +184,26 @@ function createInformationData(base: string, count: number) {
   return result
 }
 
+/**
+ * Map positions from `order` to `panels`.
+ * @param order
+ * @param panels
+ */
+function mapToPanels(order: PanelWithPosition[], panels: PanelWithPosition[]) {
+  // Reset `order` to be the same order with panels.
+  const op = panels.map(p => {
+    return order.find(o => o.key === p.key)
+  }) as PanelWithPosition[]
+  return panels.map((p, i) => {
+    const thisOp = op[i]
+    p.width = thisOp.width
+    p.height = thisOp.height
+    p.left = thisOp.left
+    p.top = thisOp.top
+    return p
+  })
+}
+
 // ----------------------------------------------------------------------------
 // --------------------------- EXPORT START -----------------------------------
 
@@ -142,38 +216,82 @@ function createInformationData(base: string, count: number) {
 export function getCurrentPositions(
   windowSize: Size,
   margin: number,
-  keys?: string[]
+  keys: string[],
+  largestIndex?: number
 ) {
-  const panelSizes = packagePanels(windowSize, margin)
+  const panelSizes = packagePanels(windowSize, margin, largestIndex)
   return getPositionsBySizes(panelSizes, margin, keys)
 }
 
 /**
  * Handle position and size changes while window resize.
  * @param panels
+ * @param order
  * @param windowSize
  * @param margin
+ * @param sortable
  */
 export function handleSizeChange(
   panels: PanelWithPosition[],
+  order: PanelWithPosition[],
   windowSize: Size,
   lastSize: Size,
-  margin: number
+  margin: number,
+  sortable: boolean
 ) {
-  const newPositions = packagePanels(windowSize, margin)
-
+  // Get new positions.
+  const newPositions = packagePanels(
+    windowSize,
+    margin,
+    order.findIndex(p => p.largest)
+  )
   const heightRatio = windowSize.height / lastSize.height
   const widthRatio = windowSize.width / lastSize.width
 
-  // Change relative positions and sizes.
-  panels.forEach((panel, index) => {
-    panel.width = newPositions[index].width
-    panel.height = newPositions[index].height
-    panel.top *= heightRatio
-    panel.left *= widthRatio
+  order.forEach((p, i) => {
+    const thePosition = newPositions[i]
+    p.width = thePosition.width
+    p.height = thePosition.height
+    p.top *= heightRatio
+    p.left *= widthRatio
   })
 
-  return panels
+  const newPanels = mapToPanels(order, panels)
+
+  // Change relative position in un-sortable mode.
+  if (!sortable) {
+    newPanels.forEach((p, i) => {
+      p.top = panels[i].top * heightRatio
+      p.left = panels[i].left * widthRatio
+    })
+  }
+
+  return [newPanels, order]
+}
+
+export function handleReset(
+  panels: PanelWithPosition[],
+  order: PanelWithPosition[],
+  windowSize: Size,
+  margin: number
+) {
+  // Get new positions.
+  const newPositions = getCurrentPositions(
+    windowSize,
+    margin,
+    [],
+    order.findIndex(p => p.largest)
+  )
+  order.forEach((p, i) => {
+    const thePosition = newPositions[i]
+    p.width = thePosition.width
+    p.height = thePosition.height
+    p.top = thePosition.top
+    p.left = thePosition.left
+  })
+
+  const newPanels = mapToPanels(order, panels)
+  return [newPanels, order]
 }
 
 /**
