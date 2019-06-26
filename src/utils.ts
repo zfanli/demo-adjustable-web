@@ -47,7 +47,7 @@
  *
  *****************************************************************************/
 
-import { range } from 'lodash'
+import { range, cloneDeep } from 'lodash'
 import { Size, SizeWithPosition, PanelWithPosition, ExtendSize } from './type'
 
 /**
@@ -135,7 +135,7 @@ export function getPositionsBySizes(
   margin: number,
   keys: string[] = []
 ) {
-  const tempOrder = panelSizes.slice()
+  const tempOrder = panelSizes
   let tempPanels: SizeWithPosition[] = []
 
   const largestIndex = tempOrder.findIndex(p => p.largest)
@@ -160,7 +160,7 @@ export function getPositionsBySizes(
     })
   })
 
-  return tempPanels.slice().map((p, i) => ({
+  return tempPanels.map((p, i) => ({
     key: keys[i] ? keys[i] : '',
     height: p.height,
     width: p.width,
@@ -198,14 +198,14 @@ export function mapToPanels(
   order: PanelWithPosition[],
   panels: PanelWithPosition[]
 ) {
-  const tempOrder = order.slice()
-  const tempPanels = panels.slice()
+  const tempOrder = order
+  const tempPanels = cloneDeep(panels)
   // Reset `order` to be the same order with panels.
   const op = tempPanels.map(p => {
     return tempOrder.find(o => o.key === p.key)
   }) as PanelWithPosition[]
 
-  return tempPanels.slice().map((p, i) => {
+  return tempPanels.map((p, i) => {
     const thisOp = op[i]
     p.width = thisOp.width
     p.height = thisOp.height

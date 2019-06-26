@@ -182,14 +182,13 @@ export function reducer(state = initState, action: BaseAction): State {
       } else {
         // State changes from sortable to un-sortable.
         // Use backup position if does exist.
-        if (state.panelsBackup) {
-          return assign(state, {
-            panels: state.panelsBackup,
-            panelsBackup: null,
-          })
-        }
-        // Or do nothing but just set sortable flag if does not exist.
-        return assign(state, { sortable })
+        const panelsBackup = state.panelsBackup
+        return assign(state, {
+          sortable,
+          // Use backup if exists.
+          panels: panelsBackup ? panelsBackup : state.panels,
+          panelsBackup: null,
+        })
       }
 
     // ------------------------- END SECTION ----------------------------------
