@@ -31,7 +31,7 @@ const AdjustableView: React.FC = () => {
   // Dispatcher.
   const dispatch = useDispatch()
   // All panels information for further use.
-  const flatPanels = useSelector((state: State) => state.panels)
+  const panels = useSelector((state: State) => state.panels)
   // Panel names.
   const panelNames = useSelector((state: State) => state.locale.panels)
   // Panel keys.
@@ -99,8 +99,8 @@ const AdjustableView: React.FC = () => {
   // and styling as specified styles.
 
   const [springs, setSprings] = useSprings(
-    flatPanels.length,
-    getStyledPositions(flatPanels, true)
+    panels.length,
+    getStyledPositions(panels, true)
   )
 
   // --------------------------- END SECTION ----------------------------------
@@ -121,7 +121,7 @@ const AdjustableView: React.FC = () => {
 
   const triggerAnimation = useSelector((state: State) => state.triggerAnimation)
   if (triggerAnimation) {
-    setSprings(getStyledPositions(flatPanels) as any)
+    setSprings(getStyledPositions(panels) as any)
     dispatch(turnOffAnimation())
   }
 
@@ -140,7 +140,7 @@ const AdjustableView: React.FC = () => {
       dispatch(setDraggingPosition(delta, originalIndex, down))
       // Use current position to move panel smoothly.
       // Cast to any to suppress tiresome type error.
-      setSprings(getStyledPositions(flatPanels, down, originalIndex) as any)
+      setSprings(getStyledPositions(panels, down, originalIndex) as any)
     },
     // Configure to enable operation on event directly.
     { event: { capture: true, passive: false } }
