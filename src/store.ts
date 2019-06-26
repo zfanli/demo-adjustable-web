@@ -124,8 +124,15 @@ export function reducer(state = initState, action: BaseAction): State {
           targetPanel.left = targetPanel.tempLeft + p[0]
           targetPanel.top = targetPanel.tempTop + p[1]
 
-          // Reset temp position when moving end.
           const moving = action.payload.moving
+
+          // Reset position in sortable mode for temporarily
+          if (!moving && state.sortable) {
+            targetPanel.left = targetPanel.tempLeft
+            targetPanel.top = targetPanel.tempTop
+          }
+
+          // Reset temp position when moving end.
           if (!moving) {
             targetPanel.tempLeft = null
             targetPanel.tempTop = null
