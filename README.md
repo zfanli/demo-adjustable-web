@@ -6,6 +6,8 @@ Demonstrate an adjustable web UI.
 
 - [x] Base on React > v16
   - [x] use typescript
+    - [x] you can override a module's own definition by declare it in typings folder
+    - [x] cast to any type if some tiresome errors is ocurred
   - [x] router for cover other situations
   - [x] redux for integrate configurations
     - [x] read data (Provider and connect)
@@ -49,6 +51,10 @@ Demonstrate an adjustable web UI.
         - [x] move gestures into container
         - [x] adjust resize actions
       - [ ] define order algorithms
+        - [x] change direction first, row -> column, for further sort
+        - [ ] refactor position getter function to meet position changes
+        - [ ] algorithms for calculate index(position) change
+        - [ ] retrieve order from cookie
     - [ ] refactor `Panel` to be resizable
     - [ ] refactor `Panel` to be collapsible
     - [ ] refactor `Panel` to be expandable
