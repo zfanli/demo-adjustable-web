@@ -52,18 +52,19 @@ Demonstrate an adjustable web UI.
         - [x] adjust resize actions
       - [ ] define order algorithms
         - [x] change direction first, row -> column, for further sort
-        - [ ] refactor position getter function to meet position changes
+        - [x] refactor position getter function to meet position changes
         - [ ] algorithms for calculate index(position) change
         - [ ] retrieve order from cookie
     - [ ] refactor `Panel` to be resizable
     - [ ] refactor `Panel` to be collapsible
     - [ ] refactor `Panel` to be expandable
   - [ ] Styles UI
-    - [ ] base styles after draggable done
+    - [x] base styles after draggable done
     - [ ] fill fake data
+      - [x] reply info is scrollable
+      - [x] fill user info
       - [ ] fixed menu has only 6 items
       - [ ] dynamic menu has 5
-      - [ ] reply info is scrollable
     - [ ] improve UI after sortable done
   - [ ] Menu
     - [x] switch between sortable view and not sortable view
@@ -77,6 +78,9 @@ Demonstrate an adjustable web UI.
     - [ ] send a callback to handle data changes
     - [ ] get an object as parameter contains conversation and keyword feedback
     - [ ] stop bind to button
+  - [ ] Testing
+    - [ ] reducer
+    - [ ] utils
 
 **REQUIREMENTS**
 
