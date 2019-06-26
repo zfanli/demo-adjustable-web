@@ -10,10 +10,10 @@ import Panel from '../components/Panel'
 import InformationList from '../components/InformationList'
 
 import { setSize, setDraggingPosition, turnOffAnimation } from '../actions'
-import { State, FlatPanel } from '../type'
+import { State, PanelWithPosition } from '../type'
 
 import '../css/adjustableView.scss'
-import { getFakeDataOfUserInfo } from '../utils'
+import { getFakeDataOfUserInfo, getFakeDataOfReplyInfo } from '../utils'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -31,7 +31,7 @@ const AdjustableView: React.FC = () => {
   // Dispatcher.
   const dispatch = useDispatch()
   // All panels information for further use.
-  const flatPanels = useSelector((state: State) => state.flatPanels)
+  const flatPanels = useSelector((state: State) => state.panels)
   // Panel names.
   const panelNames = useSelector((state: State) => state.locale.panels)
   // Panel keys.
@@ -53,7 +53,7 @@ const AdjustableView: React.FC = () => {
 
   function getStyledPositions(
     // For get position from, directly from store.
-    panels: FlatPanel[],
+    panels: PanelWithPosition[],
     // Is now dragging? For fires dragging animations.
     down?: boolean,
     // For identify which panel is in dragging.
@@ -192,6 +192,9 @@ const AdjustableView: React.FC = () => {
   const panelChildren = {
     [panelKeys[0]]: (
       <InformationList information={getFakeDataOfUserInfo(lang, 9)} />
+    ),
+    [panelKeys[1]]: (
+      <InformationList information={getFakeDataOfReplyInfo(lang, 16)} />
     ),
   }
 

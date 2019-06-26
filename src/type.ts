@@ -4,22 +4,22 @@ export interface State {
   locale: Locale
   panelKeys: string[]
   margin: number
-  contentBoxSize: {
+  containerSize: {
     width: number
     height: number
   }
-  flatPanels: FlatPanel[]
+  panels: PanelWithPosition[]
   shadowSizeWhileDragging: number
   sortable: boolean
   triggerAnimation?: boolean
-  backupFlatPanels?: FlatPanel[]
+  panelsBackup?: PanelWithPosition[]
 }
 
 export interface PlainObject {
   [k: string]: string | number
 }
 
-export interface FlatPanel {
+export interface PanelWithPosition {
   key: string
   height: number
   width: number

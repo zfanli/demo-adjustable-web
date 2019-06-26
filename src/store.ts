@@ -57,8 +57,8 @@ const initState: State = {
   locale: locales[lang],
   panelKeys: config.panelKeys,
   margin,
-  contentBoxSize: defaultSize,
-  flatPanels: getCurrentPositions(defaultSize, margin, config.panelKeys),
+  containerSize: defaultSize,
+  panels: getCurrentPositions(defaultSize, margin, config.panelKeys),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
   sortable: true,
   triggerAnimation: false,
@@ -80,17 +80,17 @@ function reducer(state = initState, action: BaseAction): State {
     // For handle window resize.
 
     case SET_SIZE:
-      const contentBoxSize = action.payload.size
+      const containerSize = action.payload.size
       // Change relative positions and sizes.
-      const flatPanels = handleSizeChange(
-        state.flatPanels,
-        contentBoxSize,
-        state.contentBoxSize,
+      const panels = handleSizeChange(
+        state.panels,
+        containerSize,
+        state.containerSize,
         state.margin
       )
       return assign(state, {
-        contentBoxSize,
-        flatPanels,
+        containerSize,
+        panels,
         triggerAnimation: true,
       })
 
@@ -102,7 +102,7 @@ function reducer(state = initState, action: BaseAction): State {
     case SET_DRAGGING_POSITION:
       const index = action.payload.index
       if (typeof index !== 'undefined') {
-        const targetPanel = state.flatPanels[index]
+        const targetPanel = state.panels[index]
         if (targetPanel) {
           // Save temp position if not exist.
           // The temp position is for store last position.
@@ -120,10 +120,10 @@ function reducer(state = initState, action: BaseAction): State {
           targetPanel.left = targetPanel.tempLeft + p[0]
           targetPanel.top = targetPanel.tempTop + p[1]
 
-          // Make a copy of flatPanels.
-          const flatPanels = state.flatPanels.slice()
+          // Make a copy of panels.
+          const panels = state.panels.slice()
           // Set panel's motion.
-          flatPanels[index] = targetPanel
+          panels[index] = targetPanel
 
           // Reset temp position when moving end.
           if (!action.payload.moving) {
@@ -131,7 +131,7 @@ function reducer(state = initState, action: BaseAction): State {
             targetPanel.tempTop = null
           }
 
-          return assign(state, { flatPanels })
+          return assign(state, { panels })
         }
       }
       return state
@@ -163,21 +163,21 @@ function reducer(state = initState, action: BaseAction): State {
       if (sortable) {
         return assign(state, {
           sortable,
-          flatPanels: getCurrentPositions(
-            state.contentBoxSize,
+          panels: getCurrentPositions(
+            state.containerSize,
             state.margin,
             state.panelKeys
           ),
-          backupFlatPanels: state.flatPanels,
+          panelsBackup: state.panels,
           triggerAnimation: true,
         })
       } else {
         // State changes from sortable to un-sortable.
         // Use backup position if does exist.
-        if (state.backupFlatPanels) {
+        if (state.panelsBackup) {
           return assign(state, {
-            flatPanels: state.backupFlatPanels,
-            backupFlatPanels: null,
+            panels: state.panelsBackup,
+            panelsBackup: null,
             triggerAnimation: true,
           })
         }
@@ -194,7 +194,7 @@ function reducer(state = initState, action: BaseAction): State {
     case RESET_PANELS_POSITION:
       return assign(state, {
         flatPanels: getCurrentPositions(
-          state.contentBoxSize,
+          state.containerSize,
           state.margin,
           state.panelKeys
         ),

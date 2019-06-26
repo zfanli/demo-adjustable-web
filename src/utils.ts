@@ -1,12 +1,13 @@
 import { range } from 'lodash'
-import { Size, SizeWithPosition, FlatPanel, ExtendSize } from './type'
+import { Size, SizeWithPosition, PanelWithPosition, ExtendSize } from './type'
 
 /**
  * Get current panel size, calculate by current window size.
  * @param size
  * @param margin
+ * @param large?
  */
-function getCurrentPanelSize(size: Size, margin: number) {
+function getCurrentPanelSize(size: Size, margin: number, large?: boolean) {
   const [maxWidth, maxHeight] = [
     Math.ceil(size.width / 3),
     Math.ceil(size.height / 2),
@@ -15,10 +16,10 @@ function getCurrentPanelSize(size: Size, margin: number) {
   return {
     // Max size is for entire container size (fiction container).
     maxWidth,
-    maxHeight,
+    maxHeight: large ? maxHeight * 2 : maxHeight,
     // Size for panel itself, without margins.
     width: maxWidth - margin,
-    height: maxHeight - margin,
+    height: large ? maxHeight * 2 - margin : maxHeight - margin,
   }
 }
 
@@ -29,16 +30,8 @@ function getCurrentPanelSize(size: Size, margin: number) {
  */
 function packagePanels(windowSize: Size, margin: number) {
   return range(5).map((_, i) => {
-    // Position of the largest one
-    if (i === 2) {
-      let p = getCurrentPanelSize(windowSize, margin)
-      // Double the height
-      p.maxHeight = p.maxHeight * 2
-      p.height = p.maxHeight - margin
-      return p
-    } else {
-      return getCurrentPanelSize(windowSize, margin)
-    }
+    // There is a largest one default at index 2.
+    return getCurrentPanelSize(windowSize, margin, i === 4)
   })
 }
 
@@ -122,7 +115,7 @@ export function getCurrentPositions(
  * @param margin
  */
 export function handleSizeChange(
-  panels: FlatPanel[],
+  panels: PanelWithPosition[],
   windowSize: Size,
   lastSize: Size,
   margin: number
@@ -179,6 +172,21 @@ export function getFakeDataOfUserInfo(lang: string, length: number) {
     base = 'テストユーザー情報テストテスト'
   } else {
     base = 'Test User Information. Test Test.'
+  }
+  return createInformationData(base, length)
+}
+
+/**
+ * Get fake data of reply info.
+ * @param lang
+ * @param length
+ */
+export function getFakeDataOfReplyInfo(lang: string, length: number) {
+  let base: string
+  if (lang === 'jp') {
+    base = 'テスト応対情報テストテストテスト'
+  } else {
+    base = 'Test Reply Information. Test Test.'
   }
   return createInformationData(base, length)
 }
