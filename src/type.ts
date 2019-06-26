@@ -9,6 +9,7 @@ export interface State {
     height: number
   }
   panels: PanelWithPosition[]
+  order: PanelWithPosition[]
   shadowSizeWhileDragging: number
   sortable: boolean
   triggerAnimation?: boolean

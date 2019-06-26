@@ -32,6 +32,7 @@ const defaultSize = {
   width: window.innerWidth - margin,
   height: window.innerHeight - headerHeight - footerHeight - margin,
 }
+const initialPanels = getCurrentPositions(defaultSize, margin, config.panelKeys)
 
 // ---------------------------- END SECTION -----------------------------------
 // ----------------------------------------------------------------------------
@@ -58,7 +59,8 @@ const initState: State = {
   panelKeys: config.panelKeys,
   margin,
   containerSize: defaultSize,
-  panels: getCurrentPositions(defaultSize, margin, config.panelKeys),
+  panels: initialPanels,
+  order: initialPanels,
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
   sortable: true,
   triggerAnimation: false,
