@@ -56,7 +56,11 @@ import { Size, SizeWithPosition, PanelWithPosition, ExtendSize } from './type'
  * @param margin
  * @param large?
  */
-function getCurrentPanelSize(size: Size, margin: number, large?: boolean) {
+export function getCurrentPanelSize(
+  size: Size,
+  margin: number,
+  large?: boolean
+) {
   const [maxWidth, maxHeight] = [
     Math.ceil(size.width / 3),
     Math.ceil(size.height / 2),
@@ -69,7 +73,7 @@ function getCurrentPanelSize(size: Size, margin: number, large?: boolean) {
     // Size for panel itself, without margins.
     width: maxWidth - margin,
     height: large ? maxHeight * 2 - margin : maxHeight - margin,
-    largest: large,
+    largest: !!large,
   }
 }
 
@@ -78,7 +82,7 @@ function getCurrentPanelSize(size: Size, margin: number, large?: boolean) {
  * @param windowSize
  * @param margin
  */
-function packagePanels(
+export function packagePanels(
   windowSize: Size,
   margin: number,
   largestOne: number = 4
@@ -95,7 +99,7 @@ function packagePanels(
  * There are 3 patterns exists, according to the position of largest one.
  * @param largest
  */
-function convertToRowDirection(largest: number) {
+export function convertToRowDirection(largest: number) {
   switch (largest) {
     case 0:
       // Pattern 1 :
@@ -122,23 +126,24 @@ function convertToRowDirection(largest: number) {
  * This function does not need to know the order of each panel,
  * it just find the largest one, and determines the pattern,
  * then, gets its position.
- * @param order
+ * @param panelSizes
  * @param margin
  * @param keys
  */
-function getPositionsBySizes(
-  order: ExtendSize[],
+export function getPositionsBySizes(
+  panelSizes: ExtendSize[],
   margin: number,
   keys: string[] = []
 ) {
-  let panels: SizeWithPosition[] = []
+  const tempOrder = panelSizes.slice()
+  let tempPanels: SizeWithPosition[] = []
 
-  const largestIndex = order.findIndex(p => p.largest)
+  const largestIndex = tempOrder.findIndex(p => p.largest)
 
   // Convert column direction to row direction.
   const pattern = convertToRowDirection(largestIndex)
 
-  order.forEach((ps, i) => {
+  tempOrder.forEach((ps, i) => {
     // Map row direction to calculate positions.
     const index = pattern.findIndex(p => p === i)
 
@@ -148,15 +153,15 @@ function getPositionsBySizes(
     const col = index > 2 ? index - 3 : index
     const row = index > 2 ? 1 : 0
 
-    panels.push({
+    tempPanels.push({
       ...ps,
       left: ps.maxWidth * col + margin,
       top: ps.maxHeight * row + margin,
     })
   })
 
-  return panels.map((p, i) => ({
-    key: keys[i],
+  return tempPanels.slice().map((p, i) => ({
+    key: keys[i] ? keys[i] : '',
     height: p.height,
     width: p.width,
     left: p.left,
@@ -176,7 +181,7 @@ function getPositionsBySizes(
  * @param base
  * @param count
  */
-function createInformationData(base: string, count: number) {
+export function createInformationData(base: string, count: number) {
   let result: { [k: string]: string } = {}
   range(count).forEach((_, i) => {
     result[`(Info ${i + 1})`] = `${base} ${i + 1}`
@@ -189,12 +194,18 @@ function createInformationData(base: string, count: number) {
  * @param order
  * @param panels
  */
-function mapToPanels(order: PanelWithPosition[], panels: PanelWithPosition[]) {
+export function mapToPanels(
+  order: PanelWithPosition[],
+  panels: PanelWithPosition[]
+) {
+  const tempOrder = order.slice()
+  const tempPanels = panels.slice()
   // Reset `order` to be the same order with panels.
-  const op = panels.map(p => {
-    return order.find(o => o.key === p.key)
+  const op = tempPanels.map(p => {
+    return tempOrder.find(o => o.key === p.key)
   }) as PanelWithPosition[]
-  return panels.map((p, i) => {
+
+  return tempPanels.slice().map((p, i) => {
     const thisOp = op[i]
     p.width = thisOp.width
     p.height = thisOp.height

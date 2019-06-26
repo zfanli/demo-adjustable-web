@@ -17,6 +17,7 @@ import {
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
+import { cloneDeep } from 'lodash'
 
 // ----------------------------------------------------------------------------
 // --------------------------- START SECTION ----------------------------------
@@ -54,14 +55,14 @@ if (!langFromCookie) setCookie('lang', lang)
 // --------------------------- START SECTION ----------------------------------
 // Create initial state.
 
-const initState: State = {
+export const initState: State = {
   lang,
   locale: locales[lang],
   panelKeys: config.panelKeys,
   margin,
   containerSize: defaultSize,
-  panels: initialPanels.slice(),
-  order: initialPanels.slice(),
+  panels: initialPanels,
+  order: cloneDeep(initialPanels),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
   sortable: true,
   triggerAnimation: false,
@@ -76,7 +77,7 @@ const initState: State = {
 const assign = Object.assign
 
 // Reducers.
-function reducer(state = initState, action: BaseAction): State {
+export function reducer(state = initState, action: BaseAction): State {
   switch (action.type) {
     // ------------------------------------------------------------------------
     // ------------------------ START SECTION ---------------------------------
@@ -108,7 +109,7 @@ function reducer(state = initState, action: BaseAction): State {
     case SET_DRAGGING_POSITION:
       const index = action.payload.index
       if (typeof index !== 'undefined') {
-        const targetPanel = state.panels.slice()[index]
+        const targetPanel = cloneDeep(state.panels)[index]
         if (targetPanel) {
           // Save temp position if not exist.
           // The temp position is for store last position.
@@ -127,17 +128,18 @@ function reducer(state = initState, action: BaseAction): State {
           targetPanel.top = targetPanel.tempTop + p[1]
 
           // Reset temp position when moving end.
-          if (!action.payload.moving) {
+          const moving = action.payload.moving
+          if (!moving) {
             targetPanel.tempLeft = null
             targetPanel.tempTop = null
           }
 
           // Make a copy of panels.
-          const panels = state.panels.slice()
+          const panels = cloneDeep(state.panels)
           // Set panel's motion.
           panels[index] = targetPanel
 
-          return assign(state, { panels })
+          return assign(state, { panels, triggerAnimation: !moving })
         }
       }
       return state
@@ -174,7 +176,7 @@ function reducer(state = initState, action: BaseAction): State {
             state.margin,
             state.panelKeys
           ),
-          panelsBackup: state.panels.slice(),
+          panelsBackup: cloneDeep(state.panels),
           triggerAnimation: true,
         })
       } else {
@@ -182,7 +184,7 @@ function reducer(state = initState, action: BaseAction): State {
         // Use backup position if does exist.
         if (state.panelsBackup) {
           return assign(state, {
-            panels: state.panelsBackup.slice(),
+            panels: state.panelsBackup,
             panelsBackup: null,
             triggerAnimation: true,
           })
