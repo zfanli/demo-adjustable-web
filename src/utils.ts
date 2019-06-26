@@ -20,6 +20,7 @@ function getCurrentPanelSize(size: Size, margin: number, large?: boolean) {
     // Size for panel itself, without margins.
     width: maxWidth - margin,
     height: large ? maxHeight * 2 - margin : maxHeight - margin,
+    largest: large,
   }
 }
 
@@ -28,30 +29,69 @@ function getCurrentPanelSize(size: Size, margin: number, large?: boolean) {
  * @param windowSize
  * @param margin
  */
-function packagePanels(windowSize: Size, margin: number) {
+function packagePanels(
+  windowSize: Size,
+  margin: number,
+  largestOne: number = 4
+) {
   return range(5).map((_, i) => {
     // There is a largest one default at index 2.
-    return getCurrentPanelSize(windowSize, margin, i === 4)
+    return getCurrentPanelSize(windowSize, margin, i === largestOne)
   })
 }
 
 /**
+ * Convert the column direction to row direction by the index of largest one.
+ *
+ * There are 3 patterns exists, according to the position of largest one.
+ * @param largest
+ */
+function convertToRowDirection(largest: number) {
+  switch (largest) {
+    case 0:
+      // Pattern 1 :
+      // [ 0, 1, 3
+      //   0, 2, 4 ]
+      return [0, 1, 3, 0, 2, 4]
+    case 2:
+      // Pattern 2 :
+      // [ 0, 2, 3
+      //   1, 2, 4 ]
+      return [0, 2, 3, 1, 2, 4]
+    case 4:
+    default:
+      // Pattern 3 :
+      // [ 0, 2, 4
+      //   1, 3, 4 ]
+      return [0, 2, 4, 1, 3, 4]
+  }
+}
+
+/**
  * Get position by sizes.
- * @param panelSizes
+ * @param order
  * @param margin
  * @param keys
  */
 function getPositionsBySizes(
-  panelSizes: ExtendSize[],
+  order: ExtendSize[],
   margin: number,
   keys: string[] = []
 ) {
   let panels: SizeWithPosition[] = []
 
-  panelSizes.forEach((ps, index) => {
+  const largestIndex = order.findIndex(p => p.largest)
+
+  // Convert column direction to row direction.
+  const pattern = convertToRowDirection(largestIndex)
+
+  order.forEach((ps, i) => {
+    // Map row direction to calculate positions.
+    const index = pattern.findIndex(p => p === i)
+
     // Get panel col number.
-    // For first row, index is [0, 1, 2], plus 1 to get its col number,
-    // for second row, index is [3, 4], minus 2 will get their col number.
+    // For first row, index is [0, 1, 2]
+    // for second row, index is [3, 4]
     const col = index > 2 ? index - 3 : index
     const row = index > 2 ? 1 : 0
 

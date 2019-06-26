@@ -28,6 +28,7 @@ export interface PanelWithPosition {
   top: number
   tempLeft?: number | null
   tempTop?: number | null
+  largest?: boolean
 }
 
 // localize object
@@ -53,6 +54,7 @@ export interface Size {
 export interface ExtendSize extends Size {
   maxWidth: number
   maxHeight: number
+  largest?: boolean
 }
 
 // Advanced type for store panel size info and position.

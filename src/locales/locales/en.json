@@ -3,10 +3,10 @@
   "footer": "Assistant messages or marketing messages or other messages.",
   "panels": [
     "User Information",
-    "Fixed Menu",
-    "Conversation",
     "Reply Information",
-    "Dynamic Menu"
+    "Fixed Menu",
+    "Dynamic Menu",
+    "Conversation"
   ],
   "sortable": "Sortable",
   "resetPosition": "Reset Position"
