@@ -50,6 +50,10 @@ Demonstrate an adjustable web UI.
       - [x] refactor to move gestures into container
         - [x] move gestures into container
         - [x] adjust resize actions
+      - [ ] refactor to add `order` for hold order
+        - [x] added
+        - [ ] seems it's not needed, maybe should remove it?
+        - [ ] use `useTransitions` for resort animation? If `order` is not needed
       - [ ] define order algorithms
         - [x] change direction first, row -> column, for further sort
         - [x] refactor position getter function to meet position changes
