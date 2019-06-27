@@ -6,6 +6,7 @@ import {
   getCookie,
   setCookie,
   handleReset,
+  mapToPanels,
 } from './utils'
 import {
   SET_SIZE,
@@ -72,7 +73,7 @@ export const initState: State = {
 // Packaging reducers.
 
 // Alias.
-const assign = Object.assign
+const assignWithNewObject = (...args: any[]) => Object.assign({}, ...args)
 
 // Reducers.
 export function reducer(state = initState, action: BaseAction): State {
@@ -92,7 +93,7 @@ export function reducer(state = initState, action: BaseAction): State {
         state.margin,
         state.sortable
       )
-      return assign(state, {
+      return assignWithNewObject(state, {
         containerSize,
         panels: resizePanels,
         order: resizeOrder,
@@ -120,16 +121,20 @@ export function reducer(state = initState, action: BaseAction): State {
           // Calculate new position.
           // Always calculate the position with temp position,
           // to avoid unexpected position changes.
-          const p = action.payload.position
-          targetPanel.left = targetPanel.tempLeft + p[0]
-          targetPanel.top = targetPanel.tempTop + p[1]
+          const offset = action.payload.offset
+          targetPanel.left = targetPanel.tempLeft + offset[0]
+          targetPanel.top = targetPanel.tempTop + offset[1]
 
           const moving = action.payload.moving
+          const sortable = state.sortable
 
-          // Reset position in sortable mode for temporarily
-          if (!moving && state.sortable) {
-            targetPanel.left = targetPanel.tempLeft
-            targetPanel.top = targetPanel.tempTop
+          // Make a copy of panels.
+          let panels = cloneDeep(state.panels)
+
+          // Handle sorting.
+          if (sortable) {
+            // get to index
+            // check if it exists and different with from index
           }
 
           // Reset temp position when moving end.
@@ -138,12 +143,15 @@ export function reducer(state = initState, action: BaseAction): State {
             targetPanel.tempTop = null
           }
 
-          // Make a copy of panels.
-          const panels = cloneDeep(state.panels)
-          // Set panel's motion.
+          // Set panels.
           panels[index] = targetPanel
 
-          return assign(state, {
+          // Reset position in sortable mode for temporarily
+          if (!moving && sortable) {
+            panels = mapToPanels(state.order, panels)
+          }
+
+          return assignWithNewObject(state, {
             panels,
             animationIndex: index,
             isDraggingDown: moving,
@@ -160,7 +168,7 @@ export function reducer(state = initState, action: BaseAction): State {
     case SET_LOCALE:
       const locale = action.payload.locale
       setCookie('lang', locale)
-      return assign(state, {
+      return assignWithNewObject(state, {
         locale: locales[locale],
         lang: locale,
       })
@@ -177,7 +185,7 @@ export function reducer(state = initState, action: BaseAction): State {
       // All panels should reset their position,
       // and store current position as a backup for further use.
       if (sortable) {
-        return assign(state, {
+        return assignWithNewObject(state, {
           sortable,
           panels: getCurrentPositions(
             state.containerSize,
@@ -190,7 +198,7 @@ export function reducer(state = initState, action: BaseAction): State {
         // State changes from sortable to un-sortable.
         // Use backup position if does exist.
         const panelsBackup = state.panelsBackup
-        return assign(state, {
+        return assignWithNewObject(state, {
           sortable,
           // Use backup if exists.
           panels: panelsBackup ? panelsBackup : state.panels,
@@ -212,7 +220,7 @@ export function reducer(state = initState, action: BaseAction): State {
         state.margin
       )
 
-      return assign(state, {
+      return assignWithNewObject(state, {
         panels: resetPanels,
         order: resetOrder,
       })
@@ -230,7 +238,7 @@ export function reducer(state = initState, action: BaseAction): State {
 
 // export store
 export default createStore(
-  reducer,
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  reducer
+  // (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+  //   (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 )

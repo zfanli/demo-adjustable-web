@@ -2,7 +2,7 @@ import { reducer, initState } from '../store'
 import { setLocale } from '../actions'
 
 // Alias.
-// const assign = Object.assign
+// const assignWithNewObject = (...args: any[]) => Object.assign({}, ...args)
 const emptyAction = { type: '', payload: {} }
 
 describe('Reducer.', () => {
