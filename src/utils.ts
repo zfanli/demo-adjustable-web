@@ -49,6 +49,7 @@
 
 import { range, cloneDeep, debounce } from 'lodash'
 import { Size, SizeWithPosition, PanelWithPosition, ExtendSize } from './type'
+import { handleResortAction } from './actions'
 
 /**
  * Get current panel size, calculate by current window size.
@@ -201,31 +202,86 @@ export function getToIndex(order: PanelWithPosition[], position: number[]) {
 }
 
 /**
- * This function will MODIFY `order` param!!!
+ * Handle resort.
  * @param order
  * @param position
  * @param key
  */
 export function handleResort(
+  panels: PanelWithPosition[],
   order: PanelWithPosition[],
   position: number[],
-  key: string
+  index: number,
+  moving: boolean,
+  margin: number,
+  size: Size
 ) {
+  // Variables.
   const [x, y] = position
-  const fromIndex = order.findIndex(p => p.key === key)
-  const toIndex = order.findIndex(
+  const tempOrder = cloneDeep(order)
+  const key = panels[index].key
+  const fromIndex = tempOrder.findIndex(p => p.key === key)
+  // Get to index.
+  let toIndex = tempOrder.findIndex(
     ({ left, top, width, height }) =>
       x > left && x < left + width && y > top && y < top + height
   )
-  console.log(order)
-  console.log(toIndex >= 0 && toIndex !== fromIndex)
-  // if (toIndex >= 0 && toIndex !== fromIndex) {
-  //   const temp = order.splice(fromIndex, 1)
-  //   order.splice(toIndex > fromIndex ? toIndex - 1 : toIndex, 0, ...temp)
-  // }
+
+  // Do nothing if `toIndex` is invalid.
+  if (toIndex < 0) return [panels, order]
+
+  // Get flags for check is the from or to panel is the largest.
+  const isFromLargest = tempOrder[fromIndex].largest
+  const isToLargest = tempOrder[toIndex].largest
+  // Map to index if the from panel is the largest.
+  if (isFromLargest) {
+    // Set `to` to 2 if the to index is in [1, 2] and `from` is 0
+    if (fromIndex === 0 && toIndex === 1) toIndex = 2
+    // Set `to` to 2 if the to index is in [2, 3] and `from` is 4
+    else if (fromIndex === 4 && toIndex === 3) toIndex = 2
+    // Set `to` to 0 if the to index is in [0, 1]
+    else if (toIndex === 1) toIndex = 0
+    // Set `to` to 4 if the to index is in [3, 4]
+    else if (toIndex === 3) toIndex = 4
+  }
+  if (!isToLargest && toIndex >= 0 && toIndex !== fromIndex) {
+    const temp = tempOrder.splice(fromIndex, 1)
+    tempOrder.splice(toIndex, 0, ...temp)
+  }
+
+  const newPosition = getCurrentPositions(
+    size,
+    margin,
+    [],
+    tempOrder.findIndex(p => p.largest)
+  )
+
+  newPosition.forEach((p, i) => {
+    const o = tempOrder[i]
+    o.left = p.left
+    o.top = p.top
+  })
+
+  const tempPanels = mapToPanels(tempOrder, panels)
+
+  // Capture current moving panel.
+  const movingPanel = panels[index]
+
+  if (moving) {
+    tempPanels[index] = movingPanel
+  }
+
+  return [tempPanels, tempOrder]
 }
 
-export const handleResortWithDebounce = debounce(handleResort, 300)
+/**
+ * Bind debounce to resort handler, by dispatch an action.
+ */
+export const handleResortWithDebounce = debounce(
+  (dispatch, position: number[], index: number, moving: boolean) =>
+    moving && dispatch(handleResortAction(position, index, moving)),
+  50
+)
 
 /**
  * Map positions from `order` to `panels`.

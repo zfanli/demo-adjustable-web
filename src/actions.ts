@@ -53,3 +53,20 @@ export function resetPanelsPosition(): BaseAction {
     payload: {},
   }
 }
+
+export const HANDLE_RESORT = 'HANDLE_RESORT'
+
+export function handleResortAction(
+  position: number[],
+  index: number,
+  moving: boolean
+) {
+  return {
+    type: HANDLE_RESORT,
+    payload: {
+      position,
+      index,
+      moving,
+    },
+  }
+}

@@ -7,7 +7,7 @@ import {
   setCookie,
   handleReset,
   mapToPanels,
-  handleResortWithDebounce,
+  handleResort,
 } from './utils'
 import {
   SET_SIZE,
@@ -15,6 +15,7 @@ import {
   SET_LOCALE,
   SET_SORTABLE,
   RESET_PANELS_POSITION,
+  HANDLE_RESORT,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -127,17 +128,10 @@ export function reducer(state = initState, action: BaseAction): State {
           targetPanel.top = targetPanel.tempTop + offset[1]
 
           const moving = action.payload.moving
-          const position = action.payload.position
           const sortable = state.sortable
 
           // Make a copy of panels.
           let panels = cloneDeep(state.panels)
-
-          // Handle sorting.
-          if (sortable) {
-            // panels = state.order
-            handleResortWithDebounce(panels, position, targetPanel.key)
-          }
 
           // Reset temp position when moving end.
           if (!moving) {
@@ -146,9 +140,7 @@ export function reducer(state = initState, action: BaseAction): State {
           }
 
           // Set panels.
-          panels.forEach((p, i) => {
-            if (p.key === targetPanel.key) panels[i] = targetPanel
-          })
+          panels[index] = targetPanel
 
           // Reset position in sortable mode for temporarily
           if (!moving && sortable) {
@@ -163,6 +155,26 @@ export function reducer(state = initState, action: BaseAction): State {
         }
       }
       return state
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Handle resort.
+
+    case HANDLE_RESORT:
+      const [resortPanels, resortOrder] = handleResort(
+        state.panels,
+        state.order,
+        action.payload.position,
+        action.payload.index,
+        action.payload.moving,
+        state.margin,
+        state.containerSize
+      )
+      return assignWithNewObject(state, {
+        panels: resortPanels,
+        order: resortOrder,
+      })
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
