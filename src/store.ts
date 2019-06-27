@@ -5,7 +5,6 @@ import {
   handleSizeChange,
   getCookie,
   setCookie,
-  handleReset,
   mapToPanels,
   handleResort,
 } from './utils'
@@ -14,8 +13,8 @@ import {
   HANDLE_DRAGGING,
   SET_LOCALE,
   SET_SORTABLE,
-  RESET_PANELS_POSITION,
-  HANDLE_RESORT,
+  HANDLE_RESET_ACTION,
+  HANDLE_RESORT_ACTION,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -161,7 +160,7 @@ export function reducer(state = initState, action: BaseAction): State {
     // ------------------------ START SECTION ---------------------------------
     // Handle resort.
 
-    case HANDLE_RESORT:
+    case HANDLE_RESORT_ACTION:
       const [resortPanels, resortOrder] = handleResort(
         state.panels,
         state.order,
@@ -228,17 +227,16 @@ export function reducer(state = initState, action: BaseAction): State {
     // ------------------------ START SECTION ---------------------------------
     // Reset panels position to initial state.
 
-    case RESET_PANELS_POSITION:
-      let [resetPanels, resetOrder] = handleReset(
-        state.panels,
-        state.order,
+    case HANDLE_RESET_ACTION:
+      const resetPanels = getCurrentPositions(
         state.containerSize,
-        state.margin
+        state.margin,
+        state.panelKeys
       )
 
       return assignWithNewObject(state, {
         panels: resetPanels,
-        order: resetOrder,
+        order: cloneDeep(resetPanels),
       })
 
     // ------------------------- END SECTION ----------------------------------

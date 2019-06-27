@@ -45,16 +45,16 @@ export function setSortable(sortable: boolean): BaseAction {
   }
 }
 
-export const RESET_PANELS_POSITION = 'RESET_PANELS_POSITION'
+export const HANDLE_RESET_ACTION = 'HANDLE_RESET_ACTION'
 
 export function resetPanelsPosition(): BaseAction {
   return {
-    type: RESET_PANELS_POSITION,
+    type: HANDLE_RESET_ACTION,
     payload: {},
   }
 }
 
-export const HANDLE_RESORT = 'HANDLE_RESORT'
+export const HANDLE_RESORT_ACTION = 'HANDLE_RESORT_ACTION'
 
 export function handleResortAction(
   position: number[],
@@ -62,7 +62,7 @@ export function handleResortAction(
   moving: boolean
 ) {
   return {
-    type: HANDLE_RESORT,
+    type: HANDLE_RESORT_ACTION,
     payload: {
       position,
       index,

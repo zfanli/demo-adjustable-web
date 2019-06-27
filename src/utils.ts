@@ -193,14 +193,6 @@ export function createInformationData(base: string, count: number) {
 // ----------------------------------------------------------------------------
 // --------------------------- EXPORT START -----------------------------------
 
-export function getToIndex(order: PanelWithPosition[], position: number[]) {
-  const [x, y] = position
-  return order.findIndex(
-    ({ left, top, width, height }) =>
-      x > left && x < left + width && y > top && y < top + height
-  )
-}
-
 /**
  * Handle resort.
  * @param order
@@ -368,38 +360,6 @@ export function handleSizeChange(
     })
   }
 
-  return [newPanels, order]
-}
-
-/**
- * Handle reset.
- * @param panels
- * @param order
- * @param windowSize
- * @param margin
- */
-export function handleReset(
-  panels: PanelWithPosition[],
-  order: PanelWithPosition[],
-  windowSize: Size,
-  margin: number
-) {
-  // Get new positions.
-  const newPositions = getCurrentPositions(
-    windowSize,
-    margin,
-    [],
-    order.findIndex(p => p.largest)
-  )
-  order.forEach((p, i) => {
-    const thePosition = newPositions[i]
-    p.width = thePosition.width
-    p.height = thePosition.height
-    p.top = thePosition.top
-    p.left = thePosition.left
-  })
-
-  const newPanels = mapToPanels(order, panels)
   return [newPanels, order]
 }
 
