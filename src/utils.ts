@@ -47,7 +47,7 @@
  *
  *****************************************************************************/
 
-import { range, cloneDeep } from 'lodash'
+import { range, cloneDeep, debounce } from 'lodash'
 import { Size, SizeWithPosition, PanelWithPosition, ExtendSize } from './type'
 
 /**
@@ -189,6 +189,44 @@ export function createInformationData(base: string, count: number) {
   return result
 }
 
+// ----------------------------------------------------------------------------
+// --------------------------- EXPORT START -----------------------------------
+
+export function getToIndex(order: PanelWithPosition[], position: number[]) {
+  const [x, y] = position
+  return order.findIndex(
+    ({ left, top, width, height }) =>
+      x > left && x < left + width && y > top && y < top + height
+  )
+}
+
+/**
+ * This function will MODIFY `order` param!!!
+ * @param order
+ * @param position
+ * @param key
+ */
+export function handleResort(
+  order: PanelWithPosition[],
+  position: number[],
+  key: string
+) {
+  const [x, y] = position
+  const fromIndex = order.findIndex(p => p.key === key)
+  const toIndex = order.findIndex(
+    ({ left, top, width, height }) =>
+      x > left && x < left + width && y > top && y < top + height
+  )
+  console.log(order)
+  console.log(toIndex >= 0 && toIndex !== fromIndex)
+  // if (toIndex >= 0 && toIndex !== fromIndex) {
+  //   const temp = order.splice(fromIndex, 1)
+  //   order.splice(toIndex > fromIndex ? toIndex - 1 : toIndex, 0, ...temp)
+  // }
+}
+
+export const handleResortWithDebounce = debounce(handleResort, 300)
+
 /**
  * Map positions from `order` to `panels`.
  * @param order
@@ -200,7 +238,7 @@ export function mapToPanels(
 ) {
   const tempOrder = order
   const tempPanels = cloneDeep(panels)
-  // Reset `order` to be the same order with panels.
+  // Convert `order` to the same order with panels.
   const op = tempPanels.map(p => {
     return tempOrder.find(o => o.key === p.key)
   }) as PanelWithPosition[]
@@ -214,9 +252,6 @@ export function mapToPanels(
     return p
   })
 }
-
-// ----------------------------------------------------------------------------
-// --------------------------- EXPORT START -----------------------------------
 
 /**
  * Get current positions.
@@ -280,6 +315,13 @@ export function handleSizeChange(
   return [newPanels, order]
 }
 
+/**
+ * Handle reset.
+ * @param panels
+ * @param order
+ * @param windowSize
+ * @param margin
+ */
 export function handleReset(
   panels: PanelWithPosition[],
   order: PanelWithPosition[],
