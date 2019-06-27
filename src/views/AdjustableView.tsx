@@ -13,7 +13,11 @@ import { setSize, handleDragging } from '../actions'
 import { State, PanelWithPosition } from '../type'
 
 import '../css/adjustableView.scss'
-import { getFakeDataOfUserInfo, getFakeDataOfReplyInfo } from '../utils'
+import {
+  getFakeDataOfUserInfo,
+  getFakeDataOfReplyInfo,
+  handleResortWithDebounce,
+} from '../utils'
 import Conversation from '../components/Conversation'
 
 const AdjustableView: React.FC = () => {
@@ -45,6 +49,7 @@ const AdjustableView: React.FC = () => {
   // For animation.
   const animationIndex = useSelector((state: State) => state.animationIndex)
   const isDraggingDown = useSelector((state: State) => state.isDraggingDown)
+  const sortable = useSelector((state: State) => state.sortable)
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
@@ -123,6 +128,7 @@ const AdjustableView: React.FC = () => {
       !last && event && event.preventDefault()
       // Dispatch current position.
       dispatch(handleDragging(xy, delta, originalIndex, down))
+      sortable && handleResortWithDebounce(dispatch, xy, originalIndex, down)
     },
     // Configure to enable operation on event directly.
     { event: { capture: true, passive: false } }
