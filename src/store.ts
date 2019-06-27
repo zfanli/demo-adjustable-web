@@ -202,11 +202,7 @@ export function reducer(state = initState, action: BaseAction): State {
       if (sortable) {
         return assignWithNewObject(state, {
           sortable,
-          panels: getCurrentPositions(
-            state.containerSize,
-            state.margin,
-            state.panelKeys
-          ),
+          panels: mapToPanels(state.order, state.panels),
           panelsBackup: cloneDeep(state.panels),
         })
       } else {
