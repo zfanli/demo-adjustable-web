@@ -7,10 +7,11 @@ import {
   setCookie,
   handleReset,
   mapToPanels,
+  handleResortWithDebounce,
 } from './utils'
 import {
   SET_SIZE,
-  SET_DRAGGING_POSITION,
+  HANDLE_DRAGGING,
   SET_LOCALE,
   SET_SORTABLE,
   RESET_PANELS_POSITION,
@@ -104,7 +105,7 @@ export function reducer(state = initState, action: BaseAction): State {
     // ------------------------ START SECTION ---------------------------------
     // For handle panel dragging.
 
-    case SET_DRAGGING_POSITION:
+    case HANDLE_DRAGGING:
       const index = action.payload.index
       if (typeof index !== 'undefined') {
         const targetPanel = cloneDeep(state.panels)[index]
@@ -126,6 +127,7 @@ export function reducer(state = initState, action: BaseAction): State {
           targetPanel.top = targetPanel.tempTop + offset[1]
 
           const moving = action.payload.moving
+          const position = action.payload.position
           const sortable = state.sortable
 
           // Make a copy of panels.
@@ -133,8 +135,8 @@ export function reducer(state = initState, action: BaseAction): State {
 
           // Handle sorting.
           if (sortable) {
-            // get to index
-            // check if it exists and different with from index
+            // panels = state.order
+            handleResortWithDebounce(panels, position, targetPanel.key)
           }
 
           // Reset temp position when moving end.
@@ -144,7 +146,9 @@ export function reducer(state = initState, action: BaseAction): State {
           }
 
           // Set panels.
-          panels[index] = targetPanel
+          panels.forEach((p, i) => {
+            if (p.key === targetPanel.key) panels[i] = targetPanel
+          })
 
           // Reset position in sortable mode for temporarily
           if (!moving && sortable) {
