@@ -108,14 +108,14 @@ Demonstrate an adjustable web UI.
 - Main UI
   - Sortable View
     - order by column direction, means if col 1 row 1 is empty, col 1 row 2 will replace it
-    - panel will not change position if a resort action is not triggered
+    - panel will not change its position if no resort action is triggered
       - temporary position changes during mouse gesture (dragging)
-      - return to previous position if no resort action is triggered
+      - return to the previous position if no resort action is triggered
     - panel will resort if a valid resort action is triggered
       - also temporary position changes before dragging is done
       - a resort action will update all panels' position
       - animation will be triggered after a resort action
-      - the panel which is moving will not go to its new position
+      - the panel which is moving will not go to its new position immediately
       - if no other resort action is triggered, moving panel will go to the new position after dragging done
     - while resort, normal size panel will not effect the position of the larger size panel
       - resort action caused by a normal size panel will only resort between normal size panels
