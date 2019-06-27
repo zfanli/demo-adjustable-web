@@ -27,10 +27,10 @@ Demonstrate an adjustable web UI.
   - [x] ~~maybe table view because rowspan can merge cells across line~~
   - [x] ~~but flex is more flexible to layout~~
   - [x] layout with absolute position
-- [ ] Tool - UI Component Library for fast start
-  - [ ] antd
-    - [ ] layout
-    - [ ] components
+- [x] Tool - UI Component Library for fast start
+  - [x] antd
+    - [x] ~~layout (not used)~~
+    - [x] components few used
 - [ ] Working Flow
   - [x] build workspace
     - [x] dependencies
@@ -54,11 +54,15 @@ Demonstrate an adjustable web UI.
         - [x] added
         - [ ] seems it's not needed, maybe should remove it?
         - [ ] use `useTransitions` for resort animation? If `order` is not needed
-      - [ ] define order algorithms
+      - [x] define order algorithms
         - [x] change direction first, row -> column, for further sort
         - [x] refactor position getter function to meet position changes
-        - [ ] algorithms for calculate index(position) change
-        - [ ] retrieve order from cookie
+        - [x] algorithms for calculate index(position) change
+        - [x] get position by new order
+        - [x] resort caused by the largest panel is special
+          - [x] do not allow small panel to resort to larger panel
+          - [x] resort of larger panel map position to some patterns
+        - [x] ~~retrieve order from cookie (not needed now)~~
     - [ ] refactor `Panel` to be resizable
     - [ ] refactor `Panel` to be collapsible
     - [ ] refactor `Panel` to be expandable
