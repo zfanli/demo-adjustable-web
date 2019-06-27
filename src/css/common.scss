@@ -68,4 +68,15 @@ body {
       padding: 0 0.5rem;
     }
   }
+
+  .conversation {
+    display: flex;
+    height: 100%;
+    margin: 0 0.5rem;
+    flex-direction: column;
+
+    .conversation-body {
+      flex-grow: 1;
+    }
+  }
 }
