@@ -9,16 +9,21 @@ export function setSize(size: Size): BaseAction {
   }
 }
 
-export const SET_DRAGGING_POSITION = 'SET_DRAGGING_POSITION'
+export const HANDLE_DRAGGING = 'HANDLE_DRAGGING'
 
-export function setDraggingPosition(
+export function handleDragging(
+  // Mouse position.
   position: number[],
+  // Offset.
+  offset: number[],
+  // Animation index.
   index: number,
+  // Is moving?
   moving: boolean
 ): BaseAction {
   return {
-    type: SET_DRAGGING_POSITION,
-    payload: { position, index, moving },
+    type: HANDLE_DRAGGING,
+    payload: { position, offset, index, moving },
   }
 }
 
