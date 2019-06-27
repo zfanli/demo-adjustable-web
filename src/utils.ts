@@ -237,8 +237,21 @@ export function handleResort(
     else if (toIndex === 3) toIndex = 4
   }
   if (!isToLargest && toIndex >= 0 && toIndex !== fromIndex) {
+    // Get origin index of the largest one.
+    const largestIndex = tempOrder.findIndex(p => p.largest)
     const temp = tempOrder.splice(fromIndex, 1)
     tempOrder.splice(toIndex, 0, ...temp)
+    // Reset the largest one's position if `from` is not the one.
+    if (!isFromLargest) {
+      // Get the new order of the largest one.
+      const newLargestIndex = tempOrder.findIndex(p => p.largest)
+      // If order changed, reset it.
+      if (largestIndex !== newLargestIndex) {
+        const copy = tempOrder[newLargestIndex]
+        tempOrder.splice(newLargestIndex, 1)
+        tempOrder.splice(largestIndex, 0, copy)
+      }
+    }
   }
 
   const newPosition = getCurrentPositions(
