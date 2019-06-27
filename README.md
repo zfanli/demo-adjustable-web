@@ -94,13 +94,47 @@ Demonstrate an adjustable web UI.
 
 - [x] Fixed Header and Footer on the top and bottom
 - [ ] Adjustable Panels on the center
+
   - [x] 5 panels
   - [x] 1 of them should be 2x large
   - [x] other 4 panels should be the same size
-  - [ ] draggable and resizable
+  - [x] draggable and re-sortable
   - [ ] collapsible from panel to icon
   - [ ] expandable from icon to panel
   - [ ] scrollable inside panel
+
+  **UI Logic**
+
+  - Main UI
+    - Sortable View
+      - order by column direction, means if col 1 row 1 is empty, col 1 row 2 will replace it
+      - panel will not change position if a resort action is not triggered
+        - temporary position changes during mouse gesture (dragging)
+        - return to previous position if no resort action is triggered
+      - panel will resort if a valid resort action is triggered
+        - also temporary position changes before dragging is done
+        - a resort action will update all panels' position
+        - animation will be triggered after a resort action
+        - the panel which is moving will not go to its new position
+        - if no other resort action is triggered, moving panel will go to the new position after dragging done
+      - while resort, normal size panel will not effect the position of the larger size panel
+        - resort action caused by a normal size panel will only resort between normal size panels
+        - if the largest one is in the middle, it is also no effect to resort between normal panels
+        - the resort between normal panels will around the largest one if it is in the middle
+      - while resort, larger size panel only move by col (col 1~3)
+        - the largest one has only three valid position, by col numbers, 1~3
+        - even mouse could moving to the second row, position changes will happening by col only
+      - if a backup of un-sortable panels exists, it will be used while switch to un-sortable view
+      - if no backup exists, switch to un-sortable mode will cause nothing
+    - Un-Sortable View
+      - panel's position will change at dragging
+      - switch to sortable view will cause a reset of each panel's position to previous status
+      - [NOTE!] relationship of layers is not implemented because the big different between sortable and un-sortable mode
+      - [NOTE!] it could be implemented but might make a damage change to sortable view
+    - Settings
+      - language changes between English and Japanese
+      - sortable mode switch
+      - position reset
 
 ## Commands
 
