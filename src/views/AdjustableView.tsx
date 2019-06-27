@@ -9,11 +9,12 @@ import Footer from '../components/Footer'
 import Panel from '../components/Panel'
 import InformationList from '../components/InformationList'
 
-import { setSize, setDraggingPosition } from '../actions'
+import { setSize, handleDragging } from '../actions'
 import { State, PanelWithPosition } from '../type'
 
 import '../css/adjustableView.scss'
 import { getFakeDataOfUserInfo, getFakeDataOfReplyInfo } from '../utils'
+import Conversation from '../components/Conversation'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -111,15 +112,17 @@ const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
   // -------------------------- START SECTION ---------------------------------
   // Handle mouse dragging.
-  // Expose the down state, delta information to make a transition animation,
-  // and preventing text selection actions caused by dragging.
+  //
+  // Expose the down state, mouse position, delta position to make a
+  // transition animation, and preventing text selection actions caused by
+  // dragging.
 
   const bind = useGesture(
-    ({ args: [originalIndex], down, delta, last, event }) => {
+    ({ args: [originalIndex], xy, down, delta, last, event }) => {
       // Preventing text selection caused by dragging.
       !last && event && event.preventDefault()
       // Dispatch current position.
-      dispatch(setDraggingPosition(delta, originalIndex, down))
+      dispatch(handleDragging(xy, delta, originalIndex, down))
     },
     // Configure to enable operation on event directly.
     { event: { capture: true, passive: false } }
@@ -175,6 +178,7 @@ const AdjustableView: React.FC = () => {
     [panelKeys[1]]: (
       <InformationList information={getFakeDataOfReplyInfo(lang, 16)} />
     ),
+    [panelKeys[4]]: <Conversation />,
   }
 
   // --------------------------- END SECTION ----------------------------------
