@@ -1,5 +1,5 @@
 import React, { CSSProperties, useState } from 'react'
-import { Icon } from 'antd'
+import { Icon, Empty } from 'antd'
 import { animated as a } from 'react-spring'
 
 interface Props {
@@ -44,7 +44,13 @@ const Panel: React.FC<Props> = (props: Props) => {
           </button>
         </div>
       </header>
-      <div className="panel-content">{props.children}</div>
+      <div className="panel-content">
+        {props.children ? (
+          props.children
+        ) : (
+          <Empty description="No Data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        )}
+      </div>
     </a.div>
   )
 }
