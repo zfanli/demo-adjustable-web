@@ -83,6 +83,17 @@ body {
 
     .conversation-body {
       flex-grow: 1;
+      overflow: scroll;
+
+      .conversation-message {
+        &.analyzing {
+          color: #999;
+        }
+
+        .speaker-label {
+          font-weight: bold;
+        }
+      }
     }
 
     .conversation-buttons {
