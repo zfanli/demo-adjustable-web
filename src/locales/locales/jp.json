@@ -9,5 +9,8 @@
     "コミュニケーション"
   ],
   "sortable": "動的ソート",
-  "resetPosition": "位置リセット"
+  "resetPosition": "位置リセット",
+  "editNotAllowedWhileRecording": "音声識別中にはキーワードは編集不可です。",
+  "speaker": "話者",
+  "analyzing": "分析中..."
 }

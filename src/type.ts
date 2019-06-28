@@ -17,6 +17,21 @@ export interface State {
   animationIndex?: number
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]
+  watsonSpeech: {
+    keywords: string[]
+    resultKeywords: string[]
+    accessTokenURL: string
+  }
+}
+
+export interface ResultResponse {
+  textResult: TextWithLabel[]
+  keywordResult: string[]
+}
+
+export interface TextWithLabel {
+  speaker: string | number
+  transcript: string
 }
 
 export interface PlainObject {

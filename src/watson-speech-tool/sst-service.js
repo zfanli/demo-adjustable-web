@@ -7,8 +7,6 @@ import Axios from 'axios'
 var textResult = []
 var keywordResult = []
 // var keywordsText = '東京,浅草寺,バス';
-var recordBtnText = 'Record'
-var recordBtnClass = 'recordBtn'
 // var tokenUrl = 'http://localhost:8080/cca/ssttoken';
 var tokenUrl = ''
 var lastStream = null
@@ -77,8 +75,6 @@ function getRecognizeOptions(extra) {
 function record(callback) {
   if (recordState.audioSource === 'mic') {
     stopTranscription()
-    recordBtnText = 'Record'
-    recordBtnClass = 'recordBtn'
     return
   }
   recordCallback = callback
@@ -137,9 +133,6 @@ function handleStream(stream) {
     .on('close', (code, message) =>
       handleRawMessage({ close: true, code, message })
     )
-
-  recordBtnText = 'Stop'
-  recordBtnClass = 'stopBtn'
 }
 
 function stopTranscription() {
@@ -160,8 +153,6 @@ function reset() {
   recordState.error = null
   textResult = []
   keywordResult = []
-  recordBtnText = 'Record'
-  recordBtnClass = 'recordBtn'
 }
 
 function handleTranscriptEnd() {
@@ -188,7 +179,7 @@ function handleFormattedMessage(msg) {
   const { formattedMessages } = recordState
   recordState.formattedMessages = formattedMessages.concat(msg)
   // console.log('------------------handleFormattedMessage----------------------');
-  // console.log(msg);
+  // console.log(msg)
   // console.log('results:' + (msg.results.length - 1));
 
   let speakerLabel = ''
@@ -203,16 +194,18 @@ function handleFormattedMessage(msg) {
       speakerLabel = msg.results[i].speaker
       // $refs.resultArea.scrollTop = $refs.resultArea.scrollHeight
       // if(typeof speakerLabel === 'number'){
-      if (msg.results[i].word_alternatives) {
-        speakerLabel = typeof speakerLabel == 'undefined' ? 0 : speakerLabel
-      } else {
-        speakerLabel = null
-      }
+      // if (msg.results[i].word_alternatives) {
+      //   speakerLabel = !speakerLabel ? 0 : speakerLabel
+      // } else {
+      //   speakerLabel = 'analyzing'
+      // }
+      speakerLabel =
+        typeof speakerLabel !== 'undefined' ? speakerLabel : 'analyzing'
       textResult.push({ speaker: speakerLabel, transcript: transcript })
 
       if (msg.results[i].keywords_result) {
         for (var k in msg.results[i].keywords_result) {
-          let v = msg.results[i].keywords_result[k]
+          // let v = msg.results[i].keywords_result[k]
           // console.log(k,":",v);
           if (keywords[k]) {
             keywords[k] = keywords[k] + 1

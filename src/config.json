@@ -10,5 +10,9 @@
   "margin": 15,
   "headerHeight": 100,
   "footerHeight": 100,
-  "shadowSizeWhileDragging": 50
+  "shadowSizeWhileDragging": 50,
+  "watsonSpeech": {
+    "accessTokenURL": "http://localhost:8080/cca/ssttoken",
+    "defaultKeywords": []
+  }
 }

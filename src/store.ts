@@ -15,6 +15,7 @@ import {
   SET_SORTABLE,
   HANDLE_RESET_ACTION,
   HANDLE_RESORT_ACTION,
+  SET_RESULT_KEYWORDS,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -68,6 +69,11 @@ export const initState: State = {
   sortable: true,
   headerHeight: config.headerHeight,
   footerHeight: config.footerHeight,
+  watsonSpeech: {
+    keywords: config.watsonSpeech.defaultKeywords,
+    resultKeywords: [],
+    accessTokenURL: config.watsonSpeech.accessTokenURL,
+  },
 }
 
 // ---------------------------- END SECTION -----------------------------------
@@ -236,6 +242,18 @@ export function reducer(state = initState, action: BaseAction): State {
       return assignWithNewObject(state, {
         panels: resetPanels,
         order: cloneDeep(resetPanels),
+      })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Reset panels position to initial state.
+
+    case SET_RESULT_KEYWORDS:
+      const tempWatsonSpeech = cloneDeep(state.watsonSpeech)
+      tempWatsonSpeech.resultKeywords = action.payload.resultKeywords
+      return assignWithNewObject(state, {
+        watsonSpeech: tempWatsonSpeech,
       })
 
     // ------------------------- END SECTION ----------------------------------

@@ -70,3 +70,12 @@ export function handleResortAction(
     },
   }
 }
+
+export const SET_RESULT_KEYWORDS = 'SET_RESULT_KEYWORDS'
+
+export function setResultKeywords(resultKeywords: string[]): BaseAction {
+  return {
+    type: SET_RESULT_KEYWORDS,
+    payload: { resultKeywords },
+  }
+}
