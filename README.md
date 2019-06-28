@@ -65,7 +65,9 @@ Demonstrate an adjustable web UI.
         - [x] ~~retrieve order from cookie (not needed now)~~
     - [ ] refactor `Panel` to be resizable
     - [ ] refactor `Panel` to be collapsible
+      - [ ] add a tab bar to hold collapsed panels
     - [ ] refactor `Panel` to be expandable
+      - [ ] retrieve panels from tab bar
   - [ ] Styles UI
     - [x] base styles after draggable done
     - [ ] fill fake data
@@ -80,12 +82,13 @@ Demonstrate an adjustable web UI.
     - [x] reset panels' position when un-sortable
     - [ ] other settings
   - [ ] Speech to Text API
-    - [ ] start bind to button
-    - [ ] need to pass a keywords array
-    - [ ] and a api key to start
-    - [ ] send a callback to handle data changes
-    - [ ] get an object as parameter contains conversation and keyword feedback
-    - [ ] stop bind to button
+    - [x] start bind to button
+    - [x] need to pass a keywords array
+    - [x] and a api key to start
+    - [x] send a callback to handle data changes
+    - [x] get an object as parameter contains conversation and keyword feedback
+    - [x] stop bind to button (the same with start handler, it will stop automatically)
+    - [ ] keep scrolling to bottom when scroll bar is currently in the bottom
   - [ ] Testing
     - [ ] reducer
     - [ ] utils
