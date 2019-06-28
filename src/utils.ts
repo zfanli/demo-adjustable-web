@@ -206,7 +206,8 @@ export function handleResort(
   index: number,
   moving: boolean,
   margin: number,
-  size: Size
+  size: Size,
+  offsetHeight: number
 ) {
   // Variables.
   const [x, y] = position
@@ -214,10 +215,16 @@ export function handleResort(
   const key = panels[index].key
   const fromIndex = tempOrder.findIndex(p => p.key === key)
   // Get to index.
-  let toIndex = tempOrder.findIndex(
-    ({ left, top, width, height }) =>
-      x > left && x < left + width && y > top && y < top + height
-  )
+  let toIndex = tempOrder.findIndex(({ left, top, width, height }) => {
+    // x is ok, but y is calculated from the top of the page,
+    // includes the header, so we have to set a offset to get it correctly
+    return (
+      x > left &&
+      x < left + width &&
+      y > top + offsetHeight &&
+      y < top + height + offsetHeight
+    )
+  })
 
   // Do nothing if `toIndex` is invalid.
   if (toIndex < 0) return [panels, order]

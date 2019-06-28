@@ -5,7 +5,12 @@ import { State } from '../type'
 const Footer: React.FC = () => {
   // get footer string from store
   const footer = useSelector((state: State) => state.locale.footer)
-  return <footer className="footer">{footer}</footer>
+  const height = useSelector((state: State) => state.footerHeight)
+  return (
+    <footer className="footer" style={{ height }}>
+      {footer}
+    </footer>
+  )
 }
 
 export default Footer

@@ -8,6 +8,7 @@ import { setLocale, setSortable, resetPanelsPosition } from '../actions'
 const Header: React.FC = () => {
   // get header string from store
   const header = useSelector((state: State) => state.locale.header)
+  const height = useSelector((state: State) => state.headerHeight)
   const dispatch = useDispatch()
 
   const handleI18nMenuClick = (e: ClickParam) => {
@@ -33,7 +34,7 @@ const Header: React.FC = () => {
   }
 
   return (
-    <header className="header">
+    <header className="header" style={{ height }}>
       <div className="header-title">{header}</div>
       <div className="header-buttons">
         <Dropdown

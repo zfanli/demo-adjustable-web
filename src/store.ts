@@ -66,6 +66,8 @@ export const initState: State = {
   order: cloneDeep(initialPanels),
   shadowSizeWhileDragging: config.shadowSizeWhileDragging,
   sortable: true,
+  headerHeight: config.headerHeight,
+  footerHeight: config.footerHeight,
 }
 
 // ---------------------------- END SECTION -----------------------------------
@@ -168,7 +170,8 @@ export function reducer(state = initState, action: BaseAction): State {
         action.payload.index,
         action.payload.moving,
         state.margin,
-        state.containerSize
+        state.containerSize,
+        state.headerHeight
       )
       return assignWithNewObject(state, {
         panels: resortPanels,

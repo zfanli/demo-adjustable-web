@@ -12,6 +12,8 @@ export interface State {
   order: PanelWithPosition[]
   shadowSizeWhileDragging: number
   sortable: boolean
+  headerHeight: number
+  footerHeight: number
   animationIndex?: number
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]
