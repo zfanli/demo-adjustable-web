@@ -1,15 +1,29 @@
-import React from 'react'
-import { Icon, Input } from 'antd'
+import React, { useState } from 'react'
+import { Input, Button, Icon, Empty } from 'antd'
 
 const Conversation: React.FC = () => {
+  const [recordFlag, setRecordFlag] = useState(false)
+  const type = recordFlag ? 'danger' : 'primary'
+  const handleAudioButtonClick = () => setRecordFlag(!recordFlag)
   return (
     <div className="conversation">
-      <div className="conversation-body">conversation body</div>
+      <div className="conversation-body">
+        <Empty description="No Data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      </div>
       <div className="conversation-buttons">
-        <button>
-          <Icon type="trademark-circle" theme="filled" />
-        </button>
-        <Input placeholder="Keywords..." />
+        <Button
+          type={type}
+          className={type}
+          size="small"
+          onClick={handleAudioButtonClick}
+        >
+          {recordFlag ? (
+            <Icon type="audio" theme="filled" />
+          ) : (
+            <Icon type="audio" />
+          )}
+        </Button>
+        <Input size="small" placeholder="Keywords..." />
       </div>
     </div>
   )

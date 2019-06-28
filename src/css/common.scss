@@ -8,6 +8,12 @@
   color: #fff;
 }
 
+@keyframes breathing {
+  100% {
+    box-shadow: 0 0 0 6px #ff444d;
+  }
+}
+
 body {
   box-sizing: border-box;
   margin: 0;
@@ -77,6 +83,32 @@ body {
 
     .conversation-body {
       flex-grow: 1;
+    }
+
+    .conversation-buttons {
+      display: flex;
+
+      button {
+        margin-right: 0.5rem;
+        display: inline-block;
+
+        &.danger::after {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          display: block;
+          border-radius: inherit;
+          box-shadow: 0 0 0 0 #ff444d;
+          opacity: 0.2;
+          animation: fadeEffect 2s cubic-bezier(0.08, 0.82, 0.17, 1) infinite,
+            breathing 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) infinite;
+          animation-fill-mode: forwards;
+          content: '';
+          pointer-events: none;
+        }
+      }
     }
   }
 }
