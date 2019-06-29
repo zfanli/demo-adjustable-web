@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useRef, useEffect } from 'react'
+import React, { useState, ChangeEvent, useRef } from 'react'
 import { Input, Button, Icon, Empty, Tooltip } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -6,6 +6,7 @@ import sstService from '../watson-speech-tool/sst-service'
 
 import { State, ResultResponse, TextWithLabel } from '../type'
 import { setResultKeywords } from '../actions'
+import { debounce } from 'lodash'
 
 const Conversation: React.FC = () => {
   // Get data from store.
@@ -27,11 +28,28 @@ const Conversation: React.FC = () => {
   const [tooltipVisible, setTooltipVisible] = useState(false)
   const [keywordsText, setKeywordsText] = useState(keywords.join(','))
   const [conversation, setConversation] = useState<TextWithLabel[]>([])
-  // Ref for handle scroll of messages box.
-  const messageBox = useRef(null)
-  const scrollToBottom = useState(true)
+  // Handle scroll of messages box.
+  const messageBox = useRef<HTMLDivElement>(null)
+  const [scrollToBottom, setScrollToBottom] = useState(true)
 
-  // const handleMessageBoxScroll = (e: )
+  const handleMessageBoxScroll = debounce(() => {
+    if (!messageBox || !messageBox.current) {
+      return
+    }
+    const scrollTop =
+      messageBox.current.scrollTop + messageBox.current.clientHeight
+    const scrollHeight = messageBox.current.scrollHeight
+    const bottomFlag = scrollTop === scrollHeight
+    setScrollToBottom(bottomFlag)
+  }, 100)
+
+  messageBox &&
+    messageBox.current &&
+    scrollToBottom &&
+    messageBox.current.scrollTo(
+      0,
+      messageBox.current.scrollHeight - messageBox.current.clientHeight
+    )
 
   // Handle keywords changes.
   // Show a message if edit is not allowed.
@@ -84,7 +102,11 @@ const Conversation: React.FC = () => {
 
   return (
     <div className="conversation">
-      <div className="conversation-body" ref={messageBox}>
+      <div
+        className="conversation-body"
+        ref={messageBox}
+        onScroll={handleMessageBoxScroll}
+      >
         {conversation.length ? (
           conversation.map((piece, i) => (
             <div
