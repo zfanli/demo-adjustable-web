@@ -72,8 +72,8 @@ function getRecognizeOptions(extra) {
   )
 }
 
-function record(callback) {
-  if (recordState.audioSource === 'mic') {
+function record(callback, stop) {
+  if (stop) {
     stopTranscription()
     return
   }

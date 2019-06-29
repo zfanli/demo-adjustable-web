@@ -10,6 +10,9 @@ import { setResultKeywords } from '../actions'
 const Conversation: React.FC = () => {
   // Get data from store.
   const keywords = useSelector((state: State) => state.watsonSpeech.keywords)
+  const tokenUrl = useSelector(
+    (state: State) => state.watsonSpeech.accessTokenURL
+  )
   const dispatch = useDispatch()
 
   // Display texts.
@@ -61,7 +64,7 @@ const Conversation: React.FC = () => {
       // ---------------------- Configure Watson Speech -------------------------
 
       //SSTのAccessTokenの取得URLを設定
-      sstService.setTokenUrl('http://localhost:8080/cca/ssttoken')
+      sstService.setTokenUrl(tokenUrl)
 
       //キーサードを設定
       sstService.setKeywords(keywords)
@@ -75,7 +78,7 @@ const Conversation: React.FC = () => {
       // Set stop flag.
       setRecordFlag(false)
       // Auto stop if it's running now.
-      sstService.record()
+      sstService.record(undefined, true)
     }
   }
 
