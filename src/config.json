@@ -12,7 +12,7 @@
   "footerHeight": 100,
   "shadowSizeWhileDragging": 50,
   "watsonSpeech": {
-    "accessTokenURL": "http://localhost:8080/cca/ssttoken",
+    "accessTokenURL": "/api/v1/credentials",
     "defaultKeywords": []
   }
 }

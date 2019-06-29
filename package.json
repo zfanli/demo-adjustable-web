@@ -2,6 +2,7 @@
   "name": "demo-adjustable-web",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3002/",
   "dependencies": {
     "@types/jest": "24.0.15",
     "@types/lodash": "^4.14.134",
