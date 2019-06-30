@@ -21,8 +21,8 @@ Demonstrate an adjustable web UI.
   - [x] ~~Alternatives - react-motion (maybe not)~~
   - [x] ~~Alternatives - animated (perhaps not)~~
 - [x] Topics - Debounce & Throttle for best performance
-  - [x] debounce (only usage)
-  - [x] throttle (usage only)
+  - [x] debounce (used)
+  - [x] throttle (used)
 - [x] Thinking - How to layout? Flex or Table?
   - [x] ~~maybe table view because rowspan can merge cells across line~~
   - [x] ~~but flex is more flexible to layout~~
@@ -31,7 +31,7 @@ Demonstrate an adjustable web UI.
   - [x] antd
     - [x] ~~layout (not used)~~
     - [x] components few used
-- [ ] Working Flow
+- [x] **[Phase 1 *Done*] Working Flow**
   - [x] build workspace
     - [x] dependencies
     - [x] base configs
@@ -42,18 +42,16 @@ Demonstrate an adjustable web UI.
     - [x] `Panel` component also just a placeholder
     - [x] extract configs to file
     - [x] loading configs to redux store
-  - [ ] add interaction to it
+  - [x] add interaction to it
     - [x] refactor `Panel` to be draggable
       - [x] ~~try without gesture hook, just handle on mouse down events, faster with gesture~~
       - [x] if cannot work, use gesture instead (done)
-    - [ ] refactor `Panel` to be sortable
+    - [x] refactor `Panel` to be sortable
       - [x] refactor to move gestures into container
         - [x] move gestures into container
         - [x] adjust resize actions
-      - [ ] refactor to add `order` for hold order
+      - [x] refactor to add `order` for hold order
         - [x] added
-        - [ ] seems it's not needed, maybe should remove it?
-        - [ ] use `useTransitions` for resort animation? If `order` is not needed
       - [x] define order algorithms
         - [x] change direction first, row -> column, for further sort
         - [x] refactor position getter function to meet position changes
@@ -63,48 +61,69 @@ Demonstrate an adjustable web UI.
           - [x] do not allow small panel to resort to larger panel
           - [x] resort of larger panel map position to some patterns
         - [x] ~~retrieve order from cookie (not needed now)~~
-    - [ ] refactor `Panel` to be resizable
-    - [ ] refactor `Panel` to be collapsible
-      - [ ] add a tab bar to hold collapsed panels
-    - [ ] refactor `Panel` to be expandable
-      - [ ] retrieve panels from tab bar
-  - [ ] Styles UI
+  - [x] Styles UI
     - [x] base styles after draggable done
-    - [ ] fill fake data
+    - [x] fill fake data
       - [x] reply info is scrollable
       - [x] fill user info
-      - [ ] fixed menu has only 6 items
-      - [ ] dynamic menu has 5
-    - [ ] improve UI after sortable done
-  - [ ] Menu
+    - [x] improve UI after sortable done
+  - [x] Menu
     - [x] switch between sortable view and not sortable view
     - [x] display languages (en or jp)
     - [x] reset panels' position when un-sortable
-    - [ ] other settings
-  - [ ] Speech to Text API
+  - [x] Speech to Text API
     - [x] start bind to button
     - [x] need to pass a keywords array
     - [x] and a api key to start
     - [x] send a callback to handle data changes
     - [x] get an object as parameter contains conversation and keyword feedback
     - [x] stop bind to button (the same with start handler, it will stop automatically)
-    - [ ] keep scrolling to bottom when scroll bar is currently in the bottom
+    - [x] keep scrolling to bottom when scroll bar is currently in the bottom
+    - [x] simple backend for get access token
+  - [x] Testing
+    - [x] only part of reducer
+    - [x] only part of utils
+- [ ] **[Phase 2] Working Flow: For Tab Bar**
+  - [ ] Refactor the entire structure of the app to be clear
+    - [ ] carding logic of each event
+      - [ ] logic on resizing
+      - [ ] logic on resetting
+      - [ ] logic on resorting
+      - [ ] logic on dragging
+    - [ ] design the logic to meet the required new features
+      - [ ] tab bar for collapse and expand panels
+        - [ ] collapse button to minimize panel to the tab bar
+        - [ ] maximize button to minimize other panels to the tab bar
+          - [ ] set the target panel to be the max one and minimize other panels
+        - [ ] retrieve panel from the tab bar to the main screen
+      - [ ] deal with z-index on operation on the tab bar
+        - [ ] set top z-index to the active tab/panel
+        - [ ] the z-index maybe should to be managed by a individual array
+  - [ ] Add tab bar to the view
+    - [ ] panels minimize to tab bar
+    - [ ] retrieve panels from tab bar
+  - [ ] Fill fixed menu with 6 items
+  - [ ] Dynamic add/remove items to dynamic menu according to the result keywords of watson speech
+    - [ ] adding/removing items dynamically by the spotted times of keywords
+    - [ ] keep only five items on the screen
+    - [ ] transition animation when items changes
+  - [ ] Reconsideration
+    - [ ] Maybe remove `order` and animate with `useTransitions` instead of `useSprings`
+    - [ ] resizable panels
   - [ ] Testing
-    - [ ] reducer
-    - [ ] utils
+    - [ ] improvement
 
 **REQUIREMENTS**
 
 - [x] Fixed Header and Footer on the top and bottom
-- [ ] Adjustable Panels on the center
-
+- [x] Adjustable Panels on the center
   - [x] 5 panels
   - [x] 1 of them should be 2x large
   - [x] other 4 panels should be the same size
+  - [x] scrollable inside panel
   - [x] draggable and re-sortable
   - [ ] collapsible from panel to icon
   - [ ] expandable from icon to panel
-  - [ ] scrollable inside panel
 
 **UI Logic**
 
@@ -177,11 +196,16 @@ Root
     [DIR] css - for all css resources
     [DIR] locales - for localize strings
     [DIR] views - for layouts
+    [DIR] tests - testing for reducer and utils
+    [DIR] typings - override of type definitions
+    actions.ts - action creators for reducer
     App.tsx - for manage route of entire app
     config.json - for configure app
     index.tsx - the entry of app
     store.ts - for manage sate of entire app
     type.ts - for common type interfaces
+    utils.ts - for handle main events
+    ...
   .env - customize env variable
   ...
 ```
