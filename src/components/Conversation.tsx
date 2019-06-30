@@ -1,4 +1,10 @@
-import React, { useState, ChangeEvent, useRef } from 'react'
+import React, {
+  useState,
+  ChangeEvent,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react'
 import { Input, Button, Icon, Empty, Tooltip } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -6,11 +12,13 @@ import sstService from '../watson-speech-tool/sst-service'
 
 import { State, ResultResponse, TextWithLabel } from '../type'
 import { setResultKeywords } from '../actions'
-import { debounce } from 'lodash'
+import { debounce, throttle } from 'lodash'
 
 const Conversation: React.FC = () => {
   // Get data from store.
-  const keywords = useSelector((state: State) => state.watsonSpeech.keywords)
+  const defaultKeywords = useSelector(
+    (state: State) => state.watsonSpeech.keywords
+  )
   const tokenUrl = useSelector(
     (state: State) => state.watsonSpeech.accessTokenURL
   )
@@ -26,7 +34,7 @@ const Conversation: React.FC = () => {
   // State for local control.
   const [recordFlag, setRecordFlag] = useState(false)
   const [tooltipVisible, setTooltipVisible] = useState(false)
-  const [keywordsText, setKeywordsText] = useState(keywords.join(','))
+  const [keywords, setKeywords] = useState(defaultKeywords)
   const [conversation, setConversation] = useState<TextWithLabel[]>([])
   // Handle scroll of messages box.
   const messageBox = useRef<HTMLDivElement>(null)
@@ -60,17 +68,28 @@ const Conversation: React.FC = () => {
         setTooltipVisible(false)
       }, 2000)
     } else {
-      setKeywordsText(e.target.value)
+      const k = e.target.value.split(',').map(k => k.trim())
+      setKeywords(k)
     }
   }
 
   // Trigger colors.
   const type = recordFlag ? 'danger' : 'primary'
 
-  const responseHandler = (res: ResultResponse) => {
-    setConversation(res.textResult)
-    dispatch(setResultKeywords(res.keywordResult))
-  }
+  // Control the times to be called, every 200ms can be called once.
+  const dispatchResultKeywordsWithThrottle = useMemo(
+    () => throttle(keywords => dispatch(setResultKeywords(keywords)), 200),
+    [dispatch]
+  )
+
+  // Handle response from api server.
+  const responseHandler = useCallback(
+    (res: ResultResponse) => {
+      setConversation(res.textResult)
+      dispatchResultKeywordsWithThrottle(res.keywordResult)
+    },
+    [dispatchResultKeywordsWithThrottle]
+  )
 
   // Handle audio button.
   const handleAudioButtonClick = () => {
@@ -81,13 +100,13 @@ const Conversation: React.FC = () => {
       // ------------------------------------------------------------------------
       // ---------------------- Configure Watson Speech -------------------------
 
-      //SSTのAccessTokenの取得URLを設定
+      // SSTのAccessTokenの取得URLを設定
       sstService.setTokenUrl(tokenUrl)
 
-      //キーサードを設定
+      // キーサードを設定
       sstService.setKeywords(keywords)
 
-      //マイクロフォンを開き、会話解析を実施
+      // マイクロフォンを開き、会話解析を実施
       sstService.record(responseHandler)
 
       // ------------------------------ Ending ----------------------------------
@@ -142,7 +161,7 @@ const Conversation: React.FC = () => {
         <Tooltip title={tooltipText} visible={tooltipVisible}>
           <Input
             size="small"
-            value={keywordsText}
+            value={keywords.join(',')}
             onChange={handleKeywordsChange}
             placeholder="Keywords..."
           />

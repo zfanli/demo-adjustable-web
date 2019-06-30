@@ -13,6 +13,6 @@
   "shadowSizeWhileDragging": 50,
   "watsonSpeech": {
     "accessTokenURL": "/api/v1/credentials",
-    "defaultKeywords": []
+    "defaultKeywords": ["テスト", "天気", "散歩"]
   }
 }

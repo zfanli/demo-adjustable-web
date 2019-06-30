@@ -252,6 +252,7 @@ export function reducer(state = initState, action: BaseAction): State {
     case SET_RESULT_KEYWORDS:
       const tempWatsonSpeech = cloneDeep(state.watsonSpeech)
       tempWatsonSpeech.resultKeywords = action.payload.resultKeywords
+      console.log(action.payload.resultKeywords)
       return assignWithNewObject(state, {
         watsonSpeech: tempWatsonSpeech,
       })
