@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSprings, interpolate } from 'react-spring'
 import { useGesture } from 'react-use-gesture'
@@ -146,17 +146,17 @@ const AdjustableView: React.FC = () => {
   // Fortunately it won't change, which means there is no potential impact that
   // can lead to an unexpected re-rendering.
 
-  useEffect(() => {
-    // Create handler for resize event.
-    const resizeHandler = () => {
-      if (av && av.current) {
-        const width = av.current.offsetWidth
-        const height = av.current.offsetHeight
-        // Store current content box size.
-        dispatch(setSize({ width, height }))
-      }
+  // Create handler for resize event.
+  const resizeHandler = useCallback(() => {
+    if (av && av.current) {
+      const width = av.current.offsetWidth
+      const height = av.current.offsetHeight
+      // Store current content box size.
+      dispatch(setSize({ width, height }))
     }
+  }, [dispatch, av])
 
+  useEffect(() => {
     // Throttle control for optimized performance.
     const handler = debounce(resizeHandler, 200)
 
@@ -170,7 +170,7 @@ const AdjustableView: React.FC = () => {
     return function cleanup() {
       window.removeEventListener('resize', handler)
     }
-  }, [dispatch])
+  }, [resizeHandler])
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
