@@ -2,6 +2,70 @@
 
 Demonstrate an adjustable web UI.
 
+## Commands
+
+### `npm start` or `yarn start`
+
+Runs the app in the development mode.
+
+The page will reload if you make edits.
+
+You will also see any lint errors in the console.
+
+### `npm test` or `yarn test`
+
+Launches the test runner in the interactive watch mode.
+
+~~But no test now!~~
+
+### `npm run build` or `yarn build`
+
+Builds the app for production to the `build` folder.
+
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.
+
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Structure
+
+```text
+Root
+  [DIR] public - for public resources
+  [DIR] src - for sources
+    [DIR] components - for all components
+    [DIR] css - for all css resources
+    [DIR] locales - for localize strings
+    [DIR] views - for layouts
+    [DIR] tests - testing for reducer and utils
+    [DIR] typings - override of type definitions
+    actions.ts - action creators for reducer
+    App.tsx - for manage route of entire app
+    config.json - for configure app
+    index.tsx - the entry of app
+    store.ts - for manage sate of entire app
+    type.ts - for common type interfaces
+    utils.ts - for handle main events
+    ...
+  .env - customize env variable
+  ...
+```
+
+## REQUIREMENTS
+
+- [x] Fixed Header and Footer on the top and bottom
+- [x] Adjustable Panels on the center
+  - [x] 5 panels
+  - [x] 1 of them should be 2x large
+  - [x] other 4 panels should be the same size
+  - [x] scrollable inside panel
+  - [x] draggable and re-sortable
+  - [ ] collapsible from panel to icon
+  - [ ] expandable from icon to panel
+
 ## TODOs
 
 - [x] Base on React > v16
@@ -113,18 +177,6 @@ Demonstrate an adjustable web UI.
   - [ ] Testing
     - [ ] improvement
 
-**REQUIREMENTS**
-
-- [x] Fixed Header and Footer on the top and bottom
-- [x] Adjustable Panels on the center
-  - [x] 5 panels
-  - [x] 1 of them should be 2x large
-  - [x] other 4 panels should be the same size
-  - [x] scrollable inside panel
-  - [x] draggable and re-sortable
-  - [ ] collapsible from panel to icon
-  - [ ] expandable from icon to panel
-
 **UI Logic**
 
 - Main UI
@@ -157,58 +209,6 @@ Demonstrate an adjustable web UI.
     - language changes between English and Japanese
     - sortable mode switch
     - position reset
-
-## Commands
-
-### `npm start` or `yarn start`
-
-Runs the app in the development mode.
-
-The page will reload if you make edits.
-
-You will also see any lint errors in the console.
-
-### `npm test` or `yarn test`
-
-Launches the test runner in the interactive watch mode.
-
-~~But no test now!~~
-
-### `npm run build` or `yarn build`
-
-Builds the app for production to the `build` folder.
-
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.
-
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Structure
-
-```text
-Root
-  [DIR] public - for public resources
-  [DIR] src - for sources
-    [DIR] components - for all components
-    [DIR] css - for all css resources
-    [DIR] locales - for localize strings
-    [DIR] views - for layouts
-    [DIR] tests - testing for reducer and utils
-    [DIR] typings - override of type definitions
-    actions.ts - action creators for reducer
-    App.tsx - for manage route of entire app
-    config.json - for configure app
-    index.tsx - the entry of app
-    store.ts - for manage sate of entire app
-    type.ts - for common type interfaces
-    utils.ts - for handle main events
-    ...
-  .env - customize env variable
-  ...
-```
 
 ## Related Links
 
