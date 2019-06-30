@@ -68,38 +68,48 @@ Root
 
 ## TODOs
 
-- [x] Base on React > v16
-  - [x] use typescript
-    - [x] you can override a module's own definition by declare it in typings folder
-    - [x] cast to any type if some tiresome errors is ocurred
-  - [x] router for cover other situations
-  - [x] redux for integrate configurations
-    - [x] read data (Provider and connect)
-    - [x] dispatch actions
-  - [x] JSS? Or other CSS preprocessor?
-    - [x] ~~follow antd to use less as css preprocessor (cannot use less until eject...)~~
-    - [x] use sass instead ~~(for common definition)~~
-    - [x] ~~use react-jss for normally use (cannot work smoothly with typescript now)~~
+- [x] Base on React > v16 with hooks
+  - [x] Router
+    - [x] Adjustable Web View in the root (/) path
+    - [x] show a 404 message on other path
+  - [x] Redux for data management
+    - [x] configurations
+    - [x] app's main state
+    - [x] working flow with hooks api:
+      - [x] `<Provider />` to wrap the app
+      - [x] `useSelector` to get specific state
+      - [x] `useDispatch` to get a despatcher
+      - [x] use dispatcher to dispatch an action for state changes
+  - [x] about CSS
+    - [x] use sass as a CSS preprocessor
+    - [x] ~~use less because of the customization of antd (cant work unless eject project)~~
+    - [x] ~~use react-jss (cant work smoothly with typescript now)~~
+- [x] Typescript
+  - [x] override module's own definition in typings folder
+  - [x] cast expressions to any type to suppress tiresome errors
 - [x] Animation library - react-spring
-  - [x] basic usage for recall
+  - [x] `useSprings` for animate a group of panels
   - [x] ~~Alternatives - react-motion (maybe not)~~
   - [x] ~~Alternatives - animated (perhaps not)~~
 - [x] Topics - Debounce & Throttle for best performance
   - [x] debounce (used)
   - [x] throttle (used)
 - [x] Thinking - How to layout? Flex or Table?
-  - [x] ~~maybe table view because rowspan can merge cells across line~~
-  - [x] ~~but flex is more flexible to layout~~
-  - [x] layout with absolute position
+  - [x] absolute position for the most flexible
+  - [x] flex box for other parts
+  - [x] ~~table view is not recommended~~
 - [x] Tool - UI Component Library for fast start
   - [x] antd
-    - [x] ~~layout (not used)~~
-    - [x] components few used
+    - [x] components
+    - [x] ~~layout (not need)~~
+
+**Working Flow**
+
 - [x] **[Phase 1 *Done*] Working Flow**
-  - [x] build workspace
-    - [x] dependencies
-    - [x] base configs
-  - [x] statics version web
+  - [x] build the basic workspace
+    - [x] add some basic dependencies
+    - [x] do some basic configs
+  - [x] static version of the view
     - [x] `Header` component just a placeholder
     - [x] `Content` component for layout, actually named `AdjustableView`
     - [x] `Footer` component just a placeholder
@@ -115,7 +125,6 @@ Root
         - [x] move gestures into container
         - [x] adjust resize actions
       - [x] refactor to add `order` for hold order
-        - [x] added
       - [x] define order algorithms
         - [x] change direction first, row -> column, for further sort
         - [x] refactor position getter function to meet position changes
