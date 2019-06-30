@@ -56,21 +56,26 @@ Root
 
 ## REQUIREMENTS
 
-- [x] Fixed Header and Footer on the top and bottom
-- [x] Adjustable Panels on the center
-  - [x] 5 panels
-  - [x] 1 of them should be 2x large
-  - [x] other 4 panels should be the same size
+- [x] Header and Footer
+  - [x] Header has a fixed position on the top of the screen
+  - [x] Footer also has a fixed position but on the bottom
+- [x] 5 Adjustable Panels on the center
+  - [x] a total of 5 panels
+    - [x] 2 for show information
+    - [x] 2 for menu, one is fixed and another is dynamic
+    - [x] last is a larger one, for the conversation
+  - [x] 4 panels in normal size, one is in large size
   - [x] scrollable inside panel
   - [x] draggable and re-sortable
-  - [ ] collapsible from panel to icon
-  - [ ] expandable from icon to panel
+  - [ ] tab bar for manage minimization and maximization
+    - [ ] collapse from panel to tab bar
+    - [ ] expand from tab bar to panel
 
 ## TODOs
 
 - [x] Base on React > v16 with hooks
   - [x] Router
-    - [x] Adjustable Web View in the root (/) path
+    - [x] Adjustable Web View on the root (/) path
     - [x] show a 404 message on other path
   - [x] Redux for data management
     - [x] configurations
@@ -145,18 +150,20 @@ Root
     - [x] display languages (en or jp)
     - [x] reset panels' position when un-sortable
   - [x] Speech to Text API
-    - [x] start bind to button
-    - [x] need to pass a keywords array
-    - [x] and a api key to start
+    - [x] action button
+      - [x] bind start and stop actions to a single button
+    - [x] pass a api key to start action
+    - [x] pass a keywords list to start action
     - [x] send a callback to handle data changes
-    - [x] get an object as parameter contains conversation and keyword feedback
-    - [x] stop bind to button (the same with start handler, it will stop automatically)
-    - [x] keep scrolling to bottom when scroll bar is currently in the bottom
+      - [x] get conversation body to display on the screen
+      - [x] get a result keywords list and store it to the redux
+    - [x] keep scrolling to the bottom if the scroll position is currently in the bottom
     - [x] simple backend for get access token
   - [x] Testing
     - [x] only part of reducer
     - [x] only part of utils
-- [ ] **[Phase 2] Working Flow: For Tab Bar**
+
+* [ ] **[Phase 2] Working Flow: For Tab Bar**
   - [ ] Refactor the entire structure of the app to be clear
     - [ ] carding logic of each event
       - [ ] logic on resizing
