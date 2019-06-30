@@ -354,23 +354,26 @@ export function handleSizeChange(
   sortable: boolean
 ) {
   // Get new positions.
-  const newPositions = packagePanels(
+  const newPositions = getCurrentPositions(
     windowSize,
     margin,
+    [],
     order.findIndex(p => p.largest)
   )
   const heightRatio = windowSize.height / lastSize.height
   const widthRatio = windowSize.width / lastSize.width
 
-  order.forEach((p, i) => {
+  const tempOrder = cloneDeep(order)
+
+  tempOrder.forEach((p, i) => {
     const thePosition = newPositions[i]
     p.width = thePosition.width
     p.height = thePosition.height
-    p.top *= heightRatio
-    p.left *= widthRatio
+    p.top = thePosition.top
+    p.left = thePosition.left
   })
 
-  const newPanels = mapToPanels(order, panels)
+  const newPanels = mapToPanels(tempOrder, panels)
 
   // Change relative position in un-sortable mode.
   if (!sortable) {
@@ -380,7 +383,7 @@ export function handleSizeChange(
     })
   }
 
-  return [newPanels, order]
+  return [newPanels, tempOrder]
 }
 
 /**
