@@ -70,7 +70,7 @@ export const initState: State = {
   headerHeight: config.headerHeight,
   footerHeight: config.footerHeight,
   watsonSpeech: {
-    keywords: config.watsonSpeech.defaultKeywords,
+    defaultKeywords: config.watsonSpeech.defaultKeywords,
     resultKeywords: [],
     accessTokenURL: config.watsonSpeech.accessTokenURL,
   },

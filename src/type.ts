@@ -18,7 +18,7 @@ export interface State {
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]
   watsonSpeech: {
-    keywords: string[]
+    defaultKeywords: string[]
     resultKeywords: string[]
     accessTokenURL: string
   }

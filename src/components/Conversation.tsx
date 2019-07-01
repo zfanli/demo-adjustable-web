@@ -17,7 +17,7 @@ import { debounce, throttle } from 'lodash'
 const Conversation: React.FC = () => {
   // Get data from store.
   const defaultKeywords = useSelector(
-    (state: State) => state.watsonSpeech.keywords
+    (state: State) => state.watsonSpeech.defaultKeywords
   )
   const tokenUrl = useSelector(
     (state: State) => state.watsonSpeech.accessTokenURL
