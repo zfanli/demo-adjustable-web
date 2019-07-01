@@ -1,19 +1,21 @@
 // main state
 export interface State {
-  lang: string
-  locale: Locale
-  panelKeys: string[]
-  margin: number
-  containerSize: {
-    width: number
-    height: number
+  settings: {
+    lang: string
+    locale: Locale
+    margin: number
+    headerHeight: number
+    footerHeight: number
+    shadowSizeWhileDragging: number
+    sortable: boolean
+    containerSize: {
+      width: number
+      height: number
+    }
   }
+  panelKeys: string[]
   panels: PanelWithPosition[]
   order: PanelWithPosition[]
-  shadowSizeWhileDragging: number
-  sortable: boolean
-  headerHeight: number
-  footerHeight: number
   animationIndex?: number
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]

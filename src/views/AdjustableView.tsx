@@ -28,9 +28,9 @@ const AdjustableView: React.FC = () => {
   // A ref object of content box for further use.
   const av = useRef<HTMLDivElement>(null)
   // Margins.
-  const margin = useSelector((state: State) => state.margin)
+  const margin = useSelector((state: State) => state.settings.margin)
   // Lang.
-  const lang = useSelector((state: State) => state.lang)
+  const lang = useSelector((state: State) => state.settings.lang)
   // Edit content box margins.
   const contentBoxMargins = { marginBottom: margin, marginRight: margin }
   // Dispatcher.
@@ -38,18 +38,18 @@ const AdjustableView: React.FC = () => {
   // All panels information for further use.
   const panels = useSelector((state: State) => state.panels)
   // Panel names.
-  const panelNames = useSelector((state: State) => state.locale.panels)
+  const panelNames = useSelector((state: State) => state.settings.locale.panels)
   // Panel keys.
   const panelKeys = useSelector((state: State) => state.panelKeys)
   // Styling shadow while in dragging,
   // this shadow size is configured at `config.json`.
   const shadowSize = useSelector(
-    (state: State) => state.shadowSizeWhileDragging
+    (state: State) => state.settings.shadowSizeWhileDragging
   )
   // For animation.
   const animationIndex = useSelector((state: State) => state.animationIndex)
   const isDraggingDown = useSelector((state: State) => state.isDraggingDown)
-  const sortable = useSelector((state: State) => state.sortable)
+  const sortable = useSelector((state: State) => state.settings.sortable)
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------

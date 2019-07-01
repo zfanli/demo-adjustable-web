@@ -26,10 +26,12 @@ const Conversation: React.FC = () => {
 
   // Display texts.
   const tooltipText = useSelector(
-    (state: State) => state.locale.editNotAllowedWhileRecording
+    (state: State) => state.settings.locale.editNotAllowedWhileRecording
   )
-  const speaker = useSelector((state: State) => state.locale.speaker)
-  const analyzing = useSelector((state: State) => state.locale.analyzing)
+  const speaker = useSelector((state: State) => state.settings.locale.speaker)
+  const analyzing = useSelector(
+    (state: State) => state.settings.locale.analyzing
+  )
 
   // State for local control.
   const [recordFlag, setRecordFlag] = useState(false)

@@ -58,17 +58,19 @@ if (!langFromCookie) setCookie('lang', lang)
 // Create initial state.
 
 export const initState: State = {
-  lang,
-  locale: locales[lang],
+  settings: {
+    lang,
+    locale: locales[lang],
+    margin,
+    headerHeight: config.headerHeight,
+    footerHeight: config.footerHeight,
+    shadowSizeWhileDragging: config.shadowSizeWhileDragging,
+    sortable: true,
+    containerSize: defaultSize,
+  },
   panelKeys: config.panelKeys,
-  margin,
-  containerSize: defaultSize,
   panels: initialPanels,
   order: cloneDeep(initialPanels),
-  shadowSizeWhileDragging: config.shadowSizeWhileDragging,
-  sortable: true,
-  headerHeight: config.headerHeight,
-  footerHeight: config.footerHeight,
   watsonSpeech: {
     defaultKeywords: config.watsonSpeech.defaultKeywords,
     resultKeywords: [],
@@ -98,12 +100,17 @@ export function reducer(state = initState, action: BaseAction): State {
         state.panels,
         state.order,
         containerSize,
-        state.containerSize,
-        state.margin,
-        state.sortable
+        state.settings.containerSize,
+        state.settings.margin,
+        state.settings.sortable
       )
+      // const tempSettings
       return assignWithNewObject(state, {
-        containerSize,
+        settings: {
+          ...assignWithNewObject(state.settings, {
+            containerSize,
+          }),
+        },
         panels: resizePanels,
         order: resizeOrder,
       })
@@ -135,7 +142,7 @@ export function reducer(state = initState, action: BaseAction): State {
           targetPanel.top = targetPanel.tempTop + offset[1]
 
           const moving = action.payload.moving
-          const sortable = state.sortable
+          const sortable = state.settings.sortable
 
           // Make a copy of panels.
           let panels = cloneDeep(state.panels)
@@ -175,9 +182,9 @@ export function reducer(state = initState, action: BaseAction): State {
         action.payload.position,
         action.payload.index,
         action.payload.moving,
-        state.margin,
-        state.containerSize,
-        state.headerHeight
+        state.settings.margin,
+        state.settings.containerSize,
+        state.settings.headerHeight
       )
       return assignWithNewObject(state, {
         panels: resortPanels,
@@ -193,8 +200,12 @@ export function reducer(state = initState, action: BaseAction): State {
       const locale = action.payload.locale
       setCookie('lang', locale)
       return assignWithNewObject(state, {
-        locale: locales[locale],
-        lang: locale,
+        settings: {
+          ...assignWithNewObject(state.settings, {
+            locale: locales[locale],
+            lang: locale,
+          }),
+        },
       })
 
     // ------------------------- END SECTION ----------------------------------
@@ -210,7 +221,11 @@ export function reducer(state = initState, action: BaseAction): State {
       // and store current position as a backup for further use.
       if (sortable) {
         return assignWithNewObject(state, {
-          sortable,
+          settings: {
+            ...assignWithNewObject(state.settings, {
+              sortable,
+            }),
+          },
           panels: mapToPanels(state.order, state.panels),
           panelsBackup: cloneDeep(state.panels),
         })
@@ -219,7 +234,11 @@ export function reducer(state = initState, action: BaseAction): State {
         // Use backup position if does exist.
         const panelsBackup = state.panelsBackup
         return assignWithNewObject(state, {
-          sortable,
+          settings: {
+            ...assignWithNewObject(state.settings, {
+              sortable,
+            }),
+          },
           // Use backup if exists.
           panels: panelsBackup ? panelsBackup : state.panels,
           panelsBackup: null,
@@ -234,8 +253,8 @@ export function reducer(state = initState, action: BaseAction): State {
 
     case HANDLE_RESET_ACTION:
       const resetPanels = getCurrentPositions(
-        state.containerSize,
-        state.margin,
+        state.settings.containerSize,
+        state.settings.margin,
         state.panelKeys
       )
 

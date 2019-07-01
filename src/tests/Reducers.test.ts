@@ -20,7 +20,9 @@ describe('Reducer.', () => {
   describe('About i18n.', () => {
     it('Set correct `lang` value.', () => {
       const TEST_LANG = 'TEST_LANG'
-      expect(reducer(undefined, setLocale('TEST_LANG')).lang).toEqual(TEST_LANG)
+      expect(reducer(undefined, setLocale('TEST_LANG')).settings.lang).toEqual(
+        TEST_LANG
+      )
     })
   })
 })

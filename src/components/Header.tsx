@@ -7,8 +7,8 @@ import { setLocale, setSortable, resetPanelsPosition } from '../actions'
 
 const Header: React.FC = () => {
   // get header string from store
-  const header = useSelector((state: State) => state.locale.header)
-  const height = useSelector((state: State) => state.headerHeight)
+  const header = useSelector((state: State) => state.settings.locale.header)
+  const height = useSelector((state: State) => state.settings.headerHeight)
   const dispatch = useDispatch()
 
   const handleI18nMenuClick = (e: ClickParam) => {
@@ -17,8 +17,12 @@ const Header: React.FC = () => {
 
   const [settingsVisible, setSettingsVisible] = useState(false)
 
-  const sortableText = useSelector((state: State) => state.locale.sortable)
-  const resetText = useSelector((state: State) => state.locale.resetPosition)
+  const sortableText = useSelector(
+    (state: State) => state.settings.locale.sortable
+  )
+  const resetText = useSelector(
+    (state: State) => state.settings.locale.resetPosition
+  )
 
   const handleSettingsVisibleChange = (flag: boolean) => {
     setSettingsVisible(flag)
