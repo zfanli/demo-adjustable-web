@@ -13,17 +13,17 @@ export interface State {
       height: number
     }
   }
+  watsonSpeech: {
+    defaultKeywords: string[]
+    resultKeywords: string[]
+    accessTokenURL: string
+  }
   panelKeys: string[]
   panels: PanelWithPosition[]
   order: PanelWithPosition[]
   animationIndex?: number
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]
-  watsonSpeech: {
-    defaultKeywords: string[]
-    resultKeywords: string[]
-    accessTokenURL: string
-  }
 }
 
 export interface ResultResponse {

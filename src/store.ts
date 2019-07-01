@@ -68,14 +68,14 @@ export const initState: State = {
     sortable: true,
     containerSize: defaultSize,
   },
-  panelKeys: config.panelKeys,
-  panels: initialPanels,
-  order: cloneDeep(initialPanels),
   watsonSpeech: {
     defaultKeywords: config.watsonSpeech.defaultKeywords,
     resultKeywords: [],
     accessTokenURL: config.watsonSpeech.accessTokenURL,
   },
+  panelKeys: config.panelKeys,
+  panels: initialPanels,
+  order: cloneDeep(initialPanels),
 }
 
 // ---------------------------- END SECTION -----------------------------------
@@ -107,9 +107,8 @@ export function reducer(state = initState, action: BaseAction): State {
       // const tempSettings
       return assignWithNewObject(state, {
         settings: {
-          ...assignWithNewObject(state.settings, {
-            containerSize,
-          }),
+          ...state.settings,
+          containerSize,
         },
         panels: resizePanels,
         order: resizeOrder,
@@ -201,10 +200,9 @@ export function reducer(state = initState, action: BaseAction): State {
       setCookie('lang', locale)
       return assignWithNewObject(state, {
         settings: {
-          ...assignWithNewObject(state.settings, {
-            locale: locales[locale],
-            lang: locale,
-          }),
+          ...state.settings,
+          locale: locales[locale],
+          lang: locale,
         },
       })
 
@@ -222,9 +220,8 @@ export function reducer(state = initState, action: BaseAction): State {
       if (sortable) {
         return assignWithNewObject(state, {
           settings: {
-            ...assignWithNewObject(state.settings, {
-              sortable,
-            }),
+            ...state.settings,
+            sortable,
           },
           panels: mapToPanels(state.order, state.panels),
           panelsBackup: cloneDeep(state.panels),
@@ -235,9 +232,8 @@ export function reducer(state = initState, action: BaseAction): State {
         const panelsBackup = state.panelsBackup
         return assignWithNewObject(state, {
           settings: {
-            ...assignWithNewObject(state.settings, {
-              sortable,
-            }),
+            ...state.settings,
+            sortable,
           },
           // Use backup if exists.
           panels: panelsBackup ? panelsBackup : state.panels,
