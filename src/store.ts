@@ -16,10 +16,11 @@ import {
   HANDLE_RESET_ACTION,
   HANDLE_RESORT_ACTION,
   SET_RESULT_KEYWORDS,
+  SET_ACTIVE_PANEL,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, range } from 'lodash'
 
 // ----------------------------------------------------------------------------
 // --------------------------- START SECTION ----------------------------------
@@ -76,6 +77,7 @@ export const initState: State = {
   panelKeys: config.panelKeys,
   panels: initialPanels,
   order: cloneDeep(initialPanels),
+  zIndices: range(5),
 }
 
 // ---------------------------- END SECTION -----------------------------------
@@ -271,6 +273,18 @@ export function reducer(state = initState, action: BaseAction): State {
       return assignWithNewObject(state, {
         watsonSpeech: tempWatsonSpeech,
       })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Handle active panel z-index.
+
+    case SET_ACTIVE_PANEL:
+      const activePanel = action.payload.index
+      const activeIndex = state.zIndices[activePanel]
+      const zIndices = state.zIndices.map(z => (z > activeIndex ? z - 1 : z))
+      zIndices[activePanel] = 4
+      return assignWithNewObject(state, { zIndices })
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------

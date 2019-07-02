@@ -21,6 +21,7 @@ export interface State {
   panelKeys: string[]
   panels: PanelWithPosition[]
   order: PanelWithPosition[]
+  zIndices: number[]
   animationIndex?: number
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]

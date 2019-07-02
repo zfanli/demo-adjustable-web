@@ -79,3 +79,12 @@ export function setResultKeywords(resultKeywords: string[]): BaseAction {
     payload: { resultKeywords },
   }
 }
+
+export const SET_ACTIVE_PANEL = 'SET_ACTIVE_PANEL'
+
+export function setActivePanel(index: number): BaseAction {
+  return {
+    type: SET_ACTIVE_PANEL,
+    payload: { index },
+  }
+}

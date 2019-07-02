@@ -9,7 +9,7 @@ import Footer from '../components/Footer'
 import Panel from '../components/Panel'
 import InformationList from '../components/InformationList'
 
-import { setSize, handleDragging } from '../actions'
+import { setSize, handleDragging, setActivePanel } from '../actions'
 import { State, PanelWithPosition } from '../type'
 
 import '../css/adjustableView.scss'
@@ -37,6 +37,8 @@ const AdjustableView: React.FC = () => {
   const dispatch = useDispatch()
   // All panels information for further use.
   const panels = useSelector((state: State) => state.panels)
+  // Panel indices.
+  const zIndices = useSelector((state: State) => state.zIndices)
   // Panel names.
   const panelNames = useSelector((state: State) => state.settings.locale.panels)
   // Panel keys.
@@ -63,6 +65,8 @@ const AdjustableView: React.FC = () => {
   function getStyledPositions(
     // For get position from, directly from store.
     panels: PanelWithPosition[],
+    // Control indices.
+    currentIndices: number[],
     // Is now dragging? For fires dragging animations.
     down?: boolean,
     // For identify which panel is in dragging.
@@ -76,7 +80,7 @@ const AdjustableView: React.FC = () => {
             x: p.left,
             y: p.top,
             scale: 1.05,
-            zIndex: 10,
+            zIndex: 100,
             boxShadow: `0 0 ${shadowSize}px 0 rgba(0,0,0,.3)`,
             width: p.width,
             height: p.height,
@@ -90,7 +94,7 @@ const AdjustableView: React.FC = () => {
             x: p.left,
             y: p.top,
             scale: 1,
-            zIndex: 0,
+            zIndex: (currentIndices[index] + 1) * 10,
             boxShadow: '0 0 5px 0 rgba(0,0,0,.1)',
             width: p.width,
             height: p.height,
@@ -110,7 +114,7 @@ const AdjustableView: React.FC = () => {
 
   const springs = useSprings(
     panels.length,
-    getStyledPositions(panels, isDraggingDown, animationIndex)
+    getStyledPositions(panels, zIndices, isDraggingDown, animationIndex)
   )
 
   // --------------------------- END SECTION ----------------------------------
@@ -129,6 +133,7 @@ const AdjustableView: React.FC = () => {
       // Dispatch current position.
       dispatch(handleDragging(xy, delta, originalIndex, down))
       sortable && handleResortWithDebounce(dispatch, xy, originalIndex, down)
+      !sortable && !down && dispatch(setActivePanel(originalIndex))
     },
     // Configure to enable operation on event directly.
     { event: { capture: true, passive: false } }
