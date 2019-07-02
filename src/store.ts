@@ -122,9 +122,10 @@ export function reducer(state = initState, action: BaseAction): State {
     // For handle panel dragging.
 
     case HANDLE_DRAGGING:
-      const index = action.payload.index
-      if (typeof index !== 'undefined') {
-        const targetPanel = cloneDeep(state.panels)[index]
+      // Get the target index.
+      const draggingTargetIndex = action.payload.index
+      if (typeof draggingTargetIndex !== 'undefined') {
+        const targetPanel = cloneDeep(state.panels)[draggingTargetIndex]
         if (targetPanel) {
           // Save temp position if not exist.
           // The temp position is for store last position.
@@ -155,16 +156,17 @@ export function reducer(state = initState, action: BaseAction): State {
           }
 
           // Set panels.
-          panels[index] = targetPanel
+          panels[draggingTargetIndex] = targetPanel
 
           // Reset position in sortable mode for temporarily
           if (!moving && sortable) {
             panels = mapToPanels(state.order, panels)
           }
 
+          // Merge to store.
           return assignWithNewObject(state, {
             panels,
-            animationIndex: index,
+            animationIndex: draggingTargetIndex,
             isDraggingDown: moving,
           })
         }
@@ -177,6 +179,7 @@ export function reducer(state = initState, action: BaseAction): State {
     // Handle resort.
 
     case HANDLE_RESORT_ACTION:
+      // Calculate next panels and order.
       const [resortPanels, resortOrder] = handleResort(
         state.panels,
         state.order,
@@ -187,6 +190,7 @@ export function reducer(state = initState, action: BaseAction): State {
         state.settings.containerSize,
         state.settings.headerHeight
       )
+      // Merge to store.
       return assignWithNewObject(state, {
         panels: resortPanels,
         order: resortOrder,
@@ -198,8 +202,11 @@ export function reducer(state = initState, action: BaseAction): State {
     // Change locale.
 
     case SET_LOCALE:
+      // Get the next lang.
       const locale = action.payload.locale
+      // Store it into cookie.
       setCookie('lang', locale)
+      // Merge to store.
       return assignWithNewObject(state, {
         settings: {
           ...state.settings,
@@ -250,12 +257,13 @@ export function reducer(state = initState, action: BaseAction): State {
     // Reset panels position to initial state.
 
     case HANDLE_RESET_ACTION:
+      // Calculate initial position.
       const resetPanels = getCurrentPositions(
         state.settings.containerSize,
         state.settings.margin,
         state.panelKeys
       )
-
+      // Merge to store.
       return assignWithNewObject(state, {
         panels: resetPanels,
         order: cloneDeep(resetPanels),
@@ -267,9 +275,11 @@ export function reducer(state = initState, action: BaseAction): State {
     // Reset panels position to initial state.
 
     case SET_RESULT_KEYWORDS:
+      // Make a copy of watsonSpeech configs.
       const tempWatsonSpeech = cloneDeep(state.watsonSpeech)
       tempWatsonSpeech.resultKeywords = action.payload.resultKeywords
       console.log(action.payload.resultKeywords)
+      // Merge to store.
       return assignWithNewObject(state, {
         watsonSpeech: tempWatsonSpeech,
       })
@@ -282,8 +292,11 @@ export function reducer(state = initState, action: BaseAction): State {
     case SET_ACTIVE_PANEL:
       const activePanel = action.payload.index
       const activeIndex = state.zIndices[activePanel]
+      // Reduce the z-index if it is greater than the target z-index.
       const zIndices = state.zIndices.map(z => (z > activeIndex ? z - 1 : z))
+      // Set the target to be the biggest one.
       zIndices[activePanel] = 4
+      // Merge to store.
       return assignWithNewObject(state, { zIndices })
 
     // ------------------------- END SECTION ----------------------------------

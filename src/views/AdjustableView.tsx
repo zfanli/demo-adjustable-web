@@ -132,7 +132,9 @@ const AdjustableView: React.FC = () => {
       !last && event && event.preventDefault()
       // Dispatch current position.
       dispatch(handleDragging(xy, delta, originalIndex, down))
+      // Trigger resort if in sortable mode.
       sortable && handleResortWithDebounce(dispatch, xy, originalIndex, down)
+      // Set the z-indices if in un-sortable mode and dragging is done.
       !sortable && !down && dispatch(setActivePanel(originalIndex))
     },
     // Configure to enable operation on event directly.
