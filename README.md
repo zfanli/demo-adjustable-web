@@ -167,7 +167,8 @@ Root
   - [ ] Refactor the entire structure of the app to be clear
     - [ ] carding logic of each event
       - [ ] logic on resizing
-        - [ ] resizing if tab bar is appeared
+        - [x] resizing if tab bar is appeared
+          - [ ] a little bug with backup panels
       - [ ] logic on resetting
       - [ ] logic on resorting
       - [ ] logic on dragging
@@ -180,9 +181,11 @@ Root
       - [ ] deal with z-index on operation on the tab bar
         - [ ] set top z-index to the active tab/panel
           - [x] set top z-index in un-sortable mode
-          - [ ] set top z-index if tab is in active
+          - [x] set top z-index if tab is in active
+            - [x] in un-sortable mode
         - [x] the z-index maybe should to be managed by a individual array
   - [ ] Add tab bar to the view
+    - [x] basic tab bar placeholder
     - [ ] panels minimize to tab bar
     - [ ] retrieve panels from tab bar
   - [ ] Fill fixed menu with 6 items
