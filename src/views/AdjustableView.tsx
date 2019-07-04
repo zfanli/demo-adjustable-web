@@ -19,6 +19,7 @@ import {
   handleResortWithDebounce,
 } from '../utils'
 import Conversation from '../components/Conversation'
+import TabBar from '../components/TabBar'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -98,7 +99,7 @@ const AdjustableView: React.FC = () => {
             boxShadow: '0 0 5px 0 rgba(0,0,0,.1)',
             width: p.width,
             height: p.height,
-            immediate: () => false,
+            immediate: (name: string) => name === 'zIndex',
             config: { mass: 5, tension: 1000, friction: 100 },
             trail: 25,
           }
@@ -218,6 +219,7 @@ const AdjustableView: React.FC = () => {
           </Panel>
         ))}
       </div>
+      {!sortable && <TabBar handleResize={resizeHandler} />}
       <Footer />
     </>
   )
