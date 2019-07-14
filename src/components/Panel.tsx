@@ -1,6 +1,9 @@
 import React, { CSSProperties, useState } from 'react'
 import { Icon, Empty } from 'antd'
 import { animated as a } from 'react-spring'
+import { useSelector } from 'react-redux'
+import { State } from '../type'
+import { useSpring } from 'react-spring/web'
 
 interface Props {
   style: CSSProperties
@@ -10,11 +13,25 @@ interface Props {
 }
 
 const Panel: React.FC<Props> = (props: Props) => {
-  const [collapsed, setCollapsed] = useState(false)
   const [pinned, setPinned] = useState(false)
   const [maximized, setMaximized] = useState(false)
 
-  const triggerCollapsed = () => setCollapsed(!collapsed)
+  const sortable = useSelector((state: State) => state.settings.sortable)
+
+  const spring = useSpring({
+    from: {
+      // display: sortable ? 'none' : 'inline-block',
+      opacity: 0,
+    },
+    to: {
+      // display: !sortable ? 'none' : 'inline-block',
+      opacity: sortable ? 0 : 1,
+    },
+    config: {
+      duration: 100,
+    },
+  })
+
   const triggerPinned = () => setPinned(!pinned)
   const triggerMaximized = () => setMaximized(!maximized)
 
@@ -25,12 +42,8 @@ const Panel: React.FC<Props> = (props: Props) => {
           {props.title}
         </div>
         <div className="panel-buttons">
-          <button onClick={triggerCollapsed}>
-            {collapsed ? (
-              <Icon type="vertical-align-bottom" />
-            ) : (
-              <Icon type="vertical-align-top" />
-            )}
+          <button>
+            <Icon type="vertical-align-bottom" />
           </button>
           <button onClick={triggerPinned}>
             {pinned ? (
@@ -50,6 +63,12 @@ const Panel: React.FC<Props> = (props: Props) => {
         ) : (
           <Empty description="No Data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
         )}
+        <a.div
+          className="resize-icon"
+          style={{ ...spring, display: sortable ? 'none' : 'inline-block' }}
+        >
+          <Icon type="double-right" />
+        </a.div>
       </div>
     </a.div>
   )

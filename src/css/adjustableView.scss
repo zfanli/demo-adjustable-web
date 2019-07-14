@@ -49,5 +49,20 @@
       overflow: auto;
       padding: 0.5rem 0;
     }
+
+    .resize-icon {
+      $fontSize: 1.2rem;
+      width: $fontSize;
+      height: $fontSize;
+      line-height: $fontSize;
+      cursor: nwse-resize;
+      text-align: center;
+      color: #999;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: inline-block;
+      transform: rotate(45deg);
+    }
   }
 }

@@ -219,7 +219,7 @@ const AdjustableView: React.FC = () => {
           </Panel>
         ))}
       </div>
-      {!sortable && <TabBar handleResize={resizeHandler} />}
+      <TabBar handleResize={resizeHandler} />
       <Footer />
     </>
   )

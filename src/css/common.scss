@@ -128,9 +128,11 @@ body {
     width: 100%;
     display: flex;
     margin-bottom: 0.5rem;
+    z-index: 1000;
 
     .tab {
-      margin: 0 0.5rem;
+      min-width: 15%;
+      margin-left: 0.5rem;
       background: #fff;
       padding: 0 0.5rem;
       border-radius: 3px;
