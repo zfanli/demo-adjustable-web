@@ -164,11 +164,22 @@ Root
     - [x] only part of utils
 
 * [ ] **[Phase 2] Working Flow: For Tab Bar**
+  - [ ] For now just implement the resizable and tab bar (2019/07/14)
+    - [ ] Preparation
+      - [ ] split resize handler by sortable flag
+        - [ ] change width and height with a ratio in un-sortable mode
+    - [ ] Turn to tab bar task
+    - [ ] Resizable only in un-sortable mode
+      - [x] resize icon
+      - [ ] mouse key hold handler
+      - [ ] change size
+    - [ ] Add explanation
+      - [ ] flag for display control of all explanations
   - [ ] Refactor the entire structure of the app to be clear
     - [ ] carding logic of each event
       - [ ] logic on resizing
         - [x] resizing if tab bar is appeared
-          - [ ] a little bug with backup panels
+          - [ ] a little bug with backup panels (will be fixed but not now)
       - [ ] logic on resetting
       - [ ] logic on resorting
       - [ ] logic on dragging
@@ -178,14 +189,15 @@ Root
         - [ ] maximize button to minimize other panels to the tab bar
           - [ ] set the target panel to be the max one and minimize other panels
         - [ ] retrieve panel from the tab bar to the main screen
-      - [ ] deal with z-index on operation on the tab bar
-        - [ ] set top z-index to the active tab/panel
+      - [x] deal with z-index on operation on the tab bar
+        - [x] set top z-index to the active tab/panel
           - [x] set top z-index in un-sortable mode
           - [x] set top z-index if tab is in active
             - [x] in un-sortable mode
         - [x] the z-index maybe should to be managed by a individual array
   - [ ] Add tab bar to the view
     - [x] basic tab bar placeholder
+    - [ ] useTransitions to animate add and remove action
     - [ ] panels minimize to tab bar
     - [ ] retrieve panels from tab bar
   - [ ] Fill fixed menu with 6 items
