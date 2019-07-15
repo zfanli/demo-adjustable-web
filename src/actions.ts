@@ -97,3 +97,12 @@ export function handlePanelResize(key: string, size: number[]): BaseAction {
     payload: { key, size },
   }
 }
+
+export const HANDLE_PANEL_MINIMIZE = 'HANDLE_PANEL_MINIMIZE'
+
+export function handlePanelMinimize(index: number): BaseAction {
+  return {
+    type: HANDLE_PANEL_MINIMIZE,
+    payload: { index },
+  }
+}

@@ -10,7 +10,11 @@ import { animated as a } from 'react-spring'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSpring } from 'react-spring'
 import { State } from '../type'
-import { handlePanelResize, setActivePanel } from '../actions'
+import {
+  handlePanelResize,
+  setActivePanel,
+  handlePanelMinimize,
+} from '../actions'
 import { throttle } from 'lodash'
 
 interface Props {
@@ -41,10 +45,12 @@ const Panel: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     if (panelResizeFlag) {
       const dispatchPanelResizeAction = throttle((e: MouseEvent) => {
+        const x = panelSize[0] + e.clientX - originalXY[0]
+        const y = panelSize[1] + e.clientY - originalXY[1]
         dispatch(
           handlePanelResize(props.trueKey, [
-            panelSize[0] + e.clientX - originalXY[0],
-            panelSize[1] + e.clientY - originalXY[1],
+            x < 240 ? 240 : x,
+            y < 160 ? 160 : y,
           ])
         )
       }, 40)
@@ -91,6 +97,13 @@ const Panel: React.FC<Props> = (props: Props) => {
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
+  // -------------------------- START SECTION ---------------------------------
+  // Handle button click.
+
+  const handleMinimize = () => dispatch(handlePanelMinimize(props.index))
+
+  // --------------------------- END SECTION ----------------------------------
+  // --------------------------------------------------------------------------
 
   const triggerPinned = () => setPinned(!pinned)
   const triggerMaximized = () => setMaximized(!maximized)
@@ -107,7 +120,7 @@ const Panel: React.FC<Props> = (props: Props) => {
           {props.title}
         </div>
         <div className="panel-buttons">
-          <button>
+          <button onClick={handleMinimize}>
             <Icon type="vertical-align-bottom" />
           </button>
           <button onClick={triggerPinned}>

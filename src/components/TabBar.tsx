@@ -12,30 +12,40 @@ const TabBar: React.FC<Props> = (props: Props) => {
     (state: State) => state.settings.locale.panels
   ) as string[]
   const panels = useSelector((state: State) => state.panels)
+  const tabs = useSelector((state: State) => state.tabs)
+
   const dispatch = useDispatch()
-  const keys = useSelector((state: State) => state.panelKeys)
+
   const { handleResize } = props
+
+  const keyMapToName = panels.map((p, i) => ({
+    key: p.key,
+    name: names[i],
+    index: i,
+  }))
+  const tabMap = keyMapToName.filter(k => tabs.includes(k.key))
+
   useEffect(() => {
     handleResize()
 
-    return function clean() {
+    return function cleanup() {
       setTimeout(handleResize, 10)
     }
-  }, [handleResize])
+  }, [handleResize, tabs])
 
-  const handleClick = (key: string) => {
-    return () => dispatch(setActivePanel(panels.findIndex(p => p.key === key)))
+  const handleClick = (index: number) => {
+    return () => dispatch(setActivePanel(index))
   }
 
-  return (
+  return tabs.length !== 0 ? (
     <div className="tab-bar">
-      {names.map((p, i) => (
-        <div className="tab" key={keys[i]} onClick={handleClick(keys[i])}>
-          {p}
+      {tabMap.map(tab => (
+        <div className="tab" key={tab.key} onClick={handleClick(tab.index)}>
+          {tab.name}
         </div>
       ))}
     </div>
-  )
+  ) : null
 }
 
 export default TabBar

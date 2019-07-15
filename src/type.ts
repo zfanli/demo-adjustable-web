@@ -25,6 +25,7 @@ export interface State {
   animationIndex?: number
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]
+  tabs: string[]
 }
 
 export interface ResultResponse {

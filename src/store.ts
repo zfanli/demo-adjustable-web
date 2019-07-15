@@ -19,6 +19,7 @@ import {
   SET_RESULT_KEYWORDS,
   SET_ACTIVE_PANEL,
   HANDLE_PANEL_RESIZE,
+  HANDLE_PANEL_MINIMIZE,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -80,6 +81,7 @@ export const initState: State = {
   panels: initialPanels,
   order: cloneDeep(initialPanels),
   zIndices: range(5),
+  tabs: [],
 }
 
 // ---------------------------- END SECTION -----------------------------------
@@ -241,6 +243,7 @@ export function reducer(state = initState, action: BaseAction): State {
           },
           panels: mapToPanels(state.order, state.panels),
           panelsBackup: cloneDeep(state.panels),
+          tabs: [],
         })
       } else {
         // State changes from sortable to un-sortable.
@@ -254,6 +257,8 @@ export function reducer(state = initState, action: BaseAction): State {
           // Use backup if exists.
           panels: panelsBackup ? panelsBackup : state.panels,
           panelsBackup: null,
+          // Show tabs
+          tabs: state.panels.map(p => p.key),
         })
       }
 
@@ -325,6 +330,22 @@ export function reducer(state = initState, action: BaseAction): State {
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Handle panel minimize.
+
+    case HANDLE_PANEL_MINIMIZE:
+      const minimizeIndex = action.payload.index
+      const minimizePanels = cloneDeep(state.panels)
+      const minimizeTarget = minimizePanels[minimizeIndex]
+      minimizeTarget.top = minimizeTarget.height + minimizeTarget.top
+      minimizeTarget.left = minimizeTarget.width / 2 + minimizeTarget.left
+      minimizeTarget.height = 0
+      minimizeTarget.width = 0
+      return assignWithNewObject(state, { panels: minimizePanels })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+
     default:
       return state
   }
