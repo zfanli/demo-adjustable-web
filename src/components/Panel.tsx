@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useSpring } from 'react-spring'
 import { State } from '../type'
 import { handlePanelResize, setActivePanel } from '../actions'
+import { throttle } from 'lodash'
 
 interface Props {
   style: CSSProperties
@@ -39,14 +40,14 @@ const Panel: React.FC<Props> = (props: Props) => {
   // Register and unregister dispatcher according the flag.
   useEffect(() => {
     if (panelResizeFlag) {
-      const dispatchPanelResizeAction = (e: MouseEvent) => {
+      const dispatchPanelResizeAction = throttle((e: MouseEvent) => {
         dispatch(
           handlePanelResize(props.trueKey, [
             panelSize[0] + e.clientX - originalXY[0],
             panelSize[1] + e.clientY - originalXY[1],
           ])
         )
-      }
+      }, 40)
       const turnOff = () => setPanelResizeFlag(false)
 
       window.addEventListener('mousemove', dispatchPanelResizeAction)
