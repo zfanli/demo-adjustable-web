@@ -4,7 +4,8 @@
   position: relative;
 
   .panel {
-    height: 0;
+    min-height: 10rem;
+    min-width: 15rem;
     overflow: auto;
     position: absolute;
     background-color: #fff;
