@@ -132,9 +132,7 @@ const Panel: React.FC<Props> = (props: Props) => {
           className="resize-icon"
           style={{ ...spring, display: sortable ? 'none' : 'inline-block' }}
           onMouseDown={handleResizeTrigger}
-        >
-          <Icon type="double-right" />
-        </a.div>
+        />
       </div>
     </a.div>
   )

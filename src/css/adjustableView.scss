@@ -52,18 +52,20 @@
     }
 
     .resize-icon {
-      $fontSize: 1.2rem;
+      $fontSize: 0.8rem;
       width: $fontSize;
       height: $fontSize;
       line-height: $fontSize;
+      border-right: 1px solid #999;
+      border-bottom: 1px solid #999;
       cursor: nwse-resize;
       text-align: center;
       color: #999;
       position: absolute;
-      bottom: 0;
-      right: 0;
+      bottom: 5px;
+      right: 5px;
       display: inline-block;
-      transform: rotate(45deg);
+      // transform: rotate(45deg);
     }
   }
 }
