@@ -50,6 +50,8 @@ export interface PanelWithPosition {
   top: number
   tempLeft?: number | null
   tempTop?: number | null
+  tempWidth?: number
+  tempHeight?: number
   largest?: boolean
 }
 

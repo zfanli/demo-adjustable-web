@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Icon } from 'antd'
 import { State } from '../type'
-import { setActivePanel } from '../actions'
+import { setActivePanel, handlePanelRetrieve } from '../actions'
 
 interface Props {
   handleResize: () => void
@@ -34,14 +35,20 @@ const TabBar: React.FC<Props> = (props: Props) => {
   }, [handleResize, tabs])
 
   const handleClick = (index: number) => {
-    return () => dispatch(setActivePanel(index))
+    return () => {
+      dispatch(handlePanelRetrieve(index))
+      dispatch(setActivePanel(index))
+    }
   }
 
   return tabs.length !== 0 ? (
     <div className="tab-bar">
       {tabMap.map(tab => (
         <div className="tab" key={tab.key} onClick={handleClick(tab.index)}>
-          {tab.name}
+          <span>{tab.name}</span>
+          <div className="icons">
+            <Icon type="info-circle" />
+          </div>
         </div>
       ))}
     </div>

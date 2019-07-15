@@ -20,6 +20,7 @@ import {
   SET_ACTIVE_PANEL,
   HANDLE_PANEL_RESIZE,
   HANDLE_PANEL_MINIMIZE,
+  HANDLE_PANEL_RETRIEVE,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -337,11 +338,63 @@ export function reducer(state = initState, action: BaseAction): State {
       const minimizeIndex = action.payload.index
       const minimizePanels = cloneDeep(state.panels)
       const minimizeTarget = minimizePanels[minimizeIndex]
-      minimizeTarget.top = minimizeTarget.height + minimizeTarget.top
-      minimizeTarget.left = minimizeTarget.width / 2 + minimizeTarget.left
+      const minimizeTabs = state.tabs.slice()
+
+      const { width, height, left, top } = minimizeTarget
+
+      minimizeTarget.tempWidth = width
+      minimizeTarget.tempHeight = height
+      minimizeTarget.tempLeft = left
+      minimizeTarget.tempTop = top
+      minimizeTarget.top = height + top
+      minimizeTarget.left = width / 2 + left
       minimizeTarget.height = 0
       minimizeTarget.width = 0
-      return assignWithNewObject(state, { panels: minimizePanels })
+
+      if (state.settings.sortable) {
+        minimizeTabs.push(minimizeTarget.key)
+      }
+
+      return assignWithNewObject(state, {
+        panels: minimizePanels,
+        tabs: minimizeTabs,
+      })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Handle panel retrieve.
+
+    case HANDLE_PANEL_RETRIEVE:
+      const retrieveIndex = action.payload.index
+      const retrievePanels = cloneDeep(state.panels)
+      const retrieveTarget = retrievePanels[retrieveIndex]
+      const retrieveTabs = state.tabs.slice()
+
+      const { tempTop, tempLeft, tempWidth, tempHeight } = retrieveTarget
+
+      if (tempTop && tempLeft && tempWidth && tempHeight) {
+        retrieveTarget.top = tempTop
+        retrieveTarget.left = tempLeft
+        retrieveTarget.width = tempWidth
+        retrieveTarget.height = tempHeight
+        retrieveTarget.tempTop = undefined
+        retrieveTarget.tempLeft = undefined
+        retrieveTarget.tempWidth = undefined
+        retrieveTarget.tempHeight = undefined
+      }
+
+      if (state.settings.sortable) {
+        retrieveTabs.splice(
+          retrieveTabs.findIndex(t => t === retrieveTarget.key),
+          1
+        )
+      }
+
+      return assignWithNewObject(state, {
+        panels: retrievePanels,
+        tabs: retrieveTabs,
+      })
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------

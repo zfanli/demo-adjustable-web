@@ -131,6 +131,7 @@ body {
     z-index: 1000;
 
     .tab {
+      display: flex;
       min-width: 15%;
       margin-left: 0.5rem;
       background: #fff;
@@ -138,6 +139,10 @@ body {
       border-radius: 3px;
       box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
       cursor: pointer;
+
+      .icons {
+        margin-left: auto;
+      }
     }
   }
 }

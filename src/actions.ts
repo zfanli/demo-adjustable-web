@@ -106,3 +106,12 @@ export function handlePanelMinimize(index: number): BaseAction {
     payload: { index },
   }
 }
+
+export const HANDLE_PANEL_RETRIEVE = 'HANDLE_PANEL_RETRIEVE'
+
+export function handlePanelRetrieve(index: number): BaseAction {
+  return {
+    type: HANDLE_PANEL_RETRIEVE,
+    payload: { index },
+  }
+}
