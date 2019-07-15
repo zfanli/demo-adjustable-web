@@ -165,19 +165,23 @@ Root
 
 * [ ] **[Phase 2] Working Flow: For Tab Bar**
   - [ ] For now just implement the resizable and tab bar (2019/07/14)
-    - [ ] Preparation
-      - [ ] split resize handler by sortable flag
-        - [ ] change width and height with a ratio in un-sortable mode
+    - [x] Preparation
+      - [x] split resize handler by sortable flag
+        - [x] change width and height with a ratio in un-sortable mode
     - [ ] Turn to tab bar task
-    - [ ] Resizable only in un-sortable mode
+    - [x] Resizable only in un-sortable mode
       - [x] resize icon
-      - [ ] mouse key hold handler
-      - [ ] change size
+      - [x] mouse key hold handler
+        - [x] flag trigger resize
+        - [x] add mouse move listener if resize flag is true
+          - [x] useEffect hook automatically clean up listener
+        - [x] set active panel in resizing
+      - [x] set min size to panel
     - [ ] Add explanation
       - [ ] flag for display control of all explanations
   - [ ] Refactor the entire structure of the app to be clear
     - [ ] carding logic of each event
-      - [ ] logic on resizing
+      - [x] logic on resizing
         - [x] resizing if tab bar is appeared
           - [ ] a little bug with backup panels (will be fixed but not now)
       - [ ] logic on resetting
@@ -198,8 +202,13 @@ Root
   - [ ] Add tab bar to the view
     - [x] basic tab bar placeholder
     - [ ] useTransitions to animate add and remove action
+    - [ ] info icon to show some messages
     - [ ] panels minimize to tab bar
+      - [x] in un-sortable mode
+      - [ ] in sortable mode
     - [ ] retrieve panels from tab bar
+      - [x] in un-sortable mode
+      - [ ] in sortable mode
   - [ ] Fill fixed menu with 6 items
   - [ ] Dynamic add/remove items to dynamic menu according to the result keywords of watson speech
     - [ ] adding/removing items dynamically by the spotted times of keywords
