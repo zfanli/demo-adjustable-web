@@ -10,12 +10,13 @@ import { animated as a } from 'react-spring'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSpring } from 'react-spring'
 import { State } from '../type'
-import { handlePanelResize } from '../actions'
+import { handlePanelResize, setActivePanel } from '../actions'
 
 interface Props {
   style: CSSProperties
   title: string
   children: any
+  index: number
   trueKey: string
   bind: {}
 }
@@ -65,9 +66,15 @@ const Panel: React.FC<Props> = (props: Props) => {
     config: { duration: 100 },
   })
 
+  const setCurrentPanelActive = useCallback(
+    () => dispatch(setActivePanel(props.index)),
+    [dispatch, props.index]
+  )
+
   // Register trigger.
   const handleResizeTrigger = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      setCurrentPanelActive()
       e.preventDefault()
       if (panelRef && panelRef.current) {
         setPanelSize([
@@ -78,7 +85,7 @@ const Panel: React.FC<Props> = (props: Props) => {
       setOriginalXY([e.clientX, e.clientY])
       setPanelResizeFlag(true)
     },
-    []
+    [setCurrentPanelActive]
   )
 
   // --------------------------- END SECTION ----------------------------------
@@ -88,7 +95,12 @@ const Panel: React.FC<Props> = (props: Props) => {
   const triggerMaximized = () => setMaximized(!maximized)
 
   return (
-    <a.div className="panel" style={props.style} ref={panelRef}>
+    <a.div
+      className="panel"
+      style={props.style}
+      ref={panelRef}
+      onClick={setCurrentPanelActive}
+    >
       <header className="panel-header">
         <div className="panel-title" {...props.bind}>
           {props.title}
