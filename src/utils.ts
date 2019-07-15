@@ -343,15 +343,12 @@ export function getCurrentPositions(
  * @param order
  * @param windowSize
  * @param margin
- * @param sortable
  */
-export function handleSizeChange(
+export function handleSizeChangeForSortable(
   panels: PanelWithPosition[],
   order: PanelWithPosition[],
   windowSize: Size,
-  lastSize: Size,
-  margin: number,
-  sortable: boolean
+  margin: number
 ) {
   // Get new positions.
   const newPositions = getCurrentPositions(
@@ -360,9 +357,6 @@ export function handleSizeChange(
     [],
     order.findIndex(p => p.largest)
   )
-  const heightRatio = windowSize.height / lastSize.height
-  const widthRatio = windowSize.width / lastSize.width
-
   const tempOrder = cloneDeep(order)
 
   tempOrder.forEach((p, i) => {
@@ -375,15 +369,35 @@ export function handleSizeChange(
 
   const newPanels = mapToPanels(tempOrder, panels)
 
-  // Change relative position in un-sortable mode.
-  if (!sortable) {
-    newPanels.forEach((p, i) => {
-      p.top = panels[i].top * heightRatio
-      p.left = panels[i].left * widthRatio
-    })
-  }
-
   return [newPanels, tempOrder]
+}
+
+/**
+ * Handle position and size changes while window resize.
+ * @param panels
+ * @param order
+ * @param windowSize
+ * @param margin
+ */
+export function handleSizeChangeForUnsortable(
+  panels: PanelWithPosition[],
+  order: PanelWithPosition[],
+  windowSize: Size,
+  lastSize: Size
+) {
+  const heightRatio = windowSize.height / lastSize.height
+  const widthRatio = windowSize.width / lastSize.width
+
+  const tempPanels = cloneDeep(panels)
+
+  tempPanels.forEach(p => {
+    // p.width *= widthRatio
+    // p.height *= heightRatio
+    p.top *= heightRatio
+    p.left *= widthRatio
+  })
+
+  return [tempPanels, order]
 }
 
 /**

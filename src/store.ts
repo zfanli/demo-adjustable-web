@@ -2,11 +2,12 @@ import { createStore } from 'redux'
 import { State, BaseAction } from './type'
 import {
   getCurrentPositions,
-  handleSizeChange,
+  handleSizeChangeForSortable,
   getCookie,
   setCookie,
   mapToPanels,
   handleResort,
+  handleSizeChangeForUnsortable,
 } from './utils'
 import {
   SET_SIZE,
@@ -99,14 +100,19 @@ export function reducer(state = initState, action: BaseAction): State {
     case SET_SIZE:
       const containerSize = action.payload.size
       // Change relative positions and sizes.
-      const [resizePanels, resizeOrder] = handleSizeChange(
-        state.panels,
-        state.order,
-        containerSize,
-        state.settings.containerSize,
-        state.settings.margin,
-        state.settings.sortable
-      )
+      const [resizePanels, resizeOrder] = state.settings.sortable
+        ? handleSizeChangeForSortable(
+            state.panels,
+            state.order,
+            containerSize,
+            state.settings.margin
+          )
+        : handleSizeChangeForUnsortable(
+            state.panels,
+            state.order,
+            containerSize,
+            state.settings.containerSize
+          )
       // const tempSettings
       return assignWithNewObject(state, {
         settings: {
