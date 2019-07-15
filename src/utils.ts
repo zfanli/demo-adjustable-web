@@ -391,8 +391,8 @@ export function handleSizeChangeForUnsortable(
   const tempPanels = cloneDeep(panels)
 
   tempPanels.forEach(p => {
-    // p.width *= widthRatio
-    // p.height *= heightRatio
+    p.width *= widthRatio
+    p.height *= heightRatio
     p.top *= heightRatio
     p.left *= widthRatio
   })
