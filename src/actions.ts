@@ -88,3 +88,12 @@ export function setActivePanel(index: number): BaseAction {
     payload: { index },
   }
 }
+
+export const HANDLE_PANEL_RESIZE = 'HANDLE_PANEL_RESIZE'
+
+export function handlePanelResize(key: string, size: number[]): BaseAction {
+  return {
+    type: HANDLE_PANEL_RESIZE,
+    payload: { key, size },
+  }
+}

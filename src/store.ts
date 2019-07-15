@@ -17,6 +17,7 @@ import {
   HANDLE_RESORT_ACTION,
   SET_RESULT_KEYWORDS,
   SET_ACTIVE_PANEL,
+  HANDLE_PANEL_RESIZE,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -301,7 +302,23 @@ export function reducer(state = initState, action: BaseAction): State {
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Handle panel resize.
 
+    case HANDLE_PANEL_RESIZE:
+      const panelKey = action.payload.key
+      const [resizeWidth, resizeHeight] = action.payload.size
+      const forPanelResizeUse = cloneDeep(state.panels)
+      forPanelResizeUse.forEach(p => {
+        if (p.key === panelKey) {
+          p.width = resizeWidth
+          p.height = resizeHeight
+        }
+      })
+      return assignWithNewObject(state, { panels: forPanelResizeUse })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
     default:
       return state
   }

@@ -204,6 +204,7 @@ const AdjustableView: React.FC = () => {
         {springs.map(({ x, y, scale, ...rest }, i) => (
           <Panel
             key={i}
+            trueKey={panelKeys[i]}
             style={{
               transform: interpolate(
                 [x, y, scale],
