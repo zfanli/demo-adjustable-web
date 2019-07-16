@@ -253,7 +253,7 @@ export function reducer(state = initState, action: BaseAction): State {
         const panelsBackup = state.panelsBackup
         // Show tabs.
         const unsortableTabs: { [k: string]: boolean } = {}
-        state.panelKeys.forEach(k => (unsortableTabs[k] = true))
+        state.panelKeys.forEach(k => (unsortableTabs[k] = false))
         return assignWithNewObject(state, {
           settings: {
             ...state.settings,
@@ -358,9 +358,9 @@ export function reducer(state = initState, action: BaseAction): State {
         minimizeTarget.height = 0
         minimizeTarget.width = 0
 
-        if (state.settings.sortable) {
-          minimizeTabs[minimizeTarget.key] = true
-        }
+        // if (state.settings.sortable) {
+        minimizeTabs[minimizeTarget.key] = true
+        // }
 
         return assignWithNewObject(state, {
           panels: state.settings.sortable
@@ -400,9 +400,9 @@ export function reducer(state = initState, action: BaseAction): State {
           retrieveTarget.tempHeight = undefined
         }
 
-        if (state.settings.sortable) {
-          retrieveTabs[retrieveTarget.key] = false
-        }
+        // if (state.settings.sortable) {
+        retrieveTabs[retrieveTarget.key] = false
+        // }
 
         return assignWithNewObject(state, {
           panels: state.settings.sortable

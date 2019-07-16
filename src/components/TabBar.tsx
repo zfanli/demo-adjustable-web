@@ -13,6 +13,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
     (state: State) => state.settings.locale.panels
   ) as string[]
   const panels = useSelector((state: State) => state.panels)
+  const sortable = useSelector((state: State) => state.settings.sortable)
   const tabs = useSelector((state: State) => state.tabs)
 
   const dispatch = useDispatch()
@@ -27,7 +28,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
 
   const tabMap = keyMapToName.filter(k =>
     Object.keys(tabs)
-      .filter(k => tabs[k])
+      .filter(k => !sortable || tabs[k])
       .includes(k.key)
   )
 

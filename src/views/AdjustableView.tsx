@@ -53,6 +53,8 @@ const AdjustableView: React.FC = () => {
   const animationIndex = useSelector((state: State) => state.animationIndex)
   const isDraggingDown = useSelector((state: State) => state.isDraggingDown)
   const sortable = useSelector((state: State) => state.settings.sortable)
+  const tabs = useSelector((state: State) => state.tabs)
+  const minimizedTabs = Object.keys(tabs).filter(k => tabs[k])
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
@@ -85,6 +87,7 @@ const AdjustableView: React.FC = () => {
             boxShadow: `0 0 ${shadowSize}px 0 rgba(0,0,0,.3)`,
             width: p.width,
             height: p.height,
+            opacity: 1,
             immediate: (name: string) =>
               name === 'zIndex' || name === 'x' || name === 'y',
             config: { mass: 5, tension: 1000, friction: 100 },
@@ -99,6 +102,7 @@ const AdjustableView: React.FC = () => {
             boxShadow: '0 0 5px 0 rgba(0,0,0,.1)',
             width: p.width,
             height: p.height,
+            opacity: minimizedTabs.includes(p.key) ? 0 : 1,
             immediate: (name: string) => name === 'zIndex',
             config: { mass: 5, tension: 1000, friction: 100 },
             trail: 25,
