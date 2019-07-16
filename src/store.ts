@@ -22,6 +22,7 @@ import {
   HANDLE_PANEL_MINIMIZE,
   HANDLE_PANEL_RETRIEVE,
   HANDLE_PANEL_PINNED,
+  SET_MESSAGE_FLAG,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -432,6 +433,17 @@ export function reducer(state = initState, action: BaseAction): State {
         pinnedArray.push(pinnedKey)
       }
       return assignWithNewObject(state, { pinned: pinnedArray })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Handle pinned keys.
+
+    case SET_MESSAGE_FLAG:
+      const messageFlag = action.payload.messageFlag
+      return assignWithNewObject(state, {
+        settings: { ...state.settings, messageFlag },
+      })
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------

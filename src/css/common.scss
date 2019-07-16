@@ -56,11 +56,16 @@ body {
     }
   }
 
-  .sortable-switch {
+  .settings-switch {
     cursor: pointer;
+    display: flex;
+
+    span {
+      margin-right: 1rem;
+    }
 
     button {
-      margin-left: 1rem;
+      margin-left: auto;
     }
   }
 

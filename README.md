@@ -178,7 +178,9 @@ Root
         - [x] set active panel in resizing
       - [x] set min size to panel
     - [ ] Add explanation
-      - [ ] flag for display control of all explanations
+      - [x] flag for display control of all explanations
+      - [ ] add more explanations
+    - [x] pinned panel
   - [ ] Refactor the entire structure of the app to be clear
     - [ ] carding logic of each event
       - [x] logic on resizing

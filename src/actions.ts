@@ -124,3 +124,12 @@ export function handlePanelPinned(index: number): BaseAction {
     payload: { index },
   }
 }
+
+export const SET_MESSAGE_FLAG = 'SET_MESSAGE_FLAG'
+
+export function setMessageFlag(messageFlag: boolean): BaseAction {
+  return {
+    type: SET_MESSAGE_FLAG,
+    payload: { messageFlag },
+  }
+}

@@ -13,5 +13,6 @@
   "editNotAllowedWhileRecording": "Edit not allowed while recording.",
   "speaker": "Speaker",
   "analyzing": "Analyzing...",
-  "panelWasPinned": "This panel was pinned."
+  "panelWasPinned": "This panel was pinned.",
+  "messageFlag": "Messages"
 }

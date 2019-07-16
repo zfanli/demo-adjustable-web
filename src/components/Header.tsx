@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Icon, Menu, Dropdown, Switch } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
 import { State } from '../type'
-import { setLocale, setSortable, resetPanelsPosition } from '../actions'
+import {
+  setLocale,
+  setSortable,
+  resetPanelsPosition,
+  setMessageFlag,
+} from '../actions'
 
 const Header: React.FC = () => {
   // get header string from store
@@ -20,6 +25,9 @@ const Header: React.FC = () => {
   const sortableText = useSelector(
     (state: State) => state.settings.locale.sortable
   )
+  const messageFlagText = useSelector(
+    (state: State) => state.settings.locale.messageFlag
+  )
   const resetText = useSelector(
     (state: State) => state.settings.locale.resetPosition
   )
@@ -30,6 +38,10 @@ const Header: React.FC = () => {
 
   const handleSortableSwitchChange = (checked: boolean) => {
     dispatch(setSortable(checked))
+  }
+
+  const handleMessageSwitchChange = (checked: boolean) => {
+    dispatch(setMessageFlag(checked))
   }
 
   const handleResetPosition = () => {
@@ -58,12 +70,18 @@ const Header: React.FC = () => {
           overlay={
             <Menu>
               <Menu.Item key="1">
-                <label className="sortable-switch">
-                  {sortableText}
+                <label className="settings-switch">
+                  <span>{sortableText}</span>
                   <Switch
                     defaultChecked
                     onChange={handleSortableSwitchChange}
                   />
+                </label>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <label className="settings-switch">
+                  <span>{messageFlagText}</span>
+                  <Switch defaultChecked onChange={handleMessageSwitchChange} />
                 </label>
               </Menu.Item>
               <Menu.Item onClick={handleResetPosition}>
