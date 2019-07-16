@@ -189,10 +189,10 @@ Root
       - [ ] logic on dragging
     - [ ] design the logic to meet the required new features
       - [ ] tab bar for collapse and expand panels
-        - [ ] collapse button to minimize panel to the tab bar
+        - [x] collapse button to minimize panel to the tab bar
         - [ ] maximize button to minimize other panels to the tab bar
           - [ ] set the target panel to be the max one and minimize other panels
-        - [ ] retrieve panel from the tab bar to the main screen
+        - [x] retrieve panel from the tab bar to the main screen
       - [x] deal with z-index on operation on the tab bar
         - [x] set top z-index to the active tab/panel
           - [x] set top z-index in un-sortable mode
@@ -203,12 +203,14 @@ Root
     - [x] basic tab bar placeholder
     - [ ] useTransitions to animate add and remove action
     - [ ] info icon to show some messages
-    - [ ] panels minimize to tab bar
+    - [x] panels minimize to tab bar
       - [x] in un-sortable mode
-      - [ ] in sortable mode
-    - [ ] retrieve panels from tab bar
+      - [x] in sortable mode
+    - [x] retrieve panels from tab bar
       - [x] in un-sortable mode
-      - [ ] in sortable mode
+      - [x] in sortable mode
+    - [ ] stretch other panel if one is minimized
+    - [ ] maximize specific panel
   - [ ] Fill fixed menu with 6 items
   - [ ] Dynamic add/remove items to dynamic menu according to the result keywords of watson speech
     - [ ] adding/removing items dynamically by the spotted times of keywords
