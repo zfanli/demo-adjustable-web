@@ -11,6 +11,7 @@
   "headerHeight": 100,
   "footerHeight": 100,
   "shadowSizeWhileDragging": 50,
+  "messageLeaveDelay": 1500,
   "watsonSpeech": {
     "accessTokenURL": "/api/v1/credentials",
     "defaultKeywords": ["テスト", "天気", "散歩"]

@@ -8,6 +8,8 @@ export interface State {
     footerHeight: number
     shadowSizeWhileDragging: number
     sortable: boolean
+    messageLeaveDelay: number
+    messageFlag: boolean
     containerSize: {
       width: number
       height: number
@@ -26,6 +28,7 @@ export interface State {
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]
   tabs: { [k: string]: boolean }
+  pinned: string[]
 }
 
 export interface ResultResponse {

@@ -12,5 +12,6 @@
   "resetPosition": "Reset Position",
   "editNotAllowedWhileRecording": "Edit not allowed while recording.",
   "speaker": "Speaker",
-  "analyzing": "Analyzing..."
+  "analyzing": "Analyzing...",
+  "panelWasPinned": "This panel was pinned."
 }

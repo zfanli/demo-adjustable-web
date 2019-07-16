@@ -115,3 +115,12 @@ export function handlePanelRetrieve(index: number): BaseAction {
     payload: { index },
   }
 }
+
+export const HANDLE_PANEL_PINNED = 'HANDLE_PANEL_PINNED'
+
+export function handlePanelPinned(index: number): BaseAction {
+  return {
+    type: HANDLE_PANEL_PINNED,
+    payload: { index },
+  }
+}

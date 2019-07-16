@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useRef,
 } from 'react'
-import { Icon, Empty } from 'antd'
+import { Icon, Empty, Tooltip } from 'antd'
 import { animated as a } from 'react-spring'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSpring } from 'react-spring'
@@ -14,6 +14,7 @@ import {
   handlePanelResize,
   setActivePanel,
   handlePanelMinimize,
+  handlePanelPinned,
 } from '../actions'
 import { throttle } from 'lodash'
 
@@ -27,14 +28,24 @@ interface Props {
 }
 
 const Panel: React.FC<Props> = (props: Props) => {
-  const [pinned, setPinned] = useState(false)
   const [maximized, setMaximized] = useState(false)
   const [panelResizeFlag, setPanelResizeFlag] = useState(false)
   const [originalXY, setOriginalXY] = useState([0, 0])
   const [panelSize, setPanelSize] = useState([0, 0])
+  const [minimizePinned, setMinimizePinned] = useState(false)
+  const [maximizePinned, setMaximizePinned] = useState(false)
+  const [resizePinned, setResizePinned] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
 
   const sortable = useSelector((state: State) => state.settings.sortable)
+  const locale = useSelector((state: State) => state.settings.locale)
+  const messageFlag = useSelector((state: State) => state.settings.messageFlag)
+  const messageLeaveDelay = useSelector(
+    (state: State) => state.settings.messageLeaveDelay
+  )
+  const pinned = useSelector((state: State) => state.pinned).includes(
+    props.trueKey
+  )
   const dispatch = useDispatch()
 
   // --------------------------------------------------------------------------
@@ -81,18 +92,25 @@ const Panel: React.FC<Props> = (props: Props) => {
   // Register trigger.
   const handleResizeTrigger = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      setCurrentPanelActive()
-      e.preventDefault()
-      if (panelRef && panelRef.current) {
-        setPanelSize([
-          panelRef.current.clientWidth,
-          panelRef.current.clientHeight,
-        ])
+      if (!pinned) {
+        setCurrentPanelActive()
+        e.preventDefault()
+        if (panelRef && panelRef.current) {
+          setPanelSize([
+            panelRef.current.clientWidth,
+            panelRef.current.clientHeight,
+          ])
+        }
+        setOriginalXY([e.clientX, e.clientY])
+        setPanelResizeFlag(true)
+      } else {
+        if (messageFlag) {
+          setResizePinned(true)
+          setTimeout(() => setResizePinned(false), messageLeaveDelay)
+        }
       }
-      setOriginalXY([e.clientX, e.clientY])
-      setPanelResizeFlag(true)
     },
-    [setCurrentPanelActive]
+    [setCurrentPanelActive, messageFlag, messageLeaveDelay, pinned]
   )
 
   // --------------------------- END SECTION ----------------------------------
@@ -100,13 +118,31 @@ const Panel: React.FC<Props> = (props: Props) => {
   // -------------------------- START SECTION ---------------------------------
   // Handle button click.
 
-  const handleMinimize = () => dispatch(handlePanelMinimize(props.index))
+  const handleMinimize = () => {
+    !pinned && dispatch(handlePanelMinimize(props.index))
+    // Show a message tells that this panel was pinned.
+    if (pinned && messageFlag) {
+      setMinimizePinned(true)
+      setTimeout(() => setMinimizePinned(false), messageLeaveDelay)
+    }
+  }
+
+  const triggerPinned = () => dispatch(handlePanelPinned(props.index))
+
+  const triggerMaximized = () => {
+    !pinned && setMaximized(!maximized)
+    // Show a message tells that this panel was pinned.
+    if (pinned && messageFlag) {
+      setMaximizePinned(true)
+      setTimeout(() => setMaximizePinned(false), messageLeaveDelay)
+    }
+  }
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
 
-  const triggerPinned = () => setPinned(!pinned)
-  const triggerMaximized = () => setMaximized(!maximized)
+  // Trigger dragging gesture only when the panel is not be pinned.
+  const bound = pinned ? {} : props.bind
 
   return (
     <a.div
@@ -116,13 +152,19 @@ const Panel: React.FC<Props> = (props: Props) => {
       onClick={setCurrentPanelActive}
     >
       <header className="panel-header">
-        <div className="panel-title" {...props.bind}>
+        <div className={`panel-title ${pinned ? 'disabled' : ''}`} {...bound}>
           {props.title}
         </div>
         <div className="panel-buttons">
-          <button onClick={handleMinimize}>
-            <Icon type="vertical-align-bottom" />
-          </button>
+          <Tooltip
+            trigger="click"
+            title={locale['panelWasPinned']}
+            visible={minimizePinned}
+          >
+            <button onClick={handleMinimize}>
+              <Icon type="vertical-align-bottom" />
+            </button>
+          </Tooltip>
           <button onClick={triggerPinned}>
             {pinned ? (
               <Icon type="pushpin" theme="filled" />
@@ -130,9 +172,15 @@ const Panel: React.FC<Props> = (props: Props) => {
               <Icon type="pushpin" />
             )}
           </button>
-          <button onClick={triggerMaximized}>
-            {maximized ? <Icon type="shrink" /> : <Icon type="arrows-alt" />}
-          </button>
+          <Tooltip
+            trigger="click"
+            title={locale['panelWasPinned']}
+            visible={maximizePinned}
+          >
+            <button onClick={triggerMaximized}>
+              {maximized ? <Icon type="shrink" /> : <Icon type="arrows-alt" />}
+            </button>
+          </Tooltip>
         </div>
       </header>
       <div className="panel-content">
@@ -141,12 +189,18 @@ const Panel: React.FC<Props> = (props: Props) => {
         ) : (
           <Empty description="No Data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
         )}
+      </div>
+      <Tooltip
+        trigger="click"
+        title={locale['panelWasPinned']}
+        visible={resizePinned}
+      >
         <a.div
           className="resize-icon"
           style={{ ...spring, display: sortable ? 'none' : 'inline-block' }}
           onMouseDown={handleResizeTrigger}
         />
-      </div>
+      </Tooltip>
     </a.div>
   )
 }

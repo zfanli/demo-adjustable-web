@@ -24,6 +24,10 @@
         padding: 0 0.5rem;
         cursor: grab;
         flex-grow: 1;
+
+        &.disabled {
+          cursor: not-allowed;
+        }
       }
 
       .panel-buttons {

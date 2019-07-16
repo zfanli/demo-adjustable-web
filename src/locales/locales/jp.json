@@ -12,5 +12,6 @@
   "resetPosition": "位置リセット",
   "editNotAllowedWhileRecording": "音声識別中にはキーワードは編集不可です。",
   "speaker": "話者",
-  "analyzing": "分析中..."
+  "analyzing": "分析中...",
+  "panelWasPinned": "このパネルは固定されています。"
 }

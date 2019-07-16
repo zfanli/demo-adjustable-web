@@ -32,6 +32,9 @@ const Conversation: React.FC = () => {
   const analyzing = useSelector(
     (state: State) => state.settings.locale.analyzing
   )
+  const messageLeaveDelay = useSelector(
+    (state: State) => state.settings.messageLeaveDelay
+  )
 
   // State for local control.
   const [recordFlag, setRecordFlag] = useState(false)
@@ -68,7 +71,7 @@ const Conversation: React.FC = () => {
       setTooltipVisible(true)
       setTimeout(() => {
         setTooltipVisible(false)
-      }, 2000)
+      }, messageLeaveDelay)
     } else {
       const k = e.target.value.split(',').map(k => k.trim())
       setKeywords(k)

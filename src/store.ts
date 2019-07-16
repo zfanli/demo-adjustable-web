@@ -21,6 +21,7 @@ import {
   HANDLE_PANEL_RESIZE,
   HANDLE_PANEL_MINIMIZE,
   HANDLE_PANEL_RETRIEVE,
+  HANDLE_PANEL_PINNED,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -72,6 +73,8 @@ export const initState: State = {
     shadowSizeWhileDragging: config.shadowSizeWhileDragging,
     sortable: true,
     containerSize: defaultSize,
+    messageLeaveDelay: config.messageLeaveDelay,
+    messageFlag: true,
   },
   watsonSpeech: {
     defaultKeywords: config.watsonSpeech.defaultKeywords,
@@ -83,6 +86,7 @@ export const initState: State = {
   order: cloneDeep(initialPanels),
   zIndices: range(5),
   tabs: {},
+  pinned: [],
 }
 
 // ---------------------------- END SECTION -----------------------------------
@@ -413,6 +417,21 @@ export function reducer(state = initState, action: BaseAction): State {
         })
       }
       return state
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Handle pinned keys.
+
+    case HANDLE_PANEL_PINNED:
+      const pinnedKey = state.panels[action.payload.index].key
+      const pinnedArray = state.pinned.slice()
+      if (pinnedArray.includes(pinnedKey)) {
+        pinnedArray.splice(pinnedArray.findIndex(k => k === pinnedKey), 1)
+      } else {
+        pinnedArray.push(pinnedKey)
+      }
+      return assignWithNewObject(state, { pinned: pinnedArray })
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
