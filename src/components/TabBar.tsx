@@ -24,7 +24,14 @@ const TabBar: React.FC<Props> = (props: Props) => {
     name: names[i],
     index: i,
   }))
-  const tabMap = keyMapToName.filter(k => tabs.includes(k.key))
+
+  const tabMap = keyMapToName.filter(k =>
+    Object.keys(tabs)
+      .filter(k => tabs[k])
+      .includes(k.key)
+  )
+
+  const triggerResizeAction = tabMap.length > 0
 
   useEffect(() => {
     handleResize()
@@ -32,7 +39,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
     return function cleanup() {
       setTimeout(handleResize, 10)
     }
-  }, [handleResize, tabs])
+  }, [handleResize, triggerResizeAction])
 
   const handleClick = (index: number) => {
     return () => {
@@ -41,7 +48,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
     }
   }
 
-  return tabs.length !== 0 ? (
+  return tabMap.length !== 0 ? (
     <div className="tab-bar">
       {tabMap.map(tab => (
         <div className="tab" key={tab.key} onClick={handleClick(tab.index)}>

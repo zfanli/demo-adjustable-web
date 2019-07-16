@@ -82,7 +82,7 @@ export const initState: State = {
   panels: initialPanels,
   order: cloneDeep(initialPanels),
   zIndices: range(5),
-  tabs: [],
+  tabs: {},
 }
 
 // ---------------------------- END SECTION -----------------------------------
@@ -108,7 +108,8 @@ export function reducer(state = initState, action: BaseAction): State {
             state.panels,
             state.order,
             containerSize,
-            state.settings.margin
+            state.settings.margin,
+            Object.keys(state.tabs).filter(k => state.tabs[k])
           )
         : handleSizeChangeForUnsortable(
             state.panels,
@@ -244,12 +245,15 @@ export function reducer(state = initState, action: BaseAction): State {
           },
           panels: mapToPanels(state.order, state.panels),
           panelsBackup: cloneDeep(state.panels),
-          tabs: [],
+          tabs: {},
         })
       } else {
         // State changes from sortable to un-sortable.
         // Use backup position if does exist.
         const panelsBackup = state.panelsBackup
+        // Show tabs.
+        const unsortableTabs: { [k: string]: boolean } = {}
+        state.panelKeys.forEach(k => (unsortableTabs[k] = true))
         return assignWithNewObject(state, {
           settings: {
             ...state.settings,
@@ -259,7 +263,7 @@ export function reducer(state = initState, action: BaseAction): State {
           panels: panelsBackup ? panelsBackup : state.panels,
           panelsBackup: null,
           // Show tabs
-          tabs: state.panels.map(p => p.key),
+          tabs: unsortableTabs,
         })
       }
 
@@ -335,30 +339,38 @@ export function reducer(state = initState, action: BaseAction): State {
     // Handle panel minimize.
 
     case HANDLE_PANEL_MINIMIZE:
-      const minimizeIndex = action.payload.index
-      const minimizePanels = cloneDeep(state.panels)
-      const minimizeTarget = minimizePanels[minimizeIndex]
-      const minimizeTabs = state.tabs.slice()
+      const minimizeKey = state.panelKeys[action.payload.index]
+      const minimizePanels = state.settings.sortable
+        ? cloneDeep(state.order)
+        : cloneDeep(state.panels)
+      const minimizeTarget = minimizePanels.find(p => p.key === minimizeKey)
+      if (minimizeTarget) {
+        const minimizeTabs = cloneDeep(state.tabs)
 
-      const { width, height, left, top } = minimizeTarget
+        const { width, height, left, top } = minimizeTarget
 
-      minimizeTarget.tempWidth = width
-      minimizeTarget.tempHeight = height
-      minimizeTarget.tempLeft = left
-      minimizeTarget.tempTop = top
-      minimizeTarget.top = height + top
-      minimizeTarget.left = width / 2 + left
-      minimizeTarget.height = 0
-      minimizeTarget.width = 0
+        minimizeTarget.tempWidth = width
+        minimizeTarget.tempHeight = height
+        minimizeTarget.tempLeft = left
+        minimizeTarget.tempTop = top
+        minimizeTarget.top = height + top
+        minimizeTarget.left = width / 2 + left
+        minimizeTarget.height = 0
+        minimizeTarget.width = 0
 
-      if (state.settings.sortable) {
-        minimizeTabs.push(minimizeTarget.key)
+        if (state.settings.sortable) {
+          minimizeTabs[minimizeTarget.key] = true
+        }
+
+        return assignWithNewObject(state, {
+          panels: state.settings.sortable
+            ? mapToPanels(minimizePanels, state.panels)
+            : minimizePanels,
+          order: state.settings.sortable ? minimizePanels : state.order,
+          tabs: minimizeTabs,
+        })
       }
-
-      return assignWithNewObject(state, {
-        panels: minimizePanels,
-        tabs: minimizeTabs,
-      })
+      return state
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
@@ -366,35 +378,41 @@ export function reducer(state = initState, action: BaseAction): State {
     // Handle panel retrieve.
 
     case HANDLE_PANEL_RETRIEVE:
-      const retrieveIndex = action.payload.index
-      const retrievePanels = cloneDeep(state.panels)
-      const retrieveTarget = retrievePanels[retrieveIndex]
-      const retrieveTabs = state.tabs.slice()
+      const retrieveKey = state.panelKeys[action.payload.index]
+      const retrievePanels = state.settings.sortable
+        ? cloneDeep(state.order)
+        : cloneDeep(state.panels)
+      const retrieveTarget = retrievePanels.find(p => p.key === retrieveKey)
 
-      const { tempTop, tempLeft, tempWidth, tempHeight } = retrieveTarget
+      if (retrieveTarget) {
+        const retrieveTabs = cloneDeep(state.tabs)
 
-      if (tempTop && tempLeft && tempWidth && tempHeight) {
-        retrieveTarget.top = tempTop
-        retrieveTarget.left = tempLeft
-        retrieveTarget.width = tempWidth
-        retrieveTarget.height = tempHeight
-        retrieveTarget.tempTop = undefined
-        retrieveTarget.tempLeft = undefined
-        retrieveTarget.tempWidth = undefined
-        retrieveTarget.tempHeight = undefined
+        const { tempTop, tempLeft, tempWidth, tempHeight } = retrieveTarget
+
+        if (tempTop && tempLeft && tempWidth && tempHeight) {
+          retrieveTarget.top = tempTop
+          retrieveTarget.left = tempLeft
+          retrieveTarget.width = tempWidth
+          retrieveTarget.height = tempHeight
+          retrieveTarget.tempTop = undefined
+          retrieveTarget.tempLeft = undefined
+          retrieveTarget.tempWidth = undefined
+          retrieveTarget.tempHeight = undefined
+        }
+
+        if (state.settings.sortable) {
+          retrieveTabs[retrieveTarget.key] = false
+        }
+
+        return assignWithNewObject(state, {
+          panels: state.settings.sortable
+            ? mapToPanels(retrievePanels, state.panels)
+            : retrievePanels,
+          order: state.settings.sortable ? retrievePanels : state.order,
+          tabs: retrieveTabs,
+        })
       }
-
-      if (state.settings.sortable) {
-        retrieveTabs.splice(
-          retrieveTabs.findIndex(t => t === retrieveTarget.key),
-          1
-        )
-      }
-
-      return assignWithNewObject(state, {
-        panels: retrievePanels,
-        tabs: retrieveTabs,
-      })
+      return state
 
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------

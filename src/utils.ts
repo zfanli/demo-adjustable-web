@@ -343,12 +343,14 @@ export function getCurrentPositions(
  * @param order
  * @param windowSize
  * @param margin
+ * @param minimizeFlag optional
  */
 export function handleSizeChangeForSortable(
   panels: PanelWithPosition[],
   order: PanelWithPosition[],
   windowSize: Size,
-  margin: number
+  margin: number,
+  minimizeFlag: string[] = []
 ) {
   // Get new positions.
   const newPositions = getCurrentPositions(
@@ -361,10 +363,17 @@ export function handleSizeChangeForSortable(
 
   tempOrder.forEach((p, i) => {
     const thePosition = newPositions[i]
-    p.width = thePosition.width
-    p.height = thePosition.height
-    p.top = thePosition.top
-    p.left = thePosition.left
+    if (!minimizeFlag.includes(p.key)) {
+      p.width = thePosition.width
+      p.height = thePosition.height
+      p.top = thePosition.top
+      p.left = thePosition.left
+    } else {
+      p.tempWidth = thePosition.width
+      p.tempHeight = thePosition.height
+      p.tempTop = thePosition.top
+      p.tempLeft = thePosition.left
+    }
   })
 
   const newPanels = mapToPanels(tempOrder, panels)
@@ -384,6 +393,7 @@ export function handleSizeChangeForUnsortable(
   order: PanelWithPosition[],
   windowSize: Size,
   lastSize: Size
+  // minimizeFlag?: boolean
 ) {
   const heightRatio = windowSize.height / lastSize.height
   const widthRatio = windowSize.width / lastSize.width
