@@ -15,8 +15,9 @@ import {
   setActivePanel,
   handlePanelMinimize,
   handlePanelPinned,
+  handlePanelRetrieve,
 } from '../actions'
-import { throttle } from 'lodash'
+import { throttle, range } from 'lodash'
 
 interface Props {
   style: CSSProperties
@@ -130,7 +131,15 @@ const Panel: React.FC<Props> = (props: Props) => {
   const triggerPinned = () => dispatch(handlePanelPinned(props.index))
 
   const triggerMaximized = () => {
-    !pinned && setMaximized(!maximized)
+    if (!pinned) {
+      setMaximized(!maximized)
+
+      range(5).forEach(
+        i =>
+          i !== props.index &&
+          dispatch(maximized ? handlePanelRetrieve(i) : handlePanelMinimize(i))
+      )
+    }
     // Show a message tells that this panel was pinned.
     if (pinned && messageFlag) {
       setMaximizePinned(true)
