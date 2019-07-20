@@ -137,10 +137,11 @@ body {
 
     .tab {
       display: flex;
-      min-width: 15%;
-      margin-left: 0.5rem;
+      // min-width: 15%;
+      overflow: hidden;
+      // margin-left: 0.5rem;
       background: #fff;
-      padding: 0 0.5rem;
+      // padding: 0 0.5rem;
       border-radius: 3px;
       box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
       cursor: pointer;

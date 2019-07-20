@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Icon } from 'antd'
 import { State } from '../type'
 import { setActivePanel, handlePanelRetrieve } from '../actions'
+import { useTransition, animated as a } from 'react-spring'
 
 interface Props {
   handleResize: () => void
@@ -32,6 +33,28 @@ const TabBar: React.FC<Props> = (props: Props) => {
       .includes(k.key)
   )
 
+  const transitions = useTransition(tabMap, (t: any) => t.key, {
+    from: { width: '0%', opacity: 0, marginLeft: '0rem', padding: '0rem 0rem' },
+    to: {
+      width: '15%',
+      opacity: 1,
+      marginLeft: '0.5rem',
+      padding: '0rem 0.5rem',
+    },
+    enter: {
+      width: '15%',
+      opacity: 1,
+      marginLeft: '0.5rem',
+      padding: '0rem 0.5rem',
+    },
+    leave: {
+      width: '0%',
+      opacity: 0,
+      marginLeft: '0rem',
+      padding: '0rem 0rem',
+    },
+  })
+
   const triggerResizeAction = tabMap.length > 0
 
   useEffect(() => {
@@ -51,13 +74,18 @@ const TabBar: React.FC<Props> = (props: Props) => {
 
   return tabMap.length !== 0 ? (
     <div className="tab-bar">
-      {tabMap.map(tab => (
-        <div className="tab" key={tab.key} onClick={handleClick(tab.index)}>
-          <span>{tab.name}</span>
+      {transitions.map(({ item, props, key }) => (
+        <a.div
+          className="tab"
+          key={key}
+          onClick={handleClick(item.index)}
+          style={props}
+        >
+          <span>{item.name}</span>
           <div className="icons">
             <Icon type="info-circle" />
           </div>
-        </div>
+        </a.div>
       ))}
     </div>
   ) : null

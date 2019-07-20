@@ -161,8 +161,8 @@ const Panel: React.FC<Props> = (props: Props) => {
             title={locale['panelWasPinned']}
             visible={minimizePinned}
           >
-            <button onClick={handleMinimize}>
-              <Icon type="vertical-align-bottom" />
+            <button className="minimize" onClick={handleMinimize}>
+              <Icon type="vertical-right" />
             </button>
           </Tooltip>
           <button onClick={triggerPinned}>
