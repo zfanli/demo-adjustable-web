@@ -51,27 +51,27 @@ const positionOfDefaultPanels = range(5).map((_, i) => {
 
 describe('Utils Test', () => {
   describe('Private function: getCurrentPanelSize.', () => {
-    it('Returns normal size if it is not the largest panel.', () => {
+    it('Return normal size if it is not the largest panel.', () => {
       expect(getCurrentPanelSize(size, margin)).toEqual(normalSize)
     })
 
-    it('Returns lager size if largest flag is set to true.', () => {
+    it('Return lager size if largest flag is set to true.', () => {
       expect(getCurrentPanelSize(size, margin, true)).toEqual(largeSize)
     })
   })
 
   describe('Private function: packagePanels.', () => {
-    it('Returns sizes with default pattern in [0, 2, 4, 1, 3, 4] (Largest at the end).', () => {
+    it('Return sizes with default pattern in [0, 2, 4, 1, 3, 4] (Largest at the end).', () => {
       expect(packagePanels(size, margin)).toEqual(defaultPanels)
     })
 
-    it('Returns sizes with pattern in [0, 1, 4, 0, 2, 3] (Largest at the top).', () => {
+    it('Return sizes with pattern in [0, 1, 4, 0, 2, 3] (Largest at the top).', () => {
       const expectedResult = range(4).map(() => normalSize)
       expectedResult.unshift(largeSize)
       expect(packagePanels(size, margin, 0)).toEqual(expectedResult)
     })
 
-    it('Returns sizes with pattern in [0, 2, 3, 1, 2, 4] (Largest at the middle).', () => {
+    it('Return sizes with pattern in [0, 2, 3, 1, 2, 4] (Largest at the middle).', () => {
       const expectedResult = range(4).map(() => normalSize)
       expectedResult.splice(2, 0, largeSize)
       expect(packagePanels(size, margin, 2)).toEqual(expectedResult)
@@ -88,19 +88,19 @@ describe('Utils Test', () => {
       [0, 2, 4, 1, 3, 4],
     ]
 
-    it(`Returns pattern 1 when the largest index is 0: ${patterns[0]}.`, () => {
+    it(`Return pattern 1 when the largest index is 0: ${patterns[0]}.`, () => {
       expect(convertToRowDirection(0)).toEqual(patterns[0])
     })
 
-    it(`Returns pattern 2 when the largest index is 2: ${patterns[1]}.`, () => {
+    it(`Return pattern 2 when the largest index is 2: ${patterns[1]}.`, () => {
       expect(convertToRowDirection(2)).toEqual(patterns[1])
     })
 
-    it(`Returns pattern 3 when the largest index is 4: ${patterns[2]}.`, () => {
+    it(`Return pattern 3 when the largest index is 4: ${patterns[2]}.`, () => {
       expect(convertToRowDirection(4)).toEqual(patterns[2])
     })
 
-    it(`Returns default pattern 3 when the index is other: ${patterns[2]}.`, () => {
+    it(`Return default pattern 3 when the index is other: ${patterns[2]}.`, () => {
       expect(convertToRowDirection(9)).toEqual(patterns[2])
     })
   })
@@ -117,7 +117,7 @@ describe('Utils Test', () => {
   })
 
   describe('Private function: mapToPanels.', () => {
-    it('Returns the same object if in the same order.', () => {
+    it('Return the same object if in the same order.', () => {
       expect(
         mapToPanels(
           positionOfDefaultPanels,
@@ -132,7 +132,7 @@ describe('Utils Test', () => {
       ).toEqual(positionOfDefaultPanels)
     })
 
-    it('Returns different object if not in the same order.', () => {
+    it('Return different object if not in the same order.', () => {
       const temp = [
         ...cloneDeep(positionOfDefaultPanels).slice(2, 5),
         ...cloneDeep(positionOfDefaultPanels).slice(0, 2),
@@ -142,7 +142,7 @@ describe('Utils Test', () => {
       )
     })
 
-    it('Returns the same object after sorted.', () => {
+    it('Return the same object after sorted.', () => {
       const temp = [
         ...cloneDeep(positionOfDefaultPanels).slice(2, 5),
         ...cloneDeep(positionOfDefaultPanels).slice(0, 2),
