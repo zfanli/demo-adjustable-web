@@ -367,20 +367,24 @@ export function reducer(state = initState, action: BaseAction): State {
         minimizeTabs[minimizeTarget.key] = true
         // }
 
-        const minimizedIndex = state.panels.findIndex(
-          p => p.key === minimizeKey
-        )
+        const minimizedIndex = state.order.findIndex(p => p.key === minimizeKey)
 
         const nearPanels = [
-          state.panels[minimizedIndex - 1] &&
-            state.panels[minimizedIndex - 1].key,
-          state.panels[minimizedIndex + 1] &&
-            state.panels[minimizedIndex + 1].key,
+          state.order[minimizedIndex - 1] &&
+            state.order[minimizedIndex - 1].key,
+          state.order[minimizedIndex + 1] &&
+            state.order[minimizedIndex + 1].key,
         ]
 
         minimizePanels.forEach(p => {
-          if (nearPanels.includes(p.key)) {
-            console.log(p.top - state.settings.margin)
+          if (
+            nearPanels.includes(p.key) &&
+            p.left === minimizeTarget.tempLeft
+          ) {
+            if (minimizeTarget.tempTop) {
+              p.top =
+                p.top < minimizeTarget.tempTop ? p.top : minimizeTarget.tempTop
+            }
           }
         })
 
