@@ -159,7 +159,7 @@ function sst(config) {
     const { formattedMessages } = recordState
     recordState.formattedMessages = formattedMessages.concat(msg)
     // console.log('------------------handleFormattedMessage----------------------');
-    console.log(msg)
+    // console.log(msg)
     // console.log('results:' + (msg.results.length - 1));
 
     if (msg.results.length > 0) {
@@ -170,7 +170,7 @@ function sst(config) {
         const transcript = msg.results[i].alternatives[0].transcript
         const timestamp = msg.results[i].alternatives[0].timestamps[0][1]
         let speakerLabel = recordState.label
-        if (!speakerLabel) {
+        if (speakerLabel === undefined) {
           speakerLabel = msg.results[i].speaker
           speakerLabel =
             typeof speakerLabel !== 'undefined' ? speakerLabel : 'analyzing'

@@ -332,7 +332,6 @@ export function reducer(state = initState, action: BaseAction): State {
           }
           return 0
         })
-        console.log(resultConversation)
       } else {
         conversation.conversation = action.payload.conversation
       }

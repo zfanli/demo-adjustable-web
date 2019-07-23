@@ -4,6 +4,7 @@ import React, {
   useRef,
   useCallback,
   useMemo,
+  useEffect,
 } from 'react'
 import { Input, Button, Icon, Empty, Tooltip } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
@@ -42,7 +43,7 @@ const Conversation: React.FC = () => {
 
   // State for local control.
   const [sst, setSst] = useState(
-    range(sstFlag ? 2 : 1).map(() =>
+    range(sstFlag === 'files' ? 2 : 1).map(() =>
       sstService({ tokenUrl, keywords: defaultKeywords })
     )
   )
@@ -83,9 +84,16 @@ const Conversation: React.FC = () => {
     } else {
       const k = e.target.value.split(',').map(k => k.trim())
       setKeywords(k)
-      setSst([sstService({ tokenUrl, keywords: k })])
     }
   }
+
+  useEffect(() => {
+    setSst(
+      range(sstFlag === 'files' ? 2 : 1).map(() =>
+        sstService({ tokenUrl, keywords })
+      )
+    )
+  }, [keywords, sstFlag, tokenUrl, setSst])
 
   // Trigger colors.
   const type = recordFlag ? 'danger' : 'primary'
