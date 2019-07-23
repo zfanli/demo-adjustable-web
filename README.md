@@ -168,7 +168,7 @@ Root
     - [x] Preparation
       - [x] split resize handler by sortable flag
         - [x] change width and height with a ratio in un-sortable mode
-    - [ ] Turn to tab bar task
+    - [x] Turn to tab bar task
     - [x] Resizable only in un-sortable mode
       - [x] resize icon
       - [x] mouse key hold handler
@@ -203,21 +203,23 @@ Root
         - [x] the z-index maybe should to be managed by a individual array
   - [ ] Add tab bar to the view
     - [x] basic tab bar placeholder
-    - [ ] useTransitions to animate add and remove action
-    - [ ] info icon to show some messages
+    - [x] useTransitions to animate add and remove action
+    - [x] ~~info icon to show some messages (no needed)~~
     - [x] panels minimize to tab bar
       - [x] in un-sortable mode
       - [x] in sortable mode
     - [x] retrieve panels from tab bar
       - [x] in un-sortable mode
       - [x] in sortable mode
-    - [ ] stretch other panel if one is minimized
+    - [x] stretch other panel if one is minimized
     - [ ] maximize specific panel
-  - [ ] Fill fixed menu with 6 items
+      - [x] minimize others
+      - [ ] stretch itself
+  - [x] Fill fixed menu with 6 items
   - [ ] Dynamic add/remove items to dynamic menu according to the result keywords of watson speech
-    - [ ] adding/removing items dynamically by the spotted times of keywords
+    - [x] adding/removing items dynamically by the spotted times of keywords
     - [ ] keep only five items on the screen
-    - [ ] transition animation when items changes
+    - [x] transition animation when items changes
   - [ ] Reconsideration
     - [ ] Maybe remove `order` and animate with `useTransitions` instead of `useSprings`
     - [ ] resizable panels
