@@ -78,7 +78,7 @@ export const initState: State = {
     containerSize: defaultSize,
     messageLeaveDelay: config.messageLeaveDelay,
     messageFlag: true,
-    sstFlag: true,
+    sstFlag: 'file',
   },
   watsonSpeech: {
     defaultKeywords: config.watsonSpeech.defaultKeywords,
@@ -320,7 +320,7 @@ export function reducer(state = initState, action: BaseAction): State {
       const conversation = cloneDeep(state.watsonSpeech)
       const resultConversation = action.payload.conversation as TextWithLabel[]
 
-      if (state.settings.sstFlag) {
+      if (state.settings.sstFlag === 'files') {
         const label = resultConversation[0].speaker
         let tempConversation = conversation.conversation.filter(
           c => c.speaker !== label

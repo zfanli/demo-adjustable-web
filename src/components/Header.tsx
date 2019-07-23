@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Icon, Menu, Dropdown, Switch } from 'antd'
+import { Icon, Menu, Dropdown, Switch, Radio } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
 import { State } from '../type'
 import {
@@ -15,6 +15,7 @@ const Header: React.FC = () => {
   // get header string from store
   const header = useSelector((state: State) => state.settings.locale.header)
   const height = useSelector((state: State) => state.settings.headerHeight)
+  const sstFlag = useSelector((state: State) => state.settings.sstFlag)
   const dispatch = useDispatch()
 
   const handleI18nMenuClick = (e: ClickParam) => {
@@ -32,6 +33,9 @@ const Header: React.FC = () => {
   const sstFlagText = useSelector(
     (state: State) => state.settings.locale.sstFlag
   )
+  const fileText = useSelector((state: State) => state.settings.locale.file)
+  const filesText = useSelector((state: State) => state.settings.locale.files)
+  const micText = useSelector((state: State) => state.settings.locale.mic)
   const resetText = useSelector(
     (state: State) => state.settings.locale.resetPosition
   )
@@ -48,13 +52,17 @@ const Header: React.FC = () => {
     dispatch(setMessageFlag(checked))
   }
 
-  const handleSstSwitchChange = (checked: boolean) => {
-    dispatch(setSstFlag(checked))
+  const handleSstSwitchChange = (e: any) => {
+    dispatch(setSstFlag(e.target.value))
   }
 
   const handleResetPosition = () => {
     setSettingsVisible(false)
     dispatch(resetPanelsPosition())
+  }
+
+  const radioStyle = {
+    display: 'block',
   }
 
   return (
@@ -93,10 +101,20 @@ const Header: React.FC = () => {
                 </label>
               </Menu.Item>
               <Menu.Item key="3">
-                <label className="settings-switch">
-                  <span>{sstFlagText}</span>
-                  <Switch defaultChecked onChange={handleSstSwitchChange} />
+                <label style={radioStyle} className="settings-switch">
+                  {sstFlagText}
                 </label>
+                <Radio.Group onChange={handleSstSwitchChange} value={sstFlag}>
+                  <Radio style={radioStyle} value="file">
+                    {fileText}
+                  </Radio>
+                  <Radio style={radioStyle} value="files">
+                    {filesText}
+                  </Radio>
+                  <Radio style={radioStyle} value="mic">
+                    {micText}
+                  </Radio>
+                </Radio.Group>
               </Menu.Item>
               <Menu.Item onClick={handleResetPosition}>
                 <Icon type="appstore" />

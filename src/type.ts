@@ -10,7 +10,7 @@ export interface State {
     sortable: boolean
     messageLeaveDelay: number
     messageFlag: boolean
-    sstFlag: boolean
+    sstFlag: string
     containerSize: {
       width: number
       height: number

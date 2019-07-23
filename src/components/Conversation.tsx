@@ -115,7 +115,7 @@ const Conversation: React.FC = () => {
 
   // Handle audio button.
   const handleAudioButtonClick = () => {
-    if (!recordFlag && !sstFlag) {
+    if (!recordFlag && sstFlag === 'mic') {
       // Set start flag.
       setRecordFlag(true)
 
@@ -127,12 +127,12 @@ const Conversation: React.FC = () => {
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
-    } else if (recordFlag && !sstFlag) {
+    } else if (recordFlag && sstFlag === 'mic') {
       // Set stop flag.
       setRecordFlag(false)
       // Stop.
       sst[0] && sst[0].record(undefined, true)
-    } else if (!recordFlag && sstFlag) {
+    } else if (!recordFlag && sstFlag === 'files') {
       // Set start flag.
       setRecordFlag(true)
 
@@ -148,12 +148,31 @@ const Conversation: React.FC = () => {
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
-    } else if (recordFlag && sstFlag) {
+    } else if (recordFlag && sstFlag === 'files') {
       // Set stop flag.
       setRecordFlag(false)
       // Stop.
       sst[0] && sst[0].playFile(undefined, 0, undefined, true)
       sst[1] && sst[1].playFile(undefined, 0, undefined, true)
+    } else if (!recordFlag && sstFlag === 'file') {
+      // Set start flag.
+      setRecordFlag(true)
+
+      // ------------------------------------------------------------------------
+      // ---------------------- Configure Watson Speech -------------------------
+
+      const file1 = 'audio/records01.wav'
+
+      // ファイルから、会話解析を実施
+      sst[0] && sst[0].playFile(file1, undefined, responseHandler, false)
+
+      // ------------------------------ Ending ----------------------------------
+      // ------------------------------------------------------------------------
+    } else if (recordFlag && sstFlag === 'file') {
+      // Set stop flag.
+      setRecordFlag(false)
+      // Stop.
+      sst[0] && sst[0].playFile(undefined, undefined, undefined, true)
     }
   }
 

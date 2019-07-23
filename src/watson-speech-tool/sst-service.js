@@ -159,7 +159,7 @@ function sst(config) {
     const { formattedMessages } = recordState
     recordState.formattedMessages = formattedMessages.concat(msg)
     // console.log('------------------handleFormattedMessage----------------------');
-    // console.log(msg)
+    console.log(msg)
     // console.log('results:' + (msg.results.length - 1));
 
     if (msg.results.length > 0) {
@@ -171,14 +171,7 @@ function sst(config) {
         const timestamp = msg.results[i].alternatives[0].timestamps[0][1]
         let speakerLabel = recordState.label
         if (!speakerLabel) {
-          let speakerLabel = msg.results[i].speaker
-          // $refs.resultArea.scrollTop = $refs.resultArea.scrollHeight
-          // if(typeof speakerLabel === 'number'){
-          // if (msg.results[i].word_alternatives) {
-          //   speakerLabel = !speakerLabel ? 0 : speakerLabel
-          // } else {
-          //   speakerLabel = 'analyzing'
-          // }
+          speakerLabel = msg.results[i].speaker
           speakerLabel =
             typeof speakerLabel !== 'undefined' ? speakerLabel : 'analyzing'
         }
