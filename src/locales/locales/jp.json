@@ -14,5 +14,6 @@
   "speaker": "話者",
   "analyzing": "分析中...",
   "panelWasPinned": "このパネルは固定されています。",
-  "messageFlag": "説明を表示"
+  "messageFlag": "説明を表示",
+  "disableDraggingMessage": "ソートにはまだ少しバグが存在しているため、このデモではパネルが最小化されている時はソートできません。"
 }

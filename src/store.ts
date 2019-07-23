@@ -384,6 +384,7 @@ export function reducer(state = initState, action: BaseAction): State {
             if (minimizeTarget.tempTop) {
               p.top =
                 p.top < minimizeTarget.tempTop ? p.top : minimizeTarget.tempTop
+              p.height = p.height * 2 + state.settings.margin
             }
           }
         })
@@ -429,6 +430,23 @@ export function reducer(state = initState, action: BaseAction): State {
         // if (state.settings.sortable) {
         retrieveTabs[retrieveTarget.key] = false
         // }
+
+        const retrieveIndex = state.order.findIndex(p => p.key === retrieveKey)
+
+        const nearPanels = [
+          state.order[retrieveIndex - 1] && state.order[retrieveIndex - 1].key,
+          state.order[retrieveIndex + 1] && state.order[retrieveIndex + 1].key,
+        ]
+
+        retrievePanels.forEach(p => {
+          if (nearPanels.includes(p.key) && p.left === tempLeft && tempHeight) {
+            p.top =
+              tempTop === state.settings.margin
+                ? tempTop + tempHeight + state.settings.margin
+                : p.top
+            p.height = tempHeight
+          }
+        })
 
         return assignWithNewObject(state, {
           panels: state.settings.sortable

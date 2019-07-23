@@ -14,5 +14,6 @@
   "speaker": "Speaker",
   "analyzing": "Analyzing...",
   "panelWasPinned": "This panel was pinned.",
-  "messageFlag": "Messages"
+  "messageFlag": "Messages",
+  "disableDraggingMessage": "Because of some bugs, sort is not available if any panel is minimized in this demo."
 }

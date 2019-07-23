@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSprings, interpolate } from 'react-spring'
 import { useGesture } from 'react-use-gesture'
+import { message } from 'antd'
 import { debounce } from 'lodash'
 
 import Header from '../components/Header'
@@ -32,6 +33,7 @@ const AdjustableView: React.FC = () => {
   const margin = useSelector((state: State) => state.settings.margin)
   // Lang.
   const lang = useSelector((state: State) => state.settings.lang)
+  const locale = useSelector((state: State) => state.settings.locale)
   // Edit content box margins.
   const contentBoxMargins = { marginBottom: margin, marginRight: margin }
   // Dispatcher.
@@ -131,8 +133,25 @@ const AdjustableView: React.FC = () => {
   // transition animation, and preventing text selection actions caused by
   // dragging.
 
+  // Message for disable dragging.
+  const disableMessage = debounce(
+    () => message.info(locale.disableDraggingMessage),
+    5000,
+    {
+      leading: true,
+      trailing: false,
+    }
+  )
+
   const bind = useGesture(
     ({ args: [originalIndex], xy, down, delta, last, event }) => {
+      // Disable dragging if any panel is minimized.
+      // 'Cause of some unexpected bugs.
+      if (minimizedTabs.length > 0) {
+        disableMessage()
+        return
+      }
+
       // Preventing text selection caused by dragging.
       !last && event && event.preventDefault()
       // Dispatch current position.

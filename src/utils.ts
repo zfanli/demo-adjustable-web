@@ -361,16 +361,24 @@ export function handleSizeChangeForSortable(
   )
   const tempOrder = cloneDeep(order)
 
-  const minimizedIndex = tempOrder.findIndex(p => minimizeFlag.includes(p.key))
+  let nearPanels: string[] = []
 
-  const nearPanels = [
-    tempOrder[minimizedIndex - 1] && tempOrder[minimizedIndex - 1].key,
-    tempOrder[minimizedIndex + 1] && tempOrder[minimizedIndex + 1].key,
-  ]
+  tempOrder.forEach((p, i) => {
+    if (minimizeFlag.includes(p.key)) {
+      const pre = tempOrder[i - 1]
+      const next = tempOrder[i + 1]
+      if (pre && pre.left === p.tempLeft) {
+        nearPanels.push(pre.key)
+      } else if (next && next.left === p.tempLeft) {
+        nearPanels.push(next.key)
+      }
+    }
+  })
 
   tempOrder.forEach((p, i) => {
     const thePosition = newPositions[i]
-    if (!minimizeFlag.includes(p.key)) {
+
+    if (!minimizeFlag.includes(p.key) && !nearPanels.includes(p.key)) {
       p.width = thePosition.width
       p.height = thePosition.height
       p.top = thePosition.top
