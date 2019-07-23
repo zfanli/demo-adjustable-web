@@ -283,6 +283,7 @@ function sst(config) {
 
   return {
     record(callback, stop) {
+      console.log(recordState.keywords)
       if (stop) {
         stopTranscription()
         return
@@ -297,6 +298,8 @@ function sst(config) {
       })
     },
     playFile(file, label, callback, stop) {
+      console.log(recordState.keywords)
+
       if (stop) {
         stopTranscription()
         return

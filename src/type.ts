@@ -18,7 +18,7 @@ export interface State {
   }
   watsonSpeech: {
     defaultKeywords: string[]
-    resultKeywords: string[]
+    resultKeywords: Keyword[]
     accessTokenURL: string
     conversation: TextWithLabel[]
   }
@@ -46,6 +46,11 @@ export interface TextWithLabel {
 
 export interface PlainObject {
   [k: string]: string | number
+}
+
+export interface Keyword {
+  count: number
+  word: string
 }
 
 export interface PanelWithPosition {

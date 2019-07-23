@@ -21,6 +21,8 @@ import {
 } from '../utils'
 import Conversation from '../components/Conversation'
 import TabBar from '../components/TabBar'
+import DynamicMenu from '../components/DynamicMenu'
+import FixedMenu from '../components/FixedMenu'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -215,6 +217,8 @@ const AdjustableView: React.FC = () => {
     [panelKeys[1]]: (
       <InformationList information={getFakeDataOfReplyInfo(lang, 16)} />
     ),
+    [panelKeys[2]]: <FixedMenu />,
+    [panelKeys[3]]: <DynamicMenu />,
     [panelKeys[4]]: <Conversation />,
   }
 

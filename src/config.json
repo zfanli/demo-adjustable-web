@@ -14,6 +14,19 @@
   "messageLeaveDelay": 1500,
   "watsonSpeech": {
     "accessTokenURL": "/api/v1/credentials",
-    "defaultKeywords": ["テスト", "天気", "散歩"]
+    "defaultKeywords": [
+      "振込",
+      "振り込み",
+      "貸付",
+      "出金",
+      "完済",
+      "延滞",
+      "解約",
+      "返済額",
+      "返済日",
+      "返済回数",
+      "増額",
+      "契約額"
+    ]
   }
 }

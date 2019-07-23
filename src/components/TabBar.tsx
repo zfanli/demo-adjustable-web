@@ -83,7 +83,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
         >
           <span>{item.name}</span>
           <div className="icons">
-            <Icon type="info-circle" />
+            <Icon type="book" />
           </div>
         </a.div>
       ))}

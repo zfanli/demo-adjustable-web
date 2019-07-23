@@ -17,7 +17,15 @@
   "messageFlag": "Messages",
   "disableDraggingMessage": "Because of some bugs, sort is not available if any panel is minimized in this demo.",
   "sstFlag": "Voice Source",
-  "file": "From one File",
-  "files": "From two Files",
-  "mic": "From Microphone"
+  "file": "From Single File",
+  "files": "From Two Files",
+  "mic": "From Microphone",
+  "fixedMenu": [
+    "Fixed Menu1",
+    "Fixed Menu2",
+    "Fixed Menu3",
+    "Fixed Menu4",
+    "Fixed Menu5",
+    "Fixed Menu6"
+  ]
 }
