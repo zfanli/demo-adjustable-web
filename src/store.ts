@@ -1,5 +1,5 @@
 import { createStore } from 'redux'
-import { State, BaseAction } from './type'
+import { State, BaseAction, TextWithLabel } from './type'
 import {
   getCurrentPositions,
   handleSizeChangeForSortable,
@@ -23,6 +23,8 @@ import {
   HANDLE_PANEL_RETRIEVE,
   HANDLE_PANEL_PINNED,
   SET_MESSAGE_FLAG,
+  SET_SST_FLAG,
+  HANDLE_CONVERSATION_CHANGED,
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
@@ -76,11 +78,13 @@ export const initState: State = {
     containerSize: defaultSize,
     messageLeaveDelay: config.messageLeaveDelay,
     messageFlag: true,
+    sstFlag: true,
   },
   watsonSpeech: {
     defaultKeywords: config.watsonSpeech.defaultKeywords,
     resultKeywords: [],
     accessTokenURL: config.watsonSpeech.accessTokenURL,
+    conversation: [],
   },
   panelKeys: config.panelKeys,
   panels: initialPanels,
@@ -309,6 +313,37 @@ export function reducer(state = initState, action: BaseAction): State {
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
     // ------------------------ START SECTION ---------------------------------
+    // Handle conversation changed.
+
+    case HANDLE_CONVERSATION_CHANGED:
+      // Make a copy of watsonSpeech configs.
+      const conversation = cloneDeep(state.watsonSpeech)
+      const resultConversation = action.payload.conversation as TextWithLabel[]
+
+      if (state.settings.sstFlag) {
+        const label = resultConversation[0].speaker
+        let tempConversation = conversation.conversation.filter(
+          c => c.speaker !== label
+        )
+        tempConversation = tempConversation.concat(resultConversation)
+        conversation.conversation = tempConversation.sort((c1, c2) => {
+          if (c1.timestamp && c2.timestamp) {
+            return c1.timestamp - c2.timestamp
+          }
+          return 0
+        })
+        console.log(resultConversation)
+      } else {
+        conversation.conversation = action.payload.conversation
+      }
+      // Merge to store.
+      return assignWithNewObject(state, {
+        watsonSpeech: conversation,
+      })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
     // Handle active panel z-index.
 
     case SET_ACTIVE_PANEL:
@@ -476,12 +511,23 @@ export function reducer(state = initState, action: BaseAction): State {
     // ------------------------- END SECTION ----------------------------------
     // ------------------------------------------------------------------------
     // ------------------------ START SECTION ---------------------------------
-    // Handle pinned keys.
+    // Handle message flag.
 
     case SET_MESSAGE_FLAG:
       const messageFlag = action.payload.messageFlag
       return assignWithNewObject(state, {
         settings: { ...state.settings, messageFlag },
+      })
+
+    // ------------------------- END SECTION ----------------------------------
+    // ------------------------------------------------------------------------
+    // ------------------------ START SECTION ---------------------------------
+    // Handle sst flag.
+
+    case SET_SST_FLAG:
+      const sstFlag = action.payload.sstFlag
+      return assignWithNewObject(state, {
+        settings: { ...state.settings, sstFlag },
       })
 
     // ------------------------- END SECTION ----------------------------------

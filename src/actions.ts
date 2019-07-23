@@ -133,3 +133,21 @@ export function setMessageFlag(messageFlag: boolean): BaseAction {
     payload: { messageFlag },
   }
 }
+
+export const SET_SST_FLAG = 'SET_SST_FLAG'
+
+export function setSstFlag(sstFlag: boolean): BaseAction {
+  return {
+    type: SET_SST_FLAG,
+    payload: { sstFlag },
+  }
+}
+
+export const HANDLE_CONVERSATION_CHANGED = 'HANDLE_CONVERSATION_CHANGED'
+
+export function handleConversationChanged(conversation: []): BaseAction {
+  return {
+    type: HANDLE_CONVERSATION_CHANGED,
+    payload: { conversation },
+  }
+}

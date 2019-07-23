@@ -10,6 +10,7 @@ export interface State {
     sortable: boolean
     messageLeaveDelay: number
     messageFlag: boolean
+    sstFlag: boolean
     containerSize: {
       width: number
       height: number
@@ -19,6 +20,7 @@ export interface State {
     defaultKeywords: string[]
     resultKeywords: string[]
     accessTokenURL: string
+    conversation: TextWithLabel[]
   }
   panelKeys: string[]
   panels: PanelWithPosition[]
@@ -39,6 +41,7 @@ export interface ResultResponse {
 export interface TextWithLabel {
   speaker: string | number
   transcript: string
+  timestamp?: number
 }
 
 export interface PlainObject {

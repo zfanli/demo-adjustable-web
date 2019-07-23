@@ -10,9 +10,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import sstService from '../watson-speech-tool/sst-service'
 
-import { State, ResultResponse, TextWithLabel } from '../type'
-import { setResultKeywords } from '../actions'
-import { debounce, throttle } from 'lodash'
+import { State, ResultResponse } from '../type'
+import { setResultKeywords, handleConversationChanged } from '../actions'
+import { debounce, throttle, range } from 'lodash'
 
 const Conversation: React.FC = () => {
   // Get data from store.
@@ -35,12 +35,20 @@ const Conversation: React.FC = () => {
   const messageLeaveDelay = useSelector(
     (state: State) => state.settings.messageLeaveDelay
   )
+  const sstFlag = useSelector((state: State) => state.settings.sstFlag)
+  const conversation = useSelector(
+    (state: State) => state.watsonSpeech.conversation
+  )
 
   // State for local control.
+  const [sst, setSst] = useState(
+    range(sstFlag ? 2 : 1).map(() =>
+      sstService({ tokenUrl, keywords: defaultKeywords })
+    )
+  )
   const [recordFlag, setRecordFlag] = useState(false)
   const [tooltipVisible, setTooltipVisible] = useState(false)
   const [keywords, setKeywords] = useState(defaultKeywords)
-  const [conversation, setConversation] = useState<TextWithLabel[]>([])
   // Handle scroll of messages box.
   const messageBox = useRef<HTMLDivElement>(null)
   const [scrollToBottom, setScrollToBottom] = useState(true)
@@ -75,6 +83,7 @@ const Conversation: React.FC = () => {
     } else {
       const k = e.target.value.split(',').map(k => k.trim())
       setKeywords(k)
+      setSst([sstService({ tokenUrl, keywords: k })])
     }
   }
 
@@ -86,41 +95,65 @@ const Conversation: React.FC = () => {
     () => throttle(keywords => dispatch(setResultKeywords(keywords)), 200),
     [dispatch]
   )
+  const dispatchResultConversationWithThrottle = useMemo(
+    () =>
+      throttle(
+        conversation => dispatch(handleConversationChanged(conversation)),
+        200
+      ),
+    [dispatch]
+  )
 
   // Handle response from api server.
   const responseHandler = useCallback(
     (res: ResultResponse) => {
-      setConversation(res.textResult)
+      dispatchResultConversationWithThrottle(res.textResult)
       dispatchResultKeywordsWithThrottle(res.keywordResult)
     },
-    [dispatchResultKeywordsWithThrottle]
+    [dispatchResultKeywordsWithThrottle, dispatchResultConversationWithThrottle]
   )
 
   // Handle audio button.
   const handleAudioButtonClick = () => {
-    if (!recordFlag) {
+    if (!recordFlag && !sstFlag) {
       // Set start flag.
       setRecordFlag(true)
 
       // ------------------------------------------------------------------------
       // ---------------------- Configure Watson Speech -------------------------
 
-      // SSTのAccessTokenの取得URLを設定
-      sstService.setTokenUrl(tokenUrl)
-
-      // キーサードを設定
-      sstService.setKeywords(keywords)
-
       // マイクロフォンを開き、会話解析を実施
-      sstService.record(responseHandler)
+      sst[0] && sst[0].record(responseHandler, false)
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
-    } else {
+    } else if (recordFlag && !sstFlag) {
       // Set stop flag.
       setRecordFlag(false)
-      // Auto stop if it's running now.
-      sstService.record(undefined, true)
+      // Stop.
+      sst[0] && sst[0].record(undefined, true)
+    } else if (!recordFlag && sstFlag) {
+      // Set start flag.
+      setRecordFlag(true)
+
+      // ------------------------------------------------------------------------
+      // ---------------------- Configure Watson Speech -------------------------
+
+      const file1 = 'audio/ja-JP_Broadband_sample1.wav'
+      const file2 = 'audio/ja-JP_Broadband_sample2.wav'
+
+      // ファイルから、会話解析を実施
+      sst[0] && sst[0].playFile(file1, 0, responseHandler, false)
+      sst[1] && sst[1].playFile(file2, 1, responseHandler, false)
+
+      // ------------------------------ Ending ----------------------------------
+      // ------------------------------------------------------------------------
+    } else if (recordFlag && sstFlag) {
+      // Set stop flag.
+      setRecordFlag(false)
+      // Stop.
+      sst[0] && sst[0].playFile(undefined, 0, undefined, true)
+      sst[1] && sst[1].playFile(undefined, 0, undefined, true)
     }
   }
 

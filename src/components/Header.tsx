@@ -8,6 +8,7 @@ import {
   setSortable,
   resetPanelsPosition,
   setMessageFlag,
+  setSstFlag,
 } from '../actions'
 
 const Header: React.FC = () => {
@@ -28,6 +29,9 @@ const Header: React.FC = () => {
   const messageFlagText = useSelector(
     (state: State) => state.settings.locale.messageFlag
   )
+  const sstFlagText = useSelector(
+    (state: State) => state.settings.locale.sstFlag
+  )
   const resetText = useSelector(
     (state: State) => state.settings.locale.resetPosition
   )
@@ -42,6 +46,10 @@ const Header: React.FC = () => {
 
   const handleMessageSwitchChange = (checked: boolean) => {
     dispatch(setMessageFlag(checked))
+  }
+
+  const handleSstSwitchChange = (checked: boolean) => {
+    dispatch(setSstFlag(checked))
   }
 
   const handleResetPosition = () => {
@@ -82,6 +90,12 @@ const Header: React.FC = () => {
                 <label className="settings-switch">
                   <span>{messageFlagText}</span>
                   <Switch defaultChecked onChange={handleMessageSwitchChange} />
+                </label>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <label className="settings-switch">
+                  <span>{sstFlagText}</span>
+                  <Switch defaultChecked onChange={handleSstSwitchChange} />
                 </label>
               </Menu.Item>
               <Menu.Item onClick={handleResetPosition}>
