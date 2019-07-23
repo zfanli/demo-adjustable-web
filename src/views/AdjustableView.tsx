@@ -147,7 +147,7 @@ const AdjustableView: React.FC = () => {
     ({ args: [originalIndex], xy, down, delta, last, event }) => {
       // Disable dragging if any panel is minimized.
       // 'Cause of some unexpected bugs.
-      if (minimizedTabs.length > 0) {
+      if (sortable && minimizedTabs.length > 0) {
         disableMessage()
         return
       }

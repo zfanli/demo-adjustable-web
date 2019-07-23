@@ -402,27 +402,33 @@ export function reducer(state = initState, action: BaseAction): State {
         minimizeTabs[minimizeTarget.key] = true
         // }
 
-        const minimizedIndex = state.order.findIndex(p => p.key === minimizeKey)
+        if (state.settings.sortable) {
+          const minimizedIndex = state.order.findIndex(
+            p => p.key === minimizeKey
+          )
 
-        const nearPanels = [
-          state.order[minimizedIndex - 1] &&
-            state.order[minimizedIndex - 1].key,
-          state.order[minimizedIndex + 1] &&
-            state.order[minimizedIndex + 1].key,
-        ]
+          const nearPanels = [
+            state.order[minimizedIndex - 1] &&
+              state.order[minimizedIndex - 1].key,
+            state.order[minimizedIndex + 1] &&
+              state.order[minimizedIndex + 1].key,
+          ]
 
-        minimizePanels.forEach(p => {
-          if (
-            nearPanels.includes(p.key) &&
-            p.left === minimizeTarget.tempLeft
-          ) {
-            if (minimizeTarget.tempTop) {
-              p.top =
-                p.top < minimizeTarget.tempTop ? p.top : minimizeTarget.tempTop
-              p.height = p.height * 2 + state.settings.margin
+          minimizePanels.forEach(p => {
+            if (
+              nearPanels.includes(p.key) &&
+              p.left === minimizeTarget.tempLeft
+            ) {
+              if (minimizeTarget.tempTop) {
+                p.top =
+                  p.top < minimizeTarget.tempTop
+                    ? p.top
+                    : minimizeTarget.tempTop
+                p.height = p.height * 2 + state.settings.margin
+              }
             }
-          }
-        })
+          })
+        }
 
         return assignWithNewObject(state, {
           panels: state.settings.sortable
@@ -466,22 +472,32 @@ export function reducer(state = initState, action: BaseAction): State {
         retrieveTabs[retrieveTarget.key] = false
         // }
 
-        const retrieveIndex = state.order.findIndex(p => p.key === retrieveKey)
+        if (state.settings.sortable) {
+          const retrieveIndex = state.order.findIndex(
+            p => p.key === retrieveKey
+          )
 
-        const nearPanels = [
-          state.order[retrieveIndex - 1] && state.order[retrieveIndex - 1].key,
-          state.order[retrieveIndex + 1] && state.order[retrieveIndex + 1].key,
-        ]
+          const nearPanels = [
+            state.order[retrieveIndex - 1] &&
+              state.order[retrieveIndex - 1].key,
+            state.order[retrieveIndex + 1] &&
+              state.order[retrieveIndex + 1].key,
+          ]
 
-        retrievePanels.forEach(p => {
-          if (nearPanels.includes(p.key) && p.left === tempLeft && tempHeight) {
-            p.top =
-              tempTop === state.settings.margin
-                ? tempTop + tempHeight + state.settings.margin
-                : p.top
-            p.height = tempHeight
-          }
-        })
+          retrievePanels.forEach(p => {
+            if (
+              nearPanels.includes(p.key) &&
+              p.left === tempLeft &&
+              tempHeight
+            ) {
+              p.top =
+                tempTop === state.settings.margin
+                  ? tempTop + tempHeight + state.settings.margin
+                  : p.top
+              p.height = tempHeight
+            }
+          })
+        }
 
         return assignWithNewObject(state, {
           panels: state.settings.sortable
