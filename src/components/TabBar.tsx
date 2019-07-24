@@ -72,8 +72,11 @@ const TabBar: React.FC<Props> = (props: Props) => {
     }
   }
 
-  return tabMap.length !== 0 ? (
-    <div className="tab-bar">
+  return (
+    <div
+      className="tab-bar"
+      style={{ display: tabMap.length !== 0 ? '' : 'none' }}
+    >
       {transitions.map(({ item, props, key }) => (
         <a.div
           className="tab"
@@ -88,7 +91,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
         </a.div>
       ))}
     </div>
-  ) : null
+  )
 }
 
 export default TabBar
