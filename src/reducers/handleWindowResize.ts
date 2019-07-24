@@ -1,5 +1,5 @@
 import { State, BaseAction, SingleReducer } from '../type'
-import { SET_SIZE } from '../actions'
+import { HANDLE_WINDOW_RESIZE } from '../actions'
 import {
   handleSizeChangeForSortable,
   handleSizeChangeForUnsortable,
@@ -33,4 +33,4 @@ const handleWindowResize = (state: State, action: BaseAction): State => {
   })
 }
 
-export default [SET_SIZE, handleWindowResize] as SingleReducer
+export default [HANDLE_WINDOW_RESIZE, handleWindowResize] as SingleReducer

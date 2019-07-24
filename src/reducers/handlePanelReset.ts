@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash'
 import { State, BaseAction, SingleReducer } from '../type'
-import { HANDLE_RESET_ACTION } from '../actions'
+import { HANDLE_PANEL_RESET } from '../actions'
 import { getCurrentPositions } from '../utils'
 
 const handlePanelReset = (state: State, action: BaseAction): State => {
@@ -17,4 +17,4 @@ const handlePanelReset = (state: State, action: BaseAction): State => {
   })
 }
 
-export default [HANDLE_RESET_ACTION, handlePanelReset] as SingleReducer
+export default [HANDLE_PANEL_RESET, handlePanelReset] as SingleReducer

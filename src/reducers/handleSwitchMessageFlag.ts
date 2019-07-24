@@ -1,4 +1,4 @@
-import { SET_MESSAGE_FLAG } from '../actions'
+import { HANDLE_SWITCH_MESSAGE_FLAG } from '../actions'
 import { State, BaseAction, SingleReducer } from '../type'
 
 const handleSwitchMessageFlag = (state: State, action: BaseAction): State => {
@@ -8,4 +8,7 @@ const handleSwitchMessageFlag = (state: State, action: BaseAction): State => {
   })
 }
 
-export default [SET_MESSAGE_FLAG, handleSwitchMessageFlag] as SingleReducer
+export default [
+  HANDLE_SWITCH_MESSAGE_FLAG,
+  handleSwitchMessageFlag,
+] as SingleReducer

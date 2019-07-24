@@ -12,7 +12,7 @@ import { useSpring } from 'react-spring'
 import { State } from '../type'
 import {
   handlePanelResize,
-  setActivePanel,
+  handleSwitchActive,
   handlePanelMinimize,
   handlePanelPinned,
   handlePanelRetrieve,
@@ -86,7 +86,7 @@ const Panel: React.FC<Props> = (props: Props) => {
   })
 
   const setCurrentPanelActive = useCallback(
-    () => dispatch(setActivePanel(props.index)),
+    () => dispatch(handleSwitchActive(props.index)),
     [dispatch, props.index]
   )
 

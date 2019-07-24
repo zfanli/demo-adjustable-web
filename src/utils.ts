@@ -49,7 +49,7 @@
 
 import { range, cloneDeep, debounce } from 'lodash'
 import { Size, SizeWithPosition, PanelWithPosition, ExtendSize } from './type'
-import { handleResortAction } from './actions'
+import { handlePanelResort } from './actions'
 
 /**
  * Get current panel size, calculate by current window size.
@@ -292,7 +292,7 @@ export function handleResort(
  */
 export const handleResortWithDebounce = debounce(
   (dispatch, position: number[], index: number, moving: boolean) =>
-    moving && dispatch(handleResortAction(position, index, moving)),
+    moving && dispatch(handlePanelResort(position, index, moving)),
   50
 )
 

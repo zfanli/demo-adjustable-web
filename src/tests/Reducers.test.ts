@@ -1,6 +1,6 @@
 import { initState } from '../store'
 import { reducer } from '../reducers'
-import { setLocale } from '../actions'
+import { handleSwitchLocale } from '../actions'
 
 // Alias.
 // const assignWithNewObject = (...args: any[]) => Object.assign({}, ...args)
@@ -21,9 +21,9 @@ describe('Reducer.', () => {
   describe('About i18n.', () => {
     it('Set correct `lang` value.', () => {
       const TEST_LANG = 'TEST_LANG'
-      expect(reducer(undefined, setLocale('TEST_LANG')).settings.lang).toEqual(
-        TEST_LANG
-      )
+      expect(
+        reducer(undefined, handleSwitchLocale('TEST_LANG')).settings.lang
+      ).toEqual(TEST_LANG)
     })
   })
 })

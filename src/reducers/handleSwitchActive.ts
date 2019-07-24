@@ -1,7 +1,7 @@
-import { SET_ACTIVE_PANEL } from '../actions'
+import { HANDLE_SWITCH_ACTIVE } from '../actions'
 import { State, BaseAction, SingleReducer } from '../type'
 
-const handleActive = (state: State, action: BaseAction): State => {
+const handleSwitchActive = (state: State, action: BaseAction): State => {
   const activePanel = action.payload.index
   const activeIndex = state.zIndices[activePanel]
   // Reduce the z-index if it is greater than the target z-index.
@@ -12,4 +12,4 @@ const handleActive = (state: State, action: BaseAction): State => {
   return Object.assign({}, state, { zIndices })
 }
 
-export default [SET_ACTIVE_PANEL, handleActive] as SingleReducer
+export default [HANDLE_SWITCH_ACTIVE, handleSwitchActive] as SingleReducer

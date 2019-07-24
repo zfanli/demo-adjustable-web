@@ -10,7 +10,11 @@ import Footer from '../components/Footer'
 import Panel from '../components/Panel'
 import InformationList from '../components/InformationList'
 
-import { setSize, handleDragging, setActivePanel } from '../actions'
+import {
+  handleWindowResize,
+  handlePanelDragging,
+  handleSwitchActive,
+} from '../actions'
 import { State, PanelWithPosition } from '../type'
 
 import '../css/adjustableView.scss'
@@ -157,11 +161,11 @@ const AdjustableView: React.FC = () => {
       // Preventing text selection caused by dragging.
       !last && event && event.preventDefault()
       // Dispatch current position.
-      dispatch(handleDragging(xy, delta, originalIndex, down))
+      dispatch(handlePanelDragging(xy, delta, originalIndex, down))
       // Trigger resort if in sortable mode.
       sortable && handleResortWithDebounce(dispatch, xy, originalIndex, down)
       // Set the z-indices if in un-sortable mode and dragging is done.
-      !sortable && !down && dispatch(setActivePanel(originalIndex))
+      !sortable && !down && dispatch(handleSwitchActive(originalIndex))
     },
     // Configure to enable operation on event directly.
     { event: { capture: true, passive: false } }
@@ -185,7 +189,7 @@ const AdjustableView: React.FC = () => {
       const width = av.current.offsetWidth
       const height = av.current.offsetHeight
       // Store current content box size.
-      dispatch(setSize({ width, height }))
+      dispatch(handleWindowResize({ width, height }))
     }
   }, [dispatch, av])
 

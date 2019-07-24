@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash'
 import { State, BaseAction, SingleReducer } from '../type'
-import { SET_RESULT_KEYWORDS } from '../actions'
+import { HANDLE_RESULT_KEYWORDS } from '../actions'
 
 const handleKeywords = (state: State, action: BaseAction): State => {
   // Make a copy of watsonSpeech configs.
@@ -13,4 +13,4 @@ const handleKeywords = (state: State, action: BaseAction): State => {
   })
 }
 
-export default [SET_RESULT_KEYWORDS, handleKeywords] as SingleReducer
+export default [HANDLE_RESULT_KEYWORDS, handleKeywords] as SingleReducer

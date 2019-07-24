@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash'
 import { State, BaseAction, SingleReducer } from '../type'
-import { HANDLE_DRAGGING } from '../actions'
+import { HANDLE_PANEL_DRAGGING } from '../actions'
 import { mapToPanels } from '../utils'
 
 const handlePanelDragging = (state: State, action: BaseAction): State => {
@@ -56,4 +56,4 @@ const handlePanelDragging = (state: State, action: BaseAction): State => {
   return state
 }
 
-export default [HANDLE_DRAGGING, handlePanelDragging] as SingleReducer
+export default [HANDLE_PANEL_DRAGGING, handlePanelDragging] as SingleReducer

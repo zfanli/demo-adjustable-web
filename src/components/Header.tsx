@@ -4,11 +4,11 @@ import { Icon, Menu, Dropdown, Switch, Radio } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
 import { State } from '../type'
 import {
-  setLocale,
-  setSortable,
-  resetPanelsPosition,
-  setMessageFlag,
-  setSstFlag,
+  handleSwitchLocale,
+  handleSwitchSortable,
+  handlePanelReset,
+  handleSwitchMessageFlag,
+  handleSwitchSstFlag,
 } from '../actions'
 
 const Header: React.FC = () => {
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   const dispatch = useDispatch()
 
   const handleI18nMenuClick = (e: ClickParam) => {
-    dispatch(setLocale(e.key))
+    dispatch(handleSwitchLocale(e.key))
   }
 
   const [settingsVisible, setSettingsVisible] = useState(false)
@@ -45,20 +45,20 @@ const Header: React.FC = () => {
   }
 
   const handleSortableSwitchChange = (checked: boolean) => {
-    dispatch(setSortable(checked))
+    dispatch(handleSwitchSortable(checked))
   }
 
   const handleMessageSwitchChange = (checked: boolean) => {
-    dispatch(setMessageFlag(checked))
+    dispatch(handleSwitchMessageFlag(checked))
   }
 
   const handleSstSwitchChange = (e: any) => {
-    dispatch(setSstFlag(e.target.value))
+    dispatch(handleSwitchSstFlag(e.target.value))
   }
 
   const handleResetPosition = () => {
     setSettingsVisible(false)
-    dispatch(resetPanelsPosition())
+    dispatch(handlePanelReset())
   }
 
   const radioStyle = {

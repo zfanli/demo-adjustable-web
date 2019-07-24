@@ -1,17 +1,17 @@
 import { BaseAction, Size } from './type'
 
-export const SET_SIZE = 'SET_SIZE'
+export const HANDLE_WINDOW_RESIZE = 'HANDLE_WINDOW_RESIZE'
 
-export function setSize(size: Size): BaseAction {
+export function handleWindowResize(size: Size): BaseAction {
   return {
-    type: SET_SIZE,
+    type: HANDLE_WINDOW_RESIZE,
     payload: { size },
   }
 }
 
-export const HANDLE_DRAGGING = 'HANDLE_DRAGGING'
+export const HANDLE_PANEL_DRAGGING = 'HANDLE_PANEL_DRAGGING'
 
-export function handleDragging(
+export function handlePanelDragging(
   // Mouse position.
   position: number[],
   // Offset.
@@ -22,47 +22,47 @@ export function handleDragging(
   moving: boolean
 ): BaseAction {
   return {
-    type: HANDLE_DRAGGING,
+    type: HANDLE_PANEL_DRAGGING,
     payload: { position, offset, index, moving },
   }
 }
 
-export const SET_LOCALE = 'SET_LOCALE'
+export const HANDLE_SWITCH_LOCALE = 'HANDLE_SWITCH_LOCALE'
 
-export function setLocale(locale: string): BaseAction {
+export function handleSwitchLocale(locale: string): BaseAction {
   return {
-    type: SET_LOCALE,
+    type: HANDLE_SWITCH_LOCALE,
     payload: { locale },
   }
 }
 
-export const SET_SORTABLE = 'SET_SORTABLE'
+export const HANDLE_SWITCH_SORTABLE = 'HANDLE_SWITCH_SORTABLE'
 
-export function setSortable(sortable: boolean): BaseAction {
+export function handleSwitchSortable(sortable: boolean): BaseAction {
   return {
-    type: SET_SORTABLE,
+    type: HANDLE_SWITCH_SORTABLE,
     payload: { sortable },
   }
 }
 
-export const HANDLE_RESET_ACTION = 'HANDLE_RESET_ACTION'
+export const HANDLE_PANEL_RESET = 'HANDLE_PANEL_RESET'
 
-export function resetPanelsPosition(): BaseAction {
+export function handlePanelReset(): BaseAction {
   return {
-    type: HANDLE_RESET_ACTION,
+    type: HANDLE_PANEL_RESET,
     payload: {},
   }
 }
 
-export const HANDLE_RESORT_ACTION = 'HANDLE_RESORT_ACTION'
+export const HANDLE_PANEL_RESORT = 'HANDLE_PANEL_RESORT'
 
-export function handleResortAction(
+export function handlePanelResort(
   position: number[],
   index: number,
   moving: boolean
 ) {
   return {
-    type: HANDLE_RESORT_ACTION,
+    type: HANDLE_PANEL_RESORT,
     payload: {
       position,
       index,
@@ -71,20 +71,20 @@ export function handleResortAction(
   }
 }
 
-export const SET_RESULT_KEYWORDS = 'SET_RESULT_KEYWORDS'
+export const HANDLE_RESULT_KEYWORDS = 'HANDLE_RESULT_KEYWORDS'
 
-export function setResultKeywords(resultKeywords: string[]): BaseAction {
+export function handleResultKeywords(resultKeywords: string[]): BaseAction {
   return {
-    type: SET_RESULT_KEYWORDS,
+    type: HANDLE_RESULT_KEYWORDS,
     payload: { resultKeywords },
   }
 }
 
-export const SET_ACTIVE_PANEL = 'SET_ACTIVE_PANEL'
+export const HANDLE_SWITCH_ACTIVE = 'HANDLE_SWITCH_ACTIVE'
 
-export function setActivePanel(index: number): BaseAction {
+export function handleSwitchActive(index: number): BaseAction {
   return {
-    type: SET_ACTIVE_PANEL,
+    type: HANDLE_SWITCH_ACTIVE,
     payload: { index },
   }
 }
@@ -125,20 +125,20 @@ export function handlePanelPinned(index: number): BaseAction {
   }
 }
 
-export const SET_MESSAGE_FLAG = 'SET_MESSAGE_FLAG'
+export const HANDLE_SWITCH_MESSAGE_FLAG = 'HANDLE_SWITCH_MESSAGE_FLAG'
 
-export function setMessageFlag(messageFlag: boolean): BaseAction {
+export function handleSwitchMessageFlag(messageFlag: boolean): BaseAction {
   return {
-    type: SET_MESSAGE_FLAG,
+    type: HANDLE_SWITCH_MESSAGE_FLAG,
     payload: { messageFlag },
   }
 }
 
-export const SET_SST_FLAG = 'SET_SST_FLAG'
+export const HANDLE_SWITCH_SST_FLAG = 'HANDLE_SWITCH_SST_FLAG'
 
-export function setSstFlag(sstFlag: boolean): BaseAction {
+export function handleSwitchSstFlag(sstFlag: boolean): BaseAction {
   return {
-    type: SET_SST_FLAG,
+    type: HANDLE_SWITCH_SST_FLAG,
     payload: { sstFlag },
   }
 }

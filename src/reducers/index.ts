@@ -1,10 +1,8 @@
 import { createStore } from 'redux'
 import { initState } from '../store'
 import { State, BaseAction, Reducers } from '../type'
-import handleActive from './handleActive'
 import handleConversation from './handleConversation'
 import handleKeywords from './handleKeywords'
-import handleLocale from './handleLocale'
 import handlePanelDragging from './handlePanelDragging'
 import handlePanelMinimize from './handlePanelMinimize'
 import handlePanelPinned from './handlePanelPinned'
@@ -12,6 +10,8 @@ import handlePanelReset from './handlePanelReset'
 import handlePanelResize from './handlePanelResize'
 import handlePanelResort from './handlePanelResort'
 import handlePanelRetrieve from './handlePanelRetrieve'
+import handleSwitchActive from './handleSwitchActive'
+import handleSwitchLocale from './handleSwitchLocale'
 import handleSwitchMessageFlag from './handleSwitchMessageFlag'
 import handleSwitchSortable from './handleSwitchSortable'
 import handleSwitchSstFlag from './handleSwitchSstFlag'
@@ -19,16 +19,16 @@ import handleWindowResize from './handleWindowResize'
 
 // Wrap all reducers in a single array.
 const allReducers = [
-  handleActive,
   handleConversation,
   handleKeywords,
-  handleLocale,
   handlePanelDragging,
   handlePanelMinimize,
   handlePanelReset,
   handlePanelResize,
   handlePanelResort,
   handlePanelRetrieve,
+  handleSwitchActive,
+  handleSwitchLocale,
   handlePanelPinned,
   handleSwitchMessageFlag,
   handleSwitchSortable,

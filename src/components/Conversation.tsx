@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import sstService from '../watson-speech-tool/sst-service'
 
 import { State, ResultResponse } from '../type'
-import { setResultKeywords, handleConversationChanged } from '../actions'
+import { handleResultKeywords, handleConversationChanged } from '../actions'
 import { debounce, throttle, range } from 'lodash'
 
 const Conversation: React.FC = () => {
@@ -107,7 +107,7 @@ const Conversation: React.FC = () => {
 
   // Control the times to be called, every 200ms can be called once.
   const dispatchResultKeywordsWithThrottle = useMemo(
-    () => throttle(keywords => dispatch(setResultKeywords(keywords)), 200),
+    () => throttle(keywords => dispatch(handleResultKeywords(keywords)), 200),
     [dispatch]
   )
   const dispatchResultConversationWithThrottle = useMemo(

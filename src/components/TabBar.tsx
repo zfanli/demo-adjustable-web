@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Icon } from 'antd'
 import { State } from '../type'
-import { setActivePanel, handlePanelRetrieve } from '../actions'
+import { handleSwitchActive, handlePanelRetrieve } from '../actions'
 import { useTransition, animated as a } from 'react-spring'
 
 interface Props {
@@ -68,7 +68,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
   const handleClick = (index: number) => {
     return () => {
       dispatch(handlePanelRetrieve(index))
-      dispatch(setActivePanel(index))
+      dispatch(handleSwitchActive(index))
     }
   }
 

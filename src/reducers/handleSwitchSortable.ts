@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash'
 import { mapToPanels } from '../utils'
-import { SET_SORTABLE } from '../actions'
+import { HANDLE_SWITCH_SORTABLE } from '../actions'
 import { State, BaseAction, SingleReducer } from '../type'
 
 const handleActive = (state: State, action: BaseAction): State => {
@@ -40,4 +40,4 @@ const handleActive = (state: State, action: BaseAction): State => {
   }
 }
 
-export default [SET_SORTABLE, handleActive] as SingleReducer
+export default [HANDLE_SWITCH_SORTABLE, handleActive] as SingleReducer

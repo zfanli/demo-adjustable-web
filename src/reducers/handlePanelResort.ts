@@ -1,5 +1,5 @@
 import { State, BaseAction, SingleReducer } from '../type'
-import { HANDLE_RESORT_ACTION } from '../actions'
+import { HANDLE_PANEL_RESORT } from '../actions'
 import { handleResort } from '../utils'
 
 const handlePanelResort = (state: State, action: BaseAction): State => {
@@ -21,4 +21,4 @@ const handlePanelResort = (state: State, action: BaseAction): State => {
   })
 }
 
-export default [HANDLE_RESORT_ACTION, handlePanelResort] as SingleReducer
+export default [HANDLE_PANEL_RESORT, handlePanelResort] as SingleReducer

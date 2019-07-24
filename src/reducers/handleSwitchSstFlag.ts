@@ -1,4 +1,4 @@
-import { SET_SST_FLAG } from '../actions'
+import { HANDLE_SWITCH_SST_FLAG } from '../actions'
 import { State, BaseAction, SingleReducer } from '../type'
 
 const handleSwitchSstFlag = (state: State, action: BaseAction): State => {
@@ -8,4 +8,4 @@ const handleSwitchSstFlag = (state: State, action: BaseAction): State => {
   })
 }
 
-export default [SET_SST_FLAG, handleSwitchSstFlag] as SingleReducer
+export default [HANDLE_SWITCH_SST_FLAG, handleSwitchSstFlag] as SingleReducer
