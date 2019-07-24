@@ -11,6 +11,10 @@ export interface State {
     messageLeaveDelay: number
     messageFlag: boolean
     sstFlag: string
+    panelSizeRatio: {
+      normalWidth: number
+      largeWidth: number
+    }
     containerSize: {
       width: number
       height: number
@@ -31,6 +35,15 @@ export interface State {
   panelsBackup?: PanelWithPosition[]
   tabs: { [k: string]: boolean }
   pinned: string[]
+}
+
+export type SingleReducer = [
+  string,
+  (state: State, action: BaseAction) => State
+]
+
+export interface Reducers {
+  [k: string]: (state: State, action: BaseAction) => State
 }
 
 export interface ResultResponse {

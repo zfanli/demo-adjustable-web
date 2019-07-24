@@ -1,4 +1,5 @@
-import { reducer, initState } from '../store'
+import { initState } from '../store'
+import { reducer } from '../reducers'
 import { setLocale } from '../actions'
 
 // Alias.
