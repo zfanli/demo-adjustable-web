@@ -55,11 +55,12 @@ import { handleResortAction } from './actions'
  * Get current panel size, calculate by current window size.
  * @param size
  * @param margin
- * @param large?
+ * @param double?
  */
 export function getCurrentPanelSize(
   size: Size,
   margin: number,
+  double?: boolean,
   large?: boolean
 ) {
   const [maxWidth, maxHeight] = [
@@ -70,11 +71,11 @@ export function getCurrentPanelSize(
   return {
     // Max size is for entire container size (fiction container).
     maxWidth,
-    maxHeight: large ? maxHeight * 2 : maxHeight,
+    maxHeight: double ? maxHeight * 2 : maxHeight,
     // Size for panel itself, without margins.
     width: maxWidth - margin,
-    height: large ? maxHeight * 2 - margin : maxHeight - margin,
-    largest: !!large,
+    height: double ? maxHeight * 2 - margin : maxHeight - margin,
+    largest: !!double,
   }
 }
 
