@@ -323,7 +323,7 @@ export function reducer(state = initState, action: BaseAction): State {
       if (state.settings.sstFlag === 'files') {
         const label = resultConversation[0].speaker
         let tempConversation = conversation.conversation.filter(
-          c => c.speaker !== label
+          c => c.speaker !== label && c.speaker !== 'analyzing'
         )
         tempConversation = tempConversation.concat(resultConversation)
         conversation.conversation = tempConversation.sort((c1, c2) => {
@@ -337,7 +337,7 @@ export function reducer(state = initState, action: BaseAction): State {
       }
 
       // Mark speaker label with customer and call service.
-      if (conversation.conversation.length > 0) {
+      if (conversation.conversation.length > 0 && state.settings.sstFlag !== 'files') {
         let speakerLabels = uniq(conversation.conversation.map(c => c.speaker))
         const analyzingIndex = speakerLabels.findIndex(s => s === 'analyzing')
         speakerLabels =

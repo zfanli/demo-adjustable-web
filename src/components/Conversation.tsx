@@ -158,8 +158,8 @@ const Conversation: React.FC = () => {
       const file2 = 'audio/ja-JP_Broadband_sample2.wav'
 
       // ファイルから、会話解析を実施
-      sst[0] && sst[0].playFile(file1, 0, responseHandler, false)
-      sst[1] && sst[1].playFile(file2, 1, responseHandler, false)
+      sst[0] && sst[0].playFile(file1, 'customer', responseHandler, false)
+      sst[1] && sst[1].playFile(file2, 'service', responseHandler, false)
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
