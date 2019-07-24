@@ -8,18 +8,28 @@ import { State } from './type'
 // --------------------------- START SECTION ----------------------------------
 // Preparation.
 
-// Cast config to any.
-const config: any = configFile as any
+// Fetch data from config.
+const {
+  defaultLang,
+  margin,
+  headerHeight,
+  footerHeight,
+  shadowSizeWhileDragging,
+  messageLeaveDelay,
+  panelSizeRatio,
+  panelKeys,
+  watsonSpeech: { defaultKeywords, accessTokenURL },
+} = configFile
+
 // define default locale if does not exist
-let lang: string = config.defaultLang ? config.defaultLang : 'en'
-// Hold margin.
-const { margin, headerHeight, footerHeight } = config
+let lang: string = defaultLang ? defaultLang : 'en'
+
 // Calculate default size.
 const defaultSize = {
   width: window.innerWidth - margin,
   height: window.innerHeight - headerHeight - footerHeight - margin,
 }
-const initialPanels = getCurrentPositions(defaultSize, margin, config.panelKeys)
+const initialPanels = getCurrentPositions(defaultSize, margin, panelKeys)
 
 // ---------------------------- END SECTION -----------------------------------
 // ----------------------------------------------------------------------------
@@ -45,22 +55,23 @@ export const initState: State = {
     lang,
     locale: locales[lang],
     margin,
-    headerHeight: config.headerHeight,
-    footerHeight: config.footerHeight,
-    shadowSizeWhileDragging: config.shadowSizeWhileDragging,
+    headerHeight,
+    footerHeight,
+    shadowSizeWhileDragging,
     sortable: true,
     containerSize: defaultSize,
-    messageLeaveDelay: config.messageLeaveDelay,
+    messageLeaveDelay,
     messageFlag: true,
     sstFlag: 'file',
+    panelSizeRatio,
   },
   watsonSpeech: {
-    defaultKeywords: config.watsonSpeech.defaultKeywords,
+    defaultKeywords,
+    accessTokenURL,
     resultKeywords: [],
-    accessTokenURL: config.watsonSpeech.accessTokenURL,
     conversation: [],
   },
-  panelKeys: config.panelKeys,
+  panelKeys,
   panels: initialPanels,
   order: cloneDeep(initialPanels),
   zIndices: range(5),
