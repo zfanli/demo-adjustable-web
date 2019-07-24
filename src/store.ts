@@ -28,7 +28,7 @@ import {
 } from './actions'
 import { locales } from './locales'
 import configFile from './config.json'
-import { cloneDeep, range } from 'lodash'
+import { cloneDeep, range, uniq } from 'lodash'
 
 // ----------------------------------------------------------------------------
 // --------------------------- START SECTION ----------------------------------
@@ -335,6 +335,32 @@ export function reducer(state = initState, action: BaseAction): State {
       } else {
         conversation.conversation = action.payload.conversation
       }
+
+      // Mark speaker label with customer and call service.
+      if (conversation.conversation.length > 0) {
+        let speakerLabels = uniq(conversation.conversation.map(c => c.speaker))
+        const analyzingIndex = speakerLabels.findIndex(s => s === 'analyzing')
+        speakerLabels =
+          analyzingIndex > -1
+            ? speakerLabels.splice(analyzingIndex, 1)
+            : speakerLabels
+        const map = {
+          [speakerLabels[0]]: 'customer',
+          [speakerLabels[1]]: 'service',
+        }
+        if (speakerLabels.length > 2) {
+          speakerLabels.forEach((s, i) => {
+            if (i > 1) {
+              map[s] = 'analyzing'
+            }
+          })
+        }
+
+        conversation.conversation = conversation.conversation.map(c => {
+          return { ...c, speaker: map[c.speaker] }
+        })
+      }
+
       // Merge to store.
       return assignWithNewObject(state, {
         watsonSpeech: conversation,

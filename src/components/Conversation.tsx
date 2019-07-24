@@ -29,7 +29,14 @@ const Conversation: React.FC = () => {
   const tooltipText = useSelector(
     (state: State) => state.settings.locale.editNotAllowedWhileRecording
   )
-  const speaker = useSelector((state: State) => state.settings.locale.speaker)
+  // const speaker = useSelector((state: State) => state.settings.locale.speaker)
+  const customer = useSelector(
+    (state: State) => state.settings.locale.customer
+  ) as string
+  const service = useSelector(
+    (state: State) => state.settings.locale.service
+  ) as string
+  const mapSpeakers: { [k: string]: string } = { customer, service }
   const analyzing = useSelector(
     (state: State) => state.settings.locale.analyzing
   )
@@ -195,13 +202,15 @@ const Conversation: React.FC = () => {
           conversation.map((piece, i) => (
             <div
               key={i}
-              className={`conversation-message ${piece.speaker ===
-                'analyzing' && 'analyzing'}`}
+              className={`conversation-message ${(piece.speaker ===
+                'analyzing' ||
+                piece.speaker === undefined) &&
+                'analyzing'}`}
             >
               <span className="speaker-label">
-                {piece.speaker === 'analyzing'
+                {piece.speaker === 'analyzing' || piece.speaker === undefined
                   ? analyzing
-                  : `${speaker} ${piece.speaker}: `}
+                  : `${mapSpeakers[piece.speaker]}: `}
               </span>
               <span className="transcript">{piece.transcript}</span>
             </div>

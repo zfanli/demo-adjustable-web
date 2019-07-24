@@ -27,5 +27,7 @@
     "Fixed Menu4",
     "Fixed Menu5",
     "Fixed Menu6"
-  ]
+  ],
+  "customer": "Customer",
+  "service": "Call Service"
 }
