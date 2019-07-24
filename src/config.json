@@ -1,5 +1,5 @@
 {
-  "defaultLang": "en",
+  "defaultLang": "jp",
   "panelKeys": [
     "userInfo",
     "replyInfo",
@@ -8,6 +8,10 @@
     "speechToTextPanel"
   ],
   "margin": 15,
+  "panelSizeRatio": {
+    "normalWidth": 0.3,
+    "largeWidth": 0.4
+  },
   "headerHeight": 100,
   "footerHeight": 100,
   "shadowSizeWhileDragging": 50,
