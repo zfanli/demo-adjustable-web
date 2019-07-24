@@ -273,10 +273,9 @@ export function reducer(state = initState, action: BaseAction): State {
       ) {
         let speakerLabels = uniq(conversation.conversation.map(c => c.speaker))
         const analyzingIndex = speakerLabels.findIndex(s => s === 'analyzing')
-        speakerLabels =
-          analyzingIndex > -1
-            ? speakerLabels.splice(analyzingIndex, 1)
-            : speakerLabels
+        if (analyzingIndex > -1) {
+          speakerLabels.splice(analyzingIndex, 1)
+        }
         const map = {
           [speakerLabels[0]]: 'customer',
           [speakerLabels[1]]: 'service',
