@@ -13,6 +13,7 @@ function sst(config) {
   var tokenUrl = config.tokenUrl
   var lastStream = null
   var recordCallback = null
+  var recordEndCallback = null
   var recordState = {
     accessToken: '',
     // token: 'A6jmaKwjgRzfYzfB6YxJYdaiRdwhOTgS8_pY29Kx26v7',
@@ -137,6 +138,7 @@ function sst(config) {
 
   function handleTranscriptEnd() {
     recordState.audioSource = null
+    recordEndCallback()
     // console.log('------------------handleTranscriptEnd----------------------');
   }
 
@@ -236,6 +238,7 @@ function sst(config) {
       err = 'Unable to access microphone'
     }
     recordState.error = err.message || err
+    recordEndCallback()
   }
 
   function handleStreamFile(stream) {
@@ -282,13 +285,14 @@ function sst(config) {
   }
 
   return {
-    record(callback, stop) {
+    record(callback, endCallback, stop) {
       console.log(recordState.keywords)
       if (stop) {
         stopTranscription()
         return
       }
       recordCallback = callback
+      recordEndCallback = endCallback
       getAccessToken(accessToken => {
         reset()
         recordState.audioSource = 'mic'
@@ -297,7 +301,7 @@ function sst(config) {
         handleStream(recognizeMicrophone(getRecognizeOptions()))
       })
     },
-    playFile(file, label, callback, stop) {
+    playFile(file, label, callback, endCallback, stop) {
       console.log(recordState.keywords)
 
       if (stop) {
@@ -306,6 +310,7 @@ function sst(config) {
       }
 
       recordCallback = callback
+      recordEndCallback = endCallback
       getAccessToken(accessToken => {
         reset()
         recordState.audioSource = 'file'

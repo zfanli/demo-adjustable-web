@@ -138,7 +138,8 @@ const Conversation: React.FC = () => {
       // ---------------------- Configure Watson Speech -------------------------
 
       // マイクロフォンを開き、会話解析を実施
-      sst[0] && sst[0].record(responseHandler, false)
+      sst[0] &&
+        sst[0].record(responseHandler, () => setRecordFlag(false), false)
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
@@ -146,7 +147,7 @@ const Conversation: React.FC = () => {
       // Set stop flag.
       setRecordFlag(false)
       // Stop.
-      sst[0] && sst[0].record(undefined, true)
+      sst[0] && sst[0].record(undefined, undefined, true)
     } else if (!recordFlag && sstFlag === 'files') {
       // Set start flag.
       setRecordFlag(true)
@@ -158,8 +159,22 @@ const Conversation: React.FC = () => {
       const file2 = 'audio/ja-JP_Broadband_sample2.wav'
 
       // ファイルから、会話解析を実施
-      sst[0] && sst[0].playFile(file1, 'customer', responseHandler, false)
-      sst[1] && sst[1].playFile(file2, 'service', responseHandler, false)
+      sst[0] &&
+        sst[0].playFile(
+          file1,
+          'customer',
+          responseHandler,
+          () => setRecordFlag(false),
+          false
+        )
+      sst[1] &&
+        sst[1].playFile(
+          file2,
+          'service',
+          responseHandler,
+          () => setRecordFlag(false),
+          false
+        )
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
@@ -167,8 +182,8 @@ const Conversation: React.FC = () => {
       // Set stop flag.
       setRecordFlag(false)
       // Stop.
-      sst[0] && sst[0].playFile(undefined, 0, undefined, true)
-      sst[1] && sst[1].playFile(undefined, 0, undefined, true)
+      sst[0] && sst[0].playFile(undefined, 0, undefined, undefined, true)
+      sst[1] && sst[1].playFile(undefined, 0, undefined, undefined, true)
     } else if (!recordFlag && sstFlag === 'file') {
       // Set start flag.
       setRecordFlag(true)
@@ -179,7 +194,14 @@ const Conversation: React.FC = () => {
       const file1 = 'audio/records01.wav'
 
       // ファイルから、会話解析を実施
-      sst[0] && sst[0].playFile(file1, undefined, responseHandler, false)
+      sst[0] &&
+        sst[0].playFile(
+          file1,
+          undefined,
+          responseHandler,
+          () => setRecordFlag(false),
+          false
+        )
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
@@ -187,7 +209,8 @@ const Conversation: React.FC = () => {
       // Set stop flag.
       setRecordFlag(false)
       // Stop.
-      sst[0] && sst[0].playFile(undefined, undefined, undefined, true)
+      sst[0] &&
+        sst[0].playFile(undefined, undefined, undefined, undefined, true)
     }
   }
 
