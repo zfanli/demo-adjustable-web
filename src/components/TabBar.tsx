@@ -34,24 +34,45 @@ const TabBar: React.FC<Props> = (props: Props) => {
   )
 
   const transitions = useTransition(tabMap, (t: any) => t.key, {
-    from: { width: '0%', opacity: 0, marginLeft: '0rem', padding: '0rem 0rem' },
-    to: {
+    from: {
+      width: '0%',
+      opacity: 0,
+      marginLeft: '0rem',
+      padding: '0rem 0rem',
+      backgroundColor: '#FFFFFF',
+      color: '#000000a6',
+    },
+    to: (t: any) => ({
       width: '15%',
       opacity: 1,
       marginLeft: '0.5rem',
       padding: '0rem 0.5rem',
-    },
-    enter: {
+      backgroundColor: tabs[t.key] ? '#47B6C2' : '#FFFFFF',
+      color: tabs[t.key] ? '#ffffffff' : '#000000a6',
+    }),
+    enter: (t: any) => ({
       width: '15%',
       opacity: 1,
       marginLeft: '0.5rem',
       padding: '0rem 0.5rem',
-    },
+      backgroundColor: tabs[t.key] ? '#47B6C2' : '#FFFFFF',
+      color: tabs[t.key] ? '#ffffffff' : '#000000a6',
+    }),
+    update: (t: any) => ({
+      width: '15%',
+      opacity: 1,
+      marginLeft: '0.5rem',
+      padding: '0rem 0.5rem',
+      backgroundColor: tabs[t.key] ? '#47B6C2' : '#FFFFFF',
+      color: tabs[t.key] ? '#ffffffff' : '#000000a6',
+    }),
     leave: {
       width: '0%',
       opacity: 0,
       marginLeft: '0rem',
       padding: '0rem 0rem',
+      backgroundColor: '#FFFFFF',
+      color: '#000000a6',
     },
   })
 
@@ -86,7 +107,11 @@ const TabBar: React.FC<Props> = (props: Props) => {
         >
           <span>{item.name}</span>
           <div className="icons">
-            <Icon type="book" />
+            {tabs[item.key] ? (
+              <Icon type="book" theme="filled" />
+            ) : (
+              <Icon type="book" />
+            )}
           </div>
         </a.div>
       ))}
