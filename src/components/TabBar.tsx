@@ -33,47 +33,33 @@ const TabBar: React.FC<Props> = (props: Props) => {
       .includes(k.key)
   )
 
+  const outStyle = {
+    width: '0%',
+    bottom: '-1.5rem',
+    height: '0rem',
+    // opacity: 0,
+    // marginLeft: '0rem',
+    padding: '0rem 0rem',
+    // backgroundColor: '#4e7383',
+    // color: '#000000a6',
+  }
+  const inStyle = (t: any) => ({
+    width: '17.5%',
+    bottom: '0rem',
+    height: '1.5rem',
+    // opacity: 1,
+    // marginLeft: '0.5rem',
+    padding: '0rem 0.5rem',
+    // backgroundColor: '#4e7383',
+    // color: tabs[t.key] ? '#ffffffff' : '#000000a6',
+  })
+
   const transitions = useTransition(tabMap, (t: any) => t.key, {
-    from: {
-      width: '0%',
-      opacity: 0,
-      marginLeft: '0rem',
-      padding: '0rem 0rem',
-      backgroundColor: '#FFFFFF',
-      color: '#000000a6',
-    },
-    to: (t: any) => ({
-      width: '15%',
-      opacity: 1,
-      marginLeft: '0.5rem',
-      padding: '0rem 0.5rem',
-      backgroundColor: tabs[t.key] ? '#47B6C2' : '#FFFFFF',
-      color: tabs[t.key] ? '#ffffffff' : '#000000a6',
-    }),
-    enter: (t: any) => ({
-      width: '15%',
-      opacity: 1,
-      marginLeft: '0.5rem',
-      padding: '0rem 0.5rem',
-      backgroundColor: tabs[t.key] ? '#47B6C2' : '#FFFFFF',
-      color: tabs[t.key] ? '#ffffffff' : '#000000a6',
-    }),
-    update: (t: any) => ({
-      width: '15%',
-      opacity: 1,
-      marginLeft: '0.5rem',
-      padding: '0rem 0.5rem',
-      backgroundColor: tabs[t.key] ? '#47B6C2' : '#FFFFFF',
-      color: tabs[t.key] ? '#ffffffff' : '#000000a6',
-    }),
-    leave: {
-      width: '0%',
-      opacity: 0,
-      marginLeft: '0rem',
-      padding: '0rem 0rem',
-      backgroundColor: '#FFFFFF',
-      color: '#000000a6',
-    },
+    from: outStyle,
+    to: inStyle,
+    enter: inStyle,
+    update: inStyle,
+    leave: outStyle,
   })
 
   const triggerResizeAction = tabMap.length > 0
@@ -82,7 +68,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
     handleResize()
 
     return function cleanup() {
-      setTimeout(handleResize, 10)
+      setTimeout(handleResize, 210)
     }
   }, [handleResize, triggerResizeAction])
 
@@ -94,10 +80,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div
-      className="tab-bar"
-      style={{ display: tabMap.length !== 0 ? '' : 'none' }}
-    >
+    <div className="tab-bar" style={{ height: tabMap.length !== 0 ? '' : '0' }}>
       {transitions.map(({ item, props, key }) => (
         <a.div
           className="tab"
@@ -105,8 +88,8 @@ const TabBar: React.FC<Props> = (props: Props) => {
           onClick={handleClick(item.index)}
           style={props}
         >
-          <span>{item.name}</span>
-          <div className="icons">
+          <span className="tab-name">{item.name}</span>
+          <div className="tab-icons">
             {tabs[item.key] ? (
               <Icon type="book" theme="filled" />
             ) : (
