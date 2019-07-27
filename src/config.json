@@ -12,12 +12,15 @@
     "normalWidth": 0.3,
     "largeWidth": 0.4
   },
+  "api": {
+    "accessTokenURL": "/api/v1/credentials",
+    "panels": "/api/panels"
+  },
   "headerHeight": 100,
   "footerHeight": 50,
   "shadowSizeWhileDragging": 50,
   "messageLeaveDelay": 1500,
   "watsonSpeech": {
-    "accessTokenURL": "/api/v1/credentials",
     "defaultKeywords": [
       "振込",
       "振り込み",

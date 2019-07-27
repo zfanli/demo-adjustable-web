@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import { PanelWithPosition } from '../type'
+import { api } from '../config.json'
 
 // API fetch.
 
@@ -12,8 +13,11 @@ import { PanelWithPosition } from '../type'
 export async function getPanels(
   sortable: boolean
 ): Promise<PanelWithPosition[]> {
+  // Do nothing if api does not exist.
+  if (!api.panels) return []
+
   try {
-    const res = await axios.get(process.env.API_PANELS || '/api/panels', {
+    const res = await axios.get(api.panels, {
       params: { sortable },
     })
     return res.data as PanelWithPosition[]
@@ -32,8 +36,11 @@ export async function setPanels(
   panels: PanelWithPosition[],
   sortable: boolean
 ): Promise<boolean> {
+  // Do nothing if api does not exist.
+  if (!api.panels) return true
+
   try {
-    const res = await axios.post(process.env.API_PANELS || '/api/panels', {
+    const res = await axios.post(api.panels, {
       panels,
       sortable,
     })

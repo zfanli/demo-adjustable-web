@@ -19,7 +19,8 @@ export default function(): State {
     messageLeaveDelay,
     panelSizeRatio,
     panelKeys,
-    watsonSpeech: { defaultKeywords, accessTokenURL },
+    watsonSpeech: { defaultKeywords },
+    api: { accessTokenURL },
   } = configFile
 
   // define default locale if does not exist
