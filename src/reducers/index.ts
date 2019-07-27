@@ -6,6 +6,7 @@ import handleInitialPanels from './handleInitialPanels'
 import handleInitialUnsortedPanels from './handleInitialUnsortedPanels'
 import handleKeywords from './handleKeywords'
 import handlePanelDragging from './handlePanelDragging'
+import handlePanelMaximize from './handlePanelMaximize'
 import handlePanelMinimize from './handlePanelMinimize'
 import handlePanelPinned from './handlePanelPinned'
 import handlePanelReset from './handlePanelReset'
@@ -26,6 +27,7 @@ const allReducers = [
   handleInitialUnsortedPanels,
   handleKeywords,
   handlePanelDragging,
+  handlePanelMaximize,
   handlePanelMinimize,
   handlePanelReset,
   handlePanelResize,

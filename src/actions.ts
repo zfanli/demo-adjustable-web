@@ -174,3 +174,15 @@ export function handleInitialUnsortedPanels(
     payload: { panels },
   }
 }
+
+export const HANDLE_PANEL_MAXIMIZE = 'HANDLE_PANEL_MAXIMIZE'
+
+export function handlePanelMaximize(
+  index: number,
+  maximized: boolean
+): BaseAction {
+  return {
+    type: HANDLE_PANEL_MAXIMIZE,
+    payload: { index, maximized },
+  }
+}
