@@ -164,7 +164,7 @@ Root
     - [x] only part of utils
 
 * [ ] **[Phase 2] Working Flow: For Tab Bar**
-  - [ ] Save order to backend as a file (2019/07/26)
+  - [x] Save order to backend as a file (2019/07/26)
   - [ ] Make a video to demonstrate the web app (2019/07/26)
   - [ ] For now just implement the resizable and tab bar (2019/07/14)
     - [x] Preparation
