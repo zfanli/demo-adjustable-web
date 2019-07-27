@@ -8,15 +8,12 @@ import Axios from 'axios'
 function sst(config) {
   var textResult = []
   var keywordResult = []
-  // var keywordsText = '東京,浅草寺,バス';
-  // var tokenUrl = 'http://localhost:8080/cca/ssttoken';
   var tokenUrl = config.tokenUrl
   var lastStream = null
   var recordCallback = null
   var recordEndCallback = null
   var recordState = {
     accessToken: '',
-    // token: 'A6jmaKwjgRzfYzfB6YxJYdaiRdwhOTgS8_pY29Kx26v7',
     serviceUrl: 'https://stream.watsonplatform.net/speech-to-text/api',
     model: 'ja-JP_BroadbandModel',
     rawMessages: [],
@@ -37,8 +34,6 @@ function sst(config) {
   }
 
   function getRecognizeOptions(extra) {
-    // const keywords = getKeywordsArrUnique();
-    // recordState.keywords = keywordsText.split(',');
     return Object.assign(
       {
         // formats phone numbers, currency, etc. (server-side)
@@ -182,13 +177,10 @@ function sst(config) {
 
         if (msg.results[i].keywords_result) {
           for (var k in msg.results[i].keywords_result) {
-            // let v = msg.results[i].keywords_result[k]
-            // console.log(k,":",v);
             if (keywords[k]) {
               keywords[k] = keywords[k] + 1
             } else {
               keywords[k] = 1
-              // Object.assign(keywords,{k:1});
             }
             // console.log(keywords);
           }
@@ -206,17 +198,6 @@ function sst(config) {
       })
 
       recordCallback({ textResult: textResult, keywordResult: keywordResult })
-
-      // console.log(keywordArr);
-      // keywordResult.forEach((keyword)=>{
-      //     menuResult+=(keyword.word + ':' + keyword.count +'回'+'\n');
-      // });
-
-      // $nextTick(() => {
-      //     // let area = document.getElementById("resultAreaId");
-      //     // area.scrollTop = area.scrollHeight;
-      //     $refs.resultArea.scrollTop = $refs.resultArea.scrollHeight
-      // });
     }
   }
 
