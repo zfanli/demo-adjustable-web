@@ -17,7 +17,8 @@ const handleSwitchSortable = (state: State, action: BaseAction): State => {
       },
       panels: mapToPanels(state.order, state.panelKeys),
       panelsBackup: cloneDeep(state.panels),
-      tabs: {},
+      tabs: state.tabsBackup ? state.tabsBackup : {},
+      tabsBackup: state.tabs,
     })
   } else {
     // State changes from sortable to un-sortable.
@@ -35,7 +36,8 @@ const handleSwitchSortable = (state: State, action: BaseAction): State => {
       panels: panelsBackup ? panelsBackup : state.panels,
       panelsBackup: null,
       // Show tabs
-      tabs: unsortableTabs,
+      tabs: state.tabsBackup ? state.tabsBackup : unsortableTabs,
+      tabsBackup: state.tabs,
     })
   }
 }

@@ -35,6 +35,7 @@ export interface State {
   isDraggingDown?: boolean
   panelsBackup?: PanelWithPosition[]
   tabs: { [k: string]: boolean }
+  tabsBackup?: { [k: string]: boolean }
   pinned: string[]
 }
 
