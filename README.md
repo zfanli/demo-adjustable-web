@@ -215,9 +215,9 @@ Root
       - [x] in sortable mode
     - [x] stretch other panel if one is minimized
     - [x] mark minimized panel as a special tab
-    - [ ] maximize specific panel
+    - [x] maximize specific panel
       - [x] minimize others
-      - [ ] stretch itself
+      - [x] stretch itself
   - [x] Fill fixed menu with 6 items
   - [ ] Dynamic add/remove items to dynamic menu according to the result keywords of watson speech
     - [x] adding/removing items dynamically by the spotted times of keywords
