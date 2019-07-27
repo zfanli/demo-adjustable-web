@@ -3,7 +3,7 @@ import { mapToPanels } from '../utils'
 import { HANDLE_SWITCH_SORTABLE } from '../actions'
 import { State, BaseAction, SingleReducer } from '../type'
 
-const handleActive = (state: State, action: BaseAction): State => {
+const handleSwitchSortable = (state: State, action: BaseAction): State => {
   const sortable = action.payload.sortable
 
   // State changes from un-sortable to sortable.
@@ -15,7 +15,7 @@ const handleActive = (state: State, action: BaseAction): State => {
         ...state.settings,
         sortable,
       },
-      panels: mapToPanels(state.order, state.panels),
+      panels: mapToPanels(state.order, state.panelKeys),
       panelsBackup: cloneDeep(state.panels),
       tabs: {},
     })
@@ -40,4 +40,4 @@ const handleActive = (state: State, action: BaseAction): State => {
   }
 }
 
-export default [HANDLE_SWITCH_SORTABLE, handleActive] as SingleReducer
+export default [HANDLE_SWITCH_SORTABLE, handleSwitchSortable] as SingleReducer

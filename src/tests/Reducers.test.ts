@@ -1,4 +1,4 @@
-import { initState } from '../store'
+import initState from '../reducers/store'
 import { reducer } from '../reducers'
 import { handleSwitchLocale } from '../actions'
 
@@ -9,11 +9,11 @@ const emptyAction = { type: '', payload: {} }
 describe('Reducer.', () => {
   describe('Initialization.', () => {
     it('Reducer has an initial state.', () => {
-      expect(reducer(undefined, emptyAction)).toEqual(initState)
+      expect(reducer(undefined, emptyAction)).toEqual(initState())
     })
 
     it('`order` should be the same with `panels` at the point of initial.', () => {
-      const panels = initState.panels
+      const panels = initState().panels
       expect(reducer(undefined, emptyAction).order).toEqual(panels)
     })
   })

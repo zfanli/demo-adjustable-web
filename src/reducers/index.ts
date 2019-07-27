@@ -1,7 +1,9 @@
 import { createStore } from 'redux'
-import { initState } from '../store'
+import initState from './store'
 import { State, BaseAction, Reducers } from '../type'
 import handleConversation from './handleConversation'
+import handleInitialPanels from './handleInitialPanels'
+import handleInitialUnsortedPanels from './handleInitialUnsortedPanels'
 import handleKeywords from './handleKeywords'
 import handlePanelDragging from './handlePanelDragging'
 import handlePanelMinimize from './handlePanelMinimize'
@@ -20,6 +22,8 @@ import handleWindowResize from './handleWindowResize'
 // Wrap all reducers in a single array.
 const allReducers = [
   handleConversation,
+  handleInitialPanels,
+  handleInitialUnsortedPanels,
   handleKeywords,
   handlePanelDragging,
   handlePanelMinimize,
@@ -40,7 +44,7 @@ const combinedReducers: Reducers = {}
 allReducers.forEach(r => (combinedReducers[r[0]] = r[1]))
 
 // Reducers.
-export function reducer(state = initState, action: BaseAction): State {
+export function reducer(state = initState(), action: BaseAction): State {
   if (!!combinedReducers[action.type]) {
     return combinedReducers[action.type](state, action)
   }
@@ -50,7 +54,7 @@ export function reducer(state = initState, action: BaseAction): State {
 
 // export store
 export default createStore(
-  reducer
-  // (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-  //   (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  reducer,
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 )

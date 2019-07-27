@@ -275,7 +275,7 @@ export function handleResort(
     o.top = p.top
   })
 
-  const tempPanels = mapToPanels(tempOrder, panels)
+  const tempPanels = mapToPanels(tempOrder, panels.map(p => p.key))
 
   // Capture current moving panel.
   const movingPanel = panels[index]
@@ -301,25 +301,12 @@ export const handleResortWithDebounce = debounce(
  * @param order
  * @param panels
  */
-export function mapToPanels(
-  order: PanelWithPosition[],
-  panels: PanelWithPosition[]
-) {
-  const tempOrder = order
-  const tempPanels = cloneDeep(panels)
+export function mapToPanels(order: PanelWithPosition[], keys: string[]) {
+  const tempOrder = cloneDeep(order)
   // Convert `order` to the same order with panels.
-  const op = tempPanels.map(p => {
-    return tempOrder.find(o => o.key === p.key)
+  return keys.map(k => {
+    return tempOrder.find(p => p.key === k)
   }) as PanelWithPosition[]
-
-  return tempPanels.map((p, i) => {
-    const thisOp = op[i]
-    p.width = thisOp.width
-    p.height = thisOp.height
-    p.left = thisOp.left
-    p.top = thisOp.top
-    return p
-  })
 }
 
 /**
@@ -392,7 +379,7 @@ export function handleSizeChangeForSortable(
     }
   })
 
-  const newPanels = mapToPanels(tempOrder, panels)
+  const newPanels = mapToPanels(tempOrder, panels.map(p => p.key))
 
   return [newPanels, tempOrder]
 }

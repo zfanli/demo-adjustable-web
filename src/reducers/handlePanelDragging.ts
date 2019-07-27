@@ -2,6 +2,7 @@ import { cloneDeep } from 'lodash'
 import { State, BaseAction, SingleReducer } from '../type'
 import { HANDLE_PANEL_DRAGGING } from '../actions'
 import { mapToPanels } from '../utils'
+import { setPanels } from './utils'
 
 const handlePanelDragging = (state: State, action: BaseAction): State => {
   // Get the target index.
@@ -42,7 +43,12 @@ const handlePanelDragging = (state: State, action: BaseAction): State => {
 
       // Reset position in sortable mode for temporarily
       if (!moving && sortable) {
-        panels = mapToPanels(state.order, panels)
+        panels = mapToPanels(state.order, state.panelKeys)
+      }
+
+      if (!moving && !sortable) {
+        // Save panels to server.
+        setPanels(panels, sortable)
       }
 
       // Merge to store.

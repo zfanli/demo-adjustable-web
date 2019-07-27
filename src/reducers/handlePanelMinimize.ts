@@ -48,7 +48,7 @@ const handlePanelMinimize = (state: State, action: BaseAction): State => {
 
     return Object.assign({}, state, {
       panels: state.settings.sortable
-        ? mapToPanels(minimizePanels, state.panels)
+        ? mapToPanels(minimizePanels, state.panelKeys)
         : minimizePanels,
       order: state.settings.sortable ? minimizePanels : state.order,
       tabs: minimizeTabs,

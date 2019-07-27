@@ -1,4 +1,4 @@
-import { BaseAction, Size } from './type'
+import { BaseAction, Size, PanelWithPosition } from './type'
 
 export const HANDLE_WINDOW_RESIZE = 'HANDLE_WINDOW_RESIZE'
 
@@ -149,5 +149,28 @@ export function handleConversationChanged(conversation: []): BaseAction {
   return {
     type: HANDLE_CONVERSATION_CHANGED,
     payload: { conversation },
+  }
+}
+
+export const HANDLE_INITIAL_PANELS = 'HANDLE_INITIAL_PANELS'
+
+export function handleInitialPanels(
+  panels: PanelWithPosition[],
+  size: Size
+): BaseAction {
+  return {
+    type: HANDLE_INITIAL_PANELS,
+    payload: { panels, size },
+  }
+}
+
+export const HANDLE_INITIAL_UNSORTED_PANELS = 'HANDLE_INITIAL_UNSORTED_PANELS'
+
+export function handleInitialUnsortedPanels(
+  panels: PanelWithPosition[]
+): BaseAction {
+  return {
+    type: HANDLE_INITIAL_UNSORTED_PANELS,
+    payload: { panels },
   }
 }

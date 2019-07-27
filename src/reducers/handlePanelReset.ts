@@ -2,6 +2,7 @@ import { cloneDeep } from 'lodash'
 import { State, BaseAction, SingleReducer } from '../type'
 import { HANDLE_PANEL_RESET } from '../actions'
 import { getCurrentPositions } from '../utils'
+import { setPanels } from './utils'
 
 const handlePanelReset = (state: State, action: BaseAction): State => {
   // Calculate initial position.
@@ -10,6 +11,10 @@ const handlePanelReset = (state: State, action: BaseAction): State => {
     state.settings.margin,
     state.panelKeys
   )
+
+  // Save panels to server.
+  setPanels(resetPanels, state.settings.sortable)
+
   // Merge to store.
   return Object.assign({}, state, {
     panels: resetPanels,

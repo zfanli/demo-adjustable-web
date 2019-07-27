@@ -51,7 +51,7 @@ const handlePanelRetrieve = (state: State, action: BaseAction): State => {
 
     return Object.assign({}, state, {
       panels: state.settings.sortable
-        ? mapToPanels(retrievePanels, state.panels)
+        ? mapToPanels(retrievePanels, state.panelKeys)
         : retrievePanels,
       order: state.settings.sortable ? retrievePanels : state.order,
       tabs: retrieveTabs,

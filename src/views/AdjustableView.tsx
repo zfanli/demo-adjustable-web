@@ -1,8 +1,13 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useSprings, interpolate } from 'react-spring'
+import {
+  useSprings,
+  interpolate,
+  animated as a,
+  useTransition,
+} from 'react-spring'
 import { useGesture } from 'react-use-gesture'
-import { message } from 'antd'
+import { message, Spin } from 'antd'
 import { debounce } from 'lodash'
 
 import Header from '../components/Header'
@@ -14,6 +19,8 @@ import {
   handleWindowResize,
   handlePanelDragging,
   handleSwitchActive,
+  handleInitialPanels,
+  handleInitialUnsortedPanels,
 } from '../actions'
 import { State, PanelWithPosition } from '../type'
 
@@ -27,6 +34,7 @@ import Conversation from '../components/Conversation'
 import TabBar from '../components/TabBar'
 import DynamicMenu from '../components/DynamicMenu'
 import FixedMenu from '../components/FixedMenu'
+import { getPanels } from '../reducers/utils'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -228,29 +236,80 @@ const AdjustableView: React.FC = () => {
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
+  // -------------------------- START SECTION ---------------------------------
+  // Retrieve panels.
+
+  const LOADED = 'LOADED'
+  const LOADING = 'LOADING'
+
+  const inStyle = { opacity: 1 }
+  const outStyle = { opacity: 0 }
+
+  const isLoadingTransition = useTransition(
+    [panels.length > 0 ? LOADED : LOADING],
+    (k: string) => k,
+    {
+      from: outStyle,
+      leave: outStyle,
+      enter: inStyle,
+      config: { duration: 100 },
+    }
+  )
+
+  useEffect(() => {
+    if (av && av.current) {
+      getPanels(true).then(panels => {
+        if (av && av.current) {
+          dispatch(
+            handleInitialPanels(panels, {
+              width: av.current.offsetWidth,
+              height: av.current.offsetHeight,
+            })
+          )
+        }
+      })
+      getPanels(false).then(panels => {
+        dispatch(handleInitialUnsortedPanels(panels))
+      })
+    }
+  }, [dispatch, resizeHandler, av])
+
+  // --------------------------- END SECTION ----------------------------------
+  // --------------------------------------------------------------------------
+
   return (
     <>
       <Header />
       <div ref={av} className="av-content" style={contentBoxMargins}>
-        {springs.map(({ x, y, scale, ...rest }, i) => (
-          <Panel
-            key={i}
-            index={i}
-            trueKey={panelKeys[i]}
-            style={{
-              transform: interpolate(
-                [x, y, scale],
-                (x: any, y: any, s: any) =>
-                  `translate3d(${x}px,${y}px,0) scale(${s})`
-              ),
-              ...rest,
-            }}
-            title={panelNames[i]}
-            bind={bind(i)}
-          >
-            {panelChildren[panelKeys[i]]}
-          </Panel>
-        ))}
+        {isLoadingTransition.map(({ item, props, key }) =>
+          item === LOADING ? (
+            <a.div className="content-loading" style={props} key={key}>
+              <Spin size="large" tip="Loading" />
+            </a.div>
+          ) : (
+            <a.div className="content-loaded" key={key} style={props}>
+              {springs.map(({ x, y, scale, ...rest }, i) => (
+                <Panel
+                  key={i}
+                  index={i}
+                  trueKey={panelKeys[i]}
+                  style={{
+                    transform: interpolate(
+                      [x, y, scale],
+                      (x: any, y: any, s: any) =>
+                        `translate3d(${x}px,${y}px,0) scale(${s})`
+                    ),
+                    ...rest,
+                  }}
+                  title={panelNames[i]}
+                  bind={bind(i)}
+                >
+                  {panelChildren[panelKeys[i]]}
+                </Panel>
+              ))}
+            </a.div>
+          )
+        )}
       </div>
       <TabBar handleResize={resizeHandler} />
       <Footer />

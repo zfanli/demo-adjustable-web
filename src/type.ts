@@ -4,6 +4,7 @@ export interface State {
     lang: string
     locale: Locale
     margin: number
+    initialContentHeight: number
     headerHeight: number
     footerHeight: number
     shadowSizeWhileDragging: number

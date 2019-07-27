@@ -1,6 +1,7 @@
 import { State, BaseAction, SingleReducer } from '../type'
 import { HANDLE_PANEL_RESORT } from '../actions'
 import { handleResort } from '../utils'
+import { setPanels } from './utils'
 
 const handlePanelResort = (state: State, action: BaseAction): State => {
   // Calculate next panels and order.
@@ -14,6 +15,10 @@ const handlePanelResort = (state: State, action: BaseAction): State => {
     state.settings.containerSize,
     state.settings.headerHeight
   )
+
+  // Save panels to server.
+  setPanels(resortOrder, state.settings.sortable)
+
   // Merge to store.
   return Object.assign({}, state, {
     panels: resortPanels,

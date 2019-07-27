@@ -1,77 +1,94 @@
+@mixin content {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 .av-content {
   flex-grow: 1;
   flex-shrink: 0;
   position: relative;
 
-  .panel {
-    overflow: auto;
-    position: absolute;
-    background-color: #fff;
-    transform: translate3d(0, 0, 0);
-    box-shadow: 0 0 5px 0 #ddd;
-    border-radius: 3px;
-    overflow: hidden;
+  .content-loading {
+    @include content();
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .panel-header {
-      display: flex;
-      border-bottom: 1px solid #ddd;
-      line-height: 2rem;
-      font-weight: bold;
+  .content-loaded {
+    @include content();
 
-      .panel-title {
-        padding: 0 0.5rem;
-        cursor: grab;
-        flex-grow: 1;
-
-        &.disabled {
-          cursor: not-allowed;
-        }
-      }
-
-      .panel-buttons {
-        padding: 0 0.5rem;
-
-        button {
-          background-color: inherit;
-          border: none;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          outline: none;
-
-          &:hover {
-            color: #03a9f4;
-          }
-
-          &.minimize {
-            transform: rotate(-90deg);
-          }
-        }
-      }
-    }
-
-    .panel-content {
-      flex-grow: 1;
+    .panel {
       overflow: auto;
-      padding: 0.5rem 0;
-    }
-
-    .resize-icon {
-      $fontSize: 0.8rem;
-      width: $fontSize;
-      height: $fontSize;
-      line-height: $fontSize;
-      border-right: 1px solid #999;
-      border-bottom: 1px solid #999;
-      cursor: nwse-resize;
-      text-align: center;
-      color: #999;
       position: absolute;
-      bottom: 5px;
-      right: 5px;
-      display: inline-block;
-      // transform: rotate(45deg);
+      background-color: #fff;
+      transform: translate3d(0, 0, 0);
+      box-shadow: 0 0 5px 0 #ddd;
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+
+      .panel-header {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+        line-height: 2rem;
+        font-weight: bold;
+
+        .panel-title {
+          padding: 0 0.5rem;
+          cursor: grab;
+          flex-grow: 1;
+
+          &.disabled {
+            cursor: not-allowed;
+          }
+        }
+
+        .panel-buttons {
+          padding: 0 0.5rem;
+
+          button {
+            background-color: inherit;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+
+            &:hover {
+              color: #03a9f4;
+            }
+
+            &.minimize {
+              transform: rotate(-90deg);
+            }
+          }
+        }
+      }
+
+      .panel-content {
+        flex-grow: 1;
+        overflow: auto;
+        padding: 0.5rem 0;
+      }
+
+      .resize-icon {
+        $fontSize: 0.8rem;
+        width: $fontSize;
+        height: $fontSize;
+        line-height: $fontSize;
+        border-right: 1px solid #999;
+        border-bottom: 1px solid #999;
+        cursor: nwse-resize;
+        text-align: center;
+        color: #999;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        display: inline-block;
+        // transform: rotate(45deg);
+      }
     }
   }
 }
