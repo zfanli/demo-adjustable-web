@@ -1,7 +1,11 @@
 import { cloneDeep } from 'lodash'
 import { State, BaseAction, SingleReducer } from '../type'
-import { HANDLE_PANEL_RETRIEVE } from '../actions'
 import { mapToPanels } from '../utils'
+import handleWindowResize from './handleWindowResize'
+import {
+  HANDLE_PANEL_RETRIEVE,
+  handleWindowResize as createResizeAction,
+} from '../actions'
 
 const handlePanelRetrieve = (state: State, action: BaseAction): State => {
   const retrieveKey = state.panelKeys[action.payload.index]
@@ -49,13 +53,32 @@ const handlePanelRetrieve = (state: State, action: BaseAction): State => {
       })
     }
 
-    return Object.assign({}, state, {
+    const tempState = Object.assign({}, state, {
       panels: state.settings.sortable
         ? mapToPanels(retrievePanels, state.panelKeys)
         : retrievePanels,
       order: state.settings.sortable ? retrievePanels : state.order,
       tabs: retrieveTabs,
     })
+
+    if (
+      state.settings.sortable &&
+      Object.keys(state.tabs).filter(k => state.tabs[k]).length === 1
+    ) {
+      return handleWindowResize[1](
+        tempState,
+        createResizeAction({
+          height:
+            window.innerHeight -
+            state.settings.headerHeight -
+            state.settings.footerHeight -
+            state.settings.margin,
+          width: window.innerWidth,
+        })
+      )
+    }
+
+    return tempState
   }
   return state
 }

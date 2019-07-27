@@ -1,7 +1,11 @@
 import { cloneDeep } from 'lodash'
-import { HANDLE_PANEL_MINIMIZE } from '../actions'
 import { State, BaseAction, SingleReducer } from '../type'
 import { mapToPanels } from '../utils'
+import handleWindowResize from './handleWindowResize'
+import {
+  HANDLE_PANEL_MINIMIZE,
+  handleWindowResize as createResizeAction,
+} from '../actions'
 
 const handlePanelMinimize = (state: State, action: BaseAction): State => {
   const minimizeKey = state.panelKeys[action.payload.index]
@@ -46,13 +50,30 @@ const handlePanelMinimize = (state: State, action: BaseAction): State => {
       })
     }
 
-    return Object.assign({}, state, {
+    const tempState = Object.assign({}, state, {
       panels: state.settings.sortable
         ? mapToPanels(minimizePanels, state.panelKeys)
         : minimizePanels,
       order: state.settings.sortable ? minimizePanels : state.order,
       tabs: minimizeTabs,
     })
+
+    if (Object.keys(state.tabs).filter(k => state.tabs[k]).length === 0) {
+      return handleWindowResize[1](
+        tempState,
+        createResizeAction({
+          height:
+            window.innerHeight -
+            state.settings.headerHeight -
+            state.settings.footerHeight -
+            state.settings.margin -
+            18,
+          width: window.innerWidth,
+        })
+      )
+    }
+
+    return tempState
   }
   return state
 }

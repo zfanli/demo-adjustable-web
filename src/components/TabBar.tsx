@@ -21,6 +21,10 @@ const TabBar: React.FC<Props> = (props: Props) => {
 
   const { handleResize } = props
 
+  useEffect(() => {
+    !sortable && setTimeout(handleResize, 100)
+  }, [sortable, handleResize])
+
   const keyMapToName = panels.map((p, i) => ({
     key: p.key,
     name: names[i],
@@ -61,16 +65,6 @@ const TabBar: React.FC<Props> = (props: Props) => {
     update: inStyle,
     leave: outStyle,
   })
-
-  const triggerResizeAction = tabMap.length > 0
-
-  useEffect(() => {
-    handleResize()
-
-    return function cleanup() {
-      setTimeout(handleResize, 210)
-    }
-  }, [handleResize, triggerResizeAction])
 
   const handleClick = (index: number) => {
     return () => {
