@@ -77,7 +77,7 @@ const TabBar: React.FC<Props> = (props: Props) => {
     <div className="tab-bar" style={{ height: tabMap.length !== 0 ? '' : '0' }}>
       {transitions.map(({ item, props, key }) => (
         <a.div
-          className="tab"
+          className={`tab ${tabs[item.key] ? 'minimized' : ''}`}
           key={key}
           onClick={handleClick(item.index)}
           style={props}
