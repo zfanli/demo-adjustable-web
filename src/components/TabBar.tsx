@@ -41,21 +41,15 @@ const TabBar: React.FC<Props> = (props: Props) => {
     width: '0%',
     bottom: '-1.5rem',
     height: '0rem',
-    // opacity: 0,
-    // marginLeft: '0rem',
+    marginLeft: '0rem',
     padding: '0rem 0rem',
-    // backgroundColor: '#4e7383',
-    // color: '#000000a6',
   }
   const inStyle = (t: any) => ({
     width: '17.5%',
     bottom: '0rem',
     height: '1.5rem',
-    // opacity: 1,
-    // marginLeft: '0.5rem',
+    marginLeft: '-0.3rem',
     padding: '0rem 0.5rem',
-    // backgroundColor: '#4e7383',
-    // color: tabs[t.key] ? '#ffffffff' : '#000000a6',
   })
 
   const transitions = useTransition(tabMap, (t: any) => t.key, {
