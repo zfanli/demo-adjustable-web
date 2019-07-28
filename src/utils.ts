@@ -414,31 +414,6 @@ export function handleSizeChangeForUnsortable(
 }
 
 /**
- * Set cookie.
- * @param key
- * @param value
- */
-export function setCookie(key: string, value: string) {
-  document.cookie = `${key}=${value};`
-}
-
-/**
- * Get cookie.
- * @param key
- */
-export function getCookie(key: string) {
-  const cookies = document.cookie
-  let coo: { [k: string]: string } = {}
-  cookies.split(';').forEach(p => {
-    if (p) {
-      const pair = p.split('=')
-      coo[pair[0].trim()] = pair[1].trim()
-    }
-  })
-  return coo[key]
-}
-
-/**
  * Get fake data of user info.
  * @param lang
  * @param length

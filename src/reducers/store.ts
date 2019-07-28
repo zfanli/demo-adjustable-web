@@ -1,5 +1,5 @@
 import { cloneDeep, range } from 'lodash'
-import { getCookie, setCookie } from '../utils'
+import { getCookie, setCookie } from './utils'
 import { locales } from '../locales'
 import configFile from '../config.json'
 import { State, PanelWithPosition } from '../type'

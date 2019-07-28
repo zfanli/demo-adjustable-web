@@ -1,5 +1,5 @@
 import { HANDLE_SWITCH_LOCALE } from '../actions'
-import { setCookie } from '../utils'
+import { setCookie } from './utils'
 import { State, BaseAction, SingleReducer } from '../type'
 import { locales } from '../locales'
 
