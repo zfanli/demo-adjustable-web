@@ -284,7 +284,11 @@ const AdjustableView: React.FC = () => {
         {isLoadingTransition.map(({ item, props, key }) =>
           item === LOADING ? (
             <a.div className="content-loading" style={props} key={key}>
-              <Spin size="large" tip="Loading" />
+              <Spin
+                className="loading-icon"
+                size="large"
+                tip={locale.loading as string}
+              />
             </a.div>
           ) : (
             <a.div className="content-loaded" key={key} style={props}>

@@ -29,5 +29,6 @@
     "Fixed Menu6"
   ],
   "customer": "Customer",
-  "service": "Call Service"
+  "service": "Call Service",
+  "loading": "Loading..."
 }
