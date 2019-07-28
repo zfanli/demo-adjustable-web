@@ -1,4 +1,5 @@
-import { getPanels, setPanels } from '../reducers/utils'
+// Utils test.
+import 'jest'
 
 beforeAll(() => {
   // Some set up works.
@@ -51,18 +52,22 @@ const testPanels = [
 describe('Utils for reducers.', () => {
   describe('API fetch.', () => {
     it('Set unsorted panels to backend server.', async () => {
+      const { setPanels } = require('../reducers/utils')
       expect(await setPanels([], false)).toBeTruthy()
     })
 
     it('Get unsorted panels from backend server.', async () => {
+      const { getPanels } = require('../reducers/utils')
       expect(await getPanels(false)).toEqual([])
     })
 
     it('Set panels to backend server.', async () => {
+      const { setPanels } = require('../reducers/utils')
       expect(await setPanels(testPanels, true)).toBeTruthy()
     })
 
     it('Get panels from backend server.', async () => {
+      const { getPanels } = require('../reducers/utils')
       expect(await getPanels(true)).toEqual(testPanels)
     })
   })
