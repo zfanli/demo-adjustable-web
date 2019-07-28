@@ -121,13 +121,7 @@ describe('Utils Test', () => {
       expect(
         mapToPanels(
           positionOfDefaultPanels,
-          cloneDeep(positionOfDefaultPanels).map(p => {
-            p.width = 0
-            p.height = 0
-            p.top = 0
-            p.left = 0
-            return p
-          })
+          positionOfDefaultPanels.map(p => p.key)
         )
       ).toEqual(positionOfDefaultPanels)
     })
@@ -137,9 +131,9 @@ describe('Utils Test', () => {
         ...cloneDeep(positionOfDefaultPanels).slice(2, 5),
         ...cloneDeep(positionOfDefaultPanels).slice(0, 2),
       ]
-      expect(mapToPanels(positionOfDefaultPanels, temp)).not.toEqual(
-        positionOfDefaultPanels
-      )
+      expect(
+        mapToPanels(positionOfDefaultPanels, temp.map(p => p.key))
+      ).not.toEqual(positionOfDefaultPanels)
     })
 
     it('Return the same object after sorted.', () => {
@@ -150,7 +144,9 @@ describe('Utils Test', () => {
       const sortFunction = (a: PanelWithPosition, b: PanelWithPosition) =>
         a.key.localeCompare(b.key)
       expect(
-        mapToPanels(positionOfDefaultPanels, temp).sort(sortFunction)
+        mapToPanels(positionOfDefaultPanels, temp.map(p => p.key)).sort(
+          sortFunction
+        )
       ).toEqual(positionOfDefaultPanels.sort(sortFunction))
     })
   })
