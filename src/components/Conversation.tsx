@@ -72,13 +72,17 @@ const Conversation: React.FC = () => {
     setScrollToBottom(bottomFlag)
   }, 100)
 
-  messageBox &&
-    messageBox.current &&
-    scrollToBottom &&
-    messageBox.current.scrollTo(
-      0,
-      messageBox.current.scrollHeight - messageBox.current.clientHeight
-    )
+  if (messageBox && messageBox.current && scrollToBottom) {
+    if (typeof messageBox.current.scrollTo === 'function') {
+      messageBox.current.scrollTo(
+        0,
+        messageBox.current.scrollHeight - messageBox.current.clientHeight
+      )
+    } else {
+      messageBox.current.scrollTo = (messageBox.current.scrollHeight -
+        messageBox.current.clientHeight) as any
+    }
+  }
 
   // Handle keywords changes.
   // Show a message if edit is not allowed.
@@ -155,8 +159,11 @@ const Conversation: React.FC = () => {
       // ------------------------------------------------------------------------
       // ---------------------- Configure Watson Speech -------------------------
 
-      const file1 = 'audio/ja-JP_Broadband_sample1.wav'
-      const file2 = 'audio/ja-JP_Broadband_sample2.wav'
+      // const file1 = 'audio/ja-JP_Broadband_sample1.wav'
+      // const file2 = 'audio/ja-JP_Broadband_sample2.wav'
+
+      const file1 = 'audio/speaker1s.wav'
+      const file2 = 'audio/speaker2s.wav'
 
       // ファイルから、会話解析を実施
       sst[0] &&
