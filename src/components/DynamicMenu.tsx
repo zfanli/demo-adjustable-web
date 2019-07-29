@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Empty } from 'antd'
-import { useTransition, animated as a } from 'react-spring'
+import { useTransition, animated as a } from 'react-spring/web.cjs'
 import { State } from '../type'
 import { uniq, isEqual } from 'lodash'
 

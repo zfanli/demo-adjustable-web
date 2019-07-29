@@ -8,12 +8,12 @@ import React, {
 } from 'react'
 import { Input, Button, Icon, Empty, Tooltip } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
+import { debounce, throttle, range } from 'lodash'
 
 import sstService from '../watson-speech-tool/sst-service'
 
 import { State, ResultResponse } from '../type'
 import { handleResultKeywords, handleConversationChanged } from '../actions'
-import { debounce, throttle, range } from 'lodash'
 
 const Conversation: React.FC = () => {
   // Get data from store.
@@ -169,7 +169,7 @@ const Conversation: React.FC = () => {
       sst[0] &&
         sst[0].playFile(
           file1,
-          'customer',
+          'service',
           responseHandler,
           () => setRecordFlag(false),
           false
@@ -177,7 +177,7 @@ const Conversation: React.FC = () => {
       sst[1] &&
         sst[1].playFile(
           file2,
-          'service',
+          'customer',
           responseHandler,
           () => setRecordFlag(false),
           false

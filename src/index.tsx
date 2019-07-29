@@ -5,6 +5,9 @@ import App from './App'
 import store from './reducers'
 import * as serviceWorker from './serviceWorker'
 
+// For compatible.
+import 'babel-polyfill'
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useTransition, animated as a } from 'react-spring/web.cjs'
 import { Icon } from 'antd'
 import { State } from '../type'
 import { handleSwitchActive, handlePanelRetrieve } from '../actions'
-import { useTransition, animated as a } from 'react-spring'
 
 interface Props {
   handleResize: () => void

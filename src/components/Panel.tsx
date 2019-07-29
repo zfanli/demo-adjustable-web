@@ -6,9 +6,8 @@ import React, {
   useRef,
 } from 'react'
 import { Icon, Empty, Tooltip } from 'antd'
-import { animated as a } from 'react-spring'
+import { animated as a, useSpring } from 'react-spring/web.cjs'
 import { useSelector, useDispatch } from 'react-redux'
-import { useSpring } from 'react-spring'
 import { State } from '../type'
 import {
   handlePanelResize,

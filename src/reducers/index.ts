@@ -56,7 +56,7 @@ export function reducer(state = initState(), action: BaseAction): State {
 
 // export store
 export default createStore(
-  reducer,
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  reducer
+  // (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+  //   (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 )

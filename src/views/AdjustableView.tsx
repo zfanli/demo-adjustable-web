@@ -5,7 +5,7 @@ import {
   interpolate,
   animated as a,
   useTransition,
-} from 'react-spring'
+} from 'react-spring/web.cjs'
 import { useGesture } from 'react-use-gesture'
 import { message, Spin } from 'antd'
 import { debounce } from 'lodash'

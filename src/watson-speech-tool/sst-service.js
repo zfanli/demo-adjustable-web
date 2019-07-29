@@ -176,7 +176,7 @@ function sst(config) {
         textResult.push({ speaker: speakerLabel, transcript, timestamp })
 
         if (msg.results[i].keywords_result) {
-          for (var k in msg.results[i].keywords_result) {
+          for (var k of Object.keys(msg.results[i].keywords_result)) {
             if (keywords[k]) {
               keywords[k] = keywords[k] + 1
             } else {
@@ -186,7 +186,7 @@ function sst(config) {
           }
         }
       }
-      for (var w in keywords) {
+      for (var w of Object.keys(keywords)) {
         let cnt = keywords[w]
         keywordResult.push({ word: w, count: cnt })
       }
