@@ -197,7 +197,11 @@ function sst(config) {
         return value2 - value1
       })
 
-      recordCallback({ textResult: textResult, keywordResult: keywordResult })
+      recordCallback({
+        textResult: textResult,
+        keywordResult: keywordResult,
+        label: recordState.label,
+      })
     }
   }
 

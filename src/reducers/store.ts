@@ -76,6 +76,7 @@ export default function(): State {
       defaultKeywords,
       accessTokenURL,
       resultKeywords: [],
+      tempResultKeywords: {},
       conversation: [],
     },
     panelKeys,

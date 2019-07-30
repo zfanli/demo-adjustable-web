@@ -73,10 +73,13 @@ export function handlePanelResort(
 
 export const HANDLE_RESULT_KEYWORDS = 'HANDLE_RESULT_KEYWORDS'
 
-export function handleResultKeywords(resultKeywords: string[]): BaseAction {
+export function handleResultKeywords(
+  resultKeywords: string[],
+  label: string
+): BaseAction {
   return {
     type: HANDLE_RESULT_KEYWORDS,
-    payload: { resultKeywords },
+    payload: { resultKeywords, label },
   }
 }
 

@@ -29,6 +29,7 @@ export interface State {
   watsonSpeech: {
     defaultKeywords: string[]
     resultKeywords: Keyword[]
+    tempResultKeywords: { [k: string]: Keyword[] }
     accessTokenURL: string
     conversation: TextWithLabel[]
   }
@@ -56,6 +57,7 @@ export interface Reducers {
 export interface ResultResponse {
   textResult: TextWithLabel[]
   keywordResult: string[]
+  label: string
 }
 
 export interface TextWithLabel {

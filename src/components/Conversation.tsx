@@ -111,7 +111,11 @@ const Conversation: React.FC = () => {
 
   // Control the times to be called, every 200ms can be called once.
   const dispatchResultKeywordsWithThrottle = useMemo(
-    () => throttle(keywords => dispatch(handleResultKeywords(keywords)), 200),
+    () =>
+      throttle(
+        (keywords, label) => dispatch(handleResultKeywords(keywords, label)),
+        200
+      ),
     [dispatch]
   )
   const dispatchResultConversationWithThrottle = useMemo(
@@ -127,7 +131,7 @@ const Conversation: React.FC = () => {
   const responseHandler = useCallback(
     (res: ResultResponse) => {
       dispatchResultConversationWithThrottle(res.textResult)
-      dispatchResultKeywordsWithThrottle(res.keywordResult)
+      dispatchResultKeywordsWithThrottle(res.keywordResult, res.label)
     },
     [dispatchResultKeywordsWithThrottle, dispatchResultConversationWithThrottle]
   )
