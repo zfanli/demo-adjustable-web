@@ -12,12 +12,14 @@ const handleSetPanels = debounce(
 
 const handlePanelResize = (state: State, action: BaseAction): State => {
   const panelKey = action.payload.key
-  const [resizeWidth, resizeHeight] = action.payload.size
+  const [width, height, left, top] = action.payload.size
   const forPanelResizeUse = cloneDeep(state.panels)
   forPanelResizeUse.forEach(p => {
     if (p.key === panelKey) {
-      p.width = resizeWidth
-      p.height = resizeHeight
+      p.width = width
+      p.height = height
+      p.left = left
+      p.top = top
     }
   })
 

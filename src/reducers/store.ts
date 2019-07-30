@@ -18,6 +18,7 @@ export default function(): State {
     shadowSizeWhileDragging,
     messageLeaveDelay,
     panelSizeRatio,
+    panelMinSize,
     panelKeys,
     watsonSpeech: { defaultKeywords },
     api: { accessTokenURL },
@@ -67,6 +68,7 @@ export default function(): State {
       messageFlag: true,
       sstFlag: 'file',
       panelSizeRatio,
+      panelMinSize,
     },
     watsonSpeech: {
       defaultKeywords,

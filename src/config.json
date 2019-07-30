@@ -12,6 +12,10 @@
     "normalWidth": 0.3,
     "largeWidth": 0.4
   },
+  "panelMinSize": {
+    "minHeight": 160,
+    "minWidth": 240
+  },
   "api": {
     "accessTokenURL": "/api/v1/credentials",
     "panels": "/api/panels"
