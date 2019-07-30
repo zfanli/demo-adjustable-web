@@ -20,7 +20,7 @@ import {
   handlePanelDragging,
   handleSwitchActive,
   handleInitialPanels,
-  handleInitialUnsortedPanels,
+  // handleInitialUnsortedPanels,
 } from '../actions'
 import { State, PanelWithPosition } from '../type'
 
@@ -268,9 +268,9 @@ const AdjustableView: React.FC = () => {
           )
         }
       })
-      getPanels(false).then(panels => {
-        dispatch(handleInitialUnsortedPanels(panels))
-      })
+      // getPanels(false).then(panels => {
+      //   dispatch(handleInitialUnsortedPanels(panels))
+      // })
     }
   }, [dispatch, resizeHandler, av])
 

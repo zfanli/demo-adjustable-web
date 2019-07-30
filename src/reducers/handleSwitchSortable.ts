@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash'
+// import { cloneDeep } from 'lodash'
 import { mapToPanels } from '../utils'
 import { HANDLE_SWITCH_SORTABLE } from '../actions'
 import { State, BaseAction, SingleReducer } from '../type'
@@ -16,7 +16,7 @@ const handleSwitchSortable = (state: State, action: BaseAction): State => {
         sortable,
       },
       panels: mapToPanels(state.order, state.panelKeys),
-      panelsBackup: cloneDeep(state.panels),
+      // panelsBackup: cloneDeep(state.panels),
       tabs: state.tabsBackup ? state.tabsBackup : {},
       tabsBackup: state.tabs,
     })

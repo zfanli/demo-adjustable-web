@@ -29,6 +29,8 @@ const handlePanelDragging = (state: State, action: BaseAction): State => {
       const minLeft = state.settings.margin
       const maxTop = state.settings.containerSize.height - targetPanel.height
       const minTop = state.settings.margin
+      const maxHeight =
+        state.settings.containerSize.height - state.settings.margin
 
       targetPanel.left =
         resultLeft < minLeft
@@ -38,6 +40,9 @@ const handlePanelDragging = (state: State, action: BaseAction): State => {
           : resultLeft
       targetPanel.top =
         resultTop < minTop ? minTop : resultTop > maxTop ? maxTop : resultTop
+
+      targetPanel.height =
+        targetPanel.height > maxHeight ? maxHeight : targetPanel.height
 
       const moving = action.payload.moving
       const sortable = state.settings.sortable
