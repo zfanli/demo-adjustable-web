@@ -164,9 +164,11 @@ Root
     - [x] only part of utils
 
 * [ ] **[Phase 2] Working Flow: For Tab Bar**
+  - [ ] Entry page(2019/07/30)
+  - [x] IE compatibility(2019/07/30)
   - [x] Save order to backend as a file (2019/07/26)
-  - [ ] Make a video to demonstrate the web app (2019/07/26)
-  - [ ] For now just implement the resizable and tab bar (2019/07/14)
+  - [ ] ~~Make a video to demonstrate the web app (2019/07/26)~~
+  - [x] For now just implement the resizable and tab bar (2019/07/14)
     - [x] Preparation
       - [x] split resize handler by sortable flag
         - [x] change width and height with a ratio in un-sortable mode
