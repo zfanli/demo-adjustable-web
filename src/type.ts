@@ -7,6 +7,7 @@ export interface State {
     initialContentHeight: number
     headerHeight: number
     footerHeight: number
+    tabBarHeight: number
     shadowSizeWhileDragging: number
     sortable: boolean
     messageLeaveDelay: number

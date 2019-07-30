@@ -22,6 +22,7 @@
   },
   "headerHeight": 100,
   "footerHeight": 50,
+  "tabBarHeight": 18,
   "shadowSizeWhileDragging": 50,
   "messageLeaveDelay": 1500,
   "watsonSpeech": {

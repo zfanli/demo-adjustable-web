@@ -23,8 +23,21 @@ const handlePanelDragging = (state: State, action: BaseAction): State => {
       // Always calculate the position with temp position,
       // to avoid unexpected position changes.
       const offset = action.payload.offset
-      targetPanel.left = targetPanel.tempLeft + offset[0]
-      targetPanel.top = targetPanel.tempTop + offset[1]
+      const resultLeft = targetPanel.tempLeft + offset[0]
+      const resultTop = targetPanel.tempTop + offset[1]
+      const maxLeft = state.settings.containerSize.width - targetPanel.width
+      const minLeft = state.settings.margin
+      const maxTop = state.settings.containerSize.height - targetPanel.height
+      const minTop = state.settings.margin
+
+      targetPanel.left =
+        resultLeft < minLeft
+          ? minLeft
+          : resultLeft > maxLeft
+          ? maxLeft
+          : resultLeft
+      targetPanel.top =
+        resultTop < minTop ? minTop : resultTop > maxTop ? maxTop : resultTop
 
       const moving = action.payload.moving
       const sortable = state.settings.sortable

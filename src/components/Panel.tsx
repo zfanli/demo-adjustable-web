@@ -54,6 +54,13 @@ const Panel: React.FC<Props> = (props: Props) => {
   )
   const dispatch = useDispatch()
 
+  // For calculate the resize border.
+  const windowSize = useSelector((state: State) => state.settings.containerSize)
+  const margin = useSelector((state: State) => state.settings.margin)
+  const headerHeight = useSelector(
+    (state: State) => state.settings.headerHeight
+  )
+
   // --------------------------------------------------------------------------
   // -------------------------- START SECTION ---------------------------------
   // Handle panel resize.
@@ -88,6 +95,22 @@ const Panel: React.FC<Props> = (props: Props) => {
           top = 0,
           left = 0
 
+        const clientX =
+          e.clientX > windowSize.width
+            ? windowSize.width
+            : e.clientX < margin
+            ? margin
+            : e.clientX
+        const clientY =
+          e.clientY < headerHeight + margin
+            ? headerHeight + margin
+            : e.clientY > headerHeight + windowSize.height
+            ? headerHeight + windowSize.height
+            : e.clientY
+
+        const distanceX = clientX - originalXY[0]
+        const distanceY = clientY - originalXY[1]
+
         const { minHeight, minWidth } = panelMinSize
 
         // Handle each situations.
@@ -97,8 +120,8 @@ const Panel: React.FC<Props> = (props: Props) => {
             // For width, moves to left means shorter,
             // for height, moves to top means shorter also.
 
-            width = panelSize[0] + (e.clientX - originalXY[0])
-            height = panelSize[1] + (e.clientY - originalXY[1])
+            width = panelSize[0] + distanceX
+            height = panelSize[1] + distanceY
 
             dispatch(
               handlePanelResize(props.trueKey, [
@@ -117,9 +140,9 @@ const Panel: React.FC<Props> = (props: Props) => {
             // moves to top means height will be longer,
             // and top coordinate should be moved, too.
 
-            top = panelPosition[1] + (e.clientY - originalXY[1])
-            width = panelSize[0] + (e.clientX - originalXY[0])
-            height = panelSize[1] + (originalXY[1] - e.clientY)
+            top = panelPosition[1] + distanceY
+            width = panelSize[0] + distanceX
+            height = panelSize[1] - distanceY
 
             dispatch(
               handlePanelResize(props.trueKey, [
@@ -140,9 +163,9 @@ const Panel: React.FC<Props> = (props: Props) => {
             // and left coordinate should be moved to left also.
             // Moves to top means height will be shorter.
 
-            left = panelPosition[0] + (e.clientX - originalXY[0])
-            width = panelSize[0] + (originalXY[0] - e.clientX)
-            height = panelSize[1] + (e.clientY - originalXY[1])
+            left = panelPosition[0] + distanceX
+            width = panelSize[0] - distanceX
+            height = panelSize[1] + distanceY
 
             dispatch(
               handlePanelResize(props.trueKey, [
@@ -162,10 +185,10 @@ const Panel: React.FC<Props> = (props: Props) => {
             // Left means longer width, and left coordinate will be expand.
             // Top means height will be longer, too, the top coordinate will be expand also.
 
-            left = panelPosition[0] - (originalXY[0] - e.clientX)
-            top = panelPosition[1] - (originalXY[1] - e.clientY)
-            width = panelSize[0] + (originalXY[0] - e.clientX)
-            height = panelSize[1] + (originalXY[1] - e.clientY)
+            left = panelPosition[0] + distanceX
+            top = panelPosition[1] + distanceY
+            width = panelSize[0] - distanceX
+            height = panelSize[1] - distanceY
 
             dispatch(
               handlePanelResize(props.trueKey, [
@@ -188,8 +211,8 @@ const Panel: React.FC<Props> = (props: Props) => {
             // Top means height's going to be longer,
             // top coordinate should be expand also.
 
-            top = panelPosition[1] - (originalXY[1] - e.clientY)
-            height = panelSize[1] + (originalXY[1] - e.clientY)
+            top = panelPosition[1] + distanceY
+            height = panelSize[1] - distanceY
 
             dispatch(
               handlePanelResize(props.trueKey, [
@@ -208,7 +231,7 @@ const Panel: React.FC<Props> = (props: Props) => {
             // Bottom border.
             // Top means shorter height.
 
-            height = panelSize[1] + (e.clientY - originalXY[1])
+            height = panelSize[1] + distanceY
 
             dispatch(
               handlePanelResize(props.trueKey, [
@@ -224,7 +247,7 @@ const Panel: React.FC<Props> = (props: Props) => {
             // Right border.
             // Left means shorter width.
 
-            width = panelSize[0] + (e.clientX - originalXY[0])
+            width = panelSize[0] + distanceX
 
             dispatch(
               handlePanelResize(props.trueKey, [
@@ -240,8 +263,8 @@ const Panel: React.FC<Props> = (props: Props) => {
             // Left border.
             // Left means longer width and left coordinate should be expand.
 
-            left = panelPosition[0] - (originalXY[0] - e.clientX)
-            width = panelSize[0] - (e.clientX - originalXY[0])
+            left = panelPosition[0] + distanceX
+            width = panelSize[0] - distanceX
 
             dispatch(
               handlePanelResize(props.trueKey, [
@@ -276,6 +299,9 @@ const Panel: React.FC<Props> = (props: Props) => {
     panelPosition,
     resizeType,
     panelMinSize,
+    windowSize,
+    headerHeight,
+    margin,
   ])
 
   const setCurrentPanelActive = useCallback(

@@ -67,7 +67,7 @@ const handlePanelMinimize = (state: State, action: BaseAction): State => {
             state.settings.headerHeight -
             state.settings.footerHeight -
             state.settings.margin -
-            18,
+            state.settings.tabBarHeight,
           width: window.innerWidth,
         })
       )
