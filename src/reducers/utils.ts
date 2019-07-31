@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 import { PanelWithPosition } from '../type'
-import { api } from '../config.json'
+import { api } from '../config/config.json'
 
 // API fetch.
 

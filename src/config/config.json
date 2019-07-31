@@ -20,7 +20,7 @@
     "accessTokenURL": "/api/v1/credentials",
     "panels": "/api/panels"
   },
-  "headerHeight": 100,
+  "headerHeight": 60,
   "footerHeight": 50,
   "tabBarHeight": 18,
   "shadowSizeWhileDragging": 50,
