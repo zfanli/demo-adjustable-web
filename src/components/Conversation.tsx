@@ -166,8 +166,11 @@ const Conversation: React.FC = () => {
       // const file1 = 'audio/ja-JP_Broadband_sample1.wav'
       // const file2 = 'audio/ja-JP_Broadband_sample2.wav'
 
-      const file1 = 'audio/speaker1s.wav'
-      const file2 = 'audio/speaker2s.wav'
+      // const file1 = 'audio/speaker1s.wav'
+      // const file2 = 'audio/speaker2s.wav'
+
+      const file1 = 'audio/service.wav'
+      const file2 = 'audio/customer.wav'
 
       // ファイルから、会話解析を実施
       sst[0] &&
@@ -202,7 +205,7 @@ const Conversation: React.FC = () => {
       // ------------------------------------------------------------------------
       // ---------------------- Configure Watson Speech -------------------------
 
-      const file1 = 'audio/records01.wav'
+      const file1 = 'audio/conversationSample.wav'
 
       // ファイルから、会話解析を実施
       sst[0] &&
