@@ -189,3 +189,12 @@ export function handlePanelMaximize(
     payload: { index, maximized },
   }
 }
+
+export const HANDLE_SWITCH_USER = 'HANDLE_SWITCH_USER'
+
+export function handleSwitchUser(id: number): BaseAction {
+  return {
+    type: HANDLE_SWITCH_USER,
+    payload: { id },
+  }
+}

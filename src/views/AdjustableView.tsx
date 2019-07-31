@@ -25,11 +25,7 @@ import {
 import { State, PanelWithPosition } from '../type'
 
 import '../css/adjustableView.scss'
-import {
-  getFakeDataOfUserInfo,
-  getFakeDataOfReplyInfo,
-  handleResortWithDebounce,
-} from '../utils'
+import { handleResortWithDebounce } from '../utils'
 import Conversation from '../components/Conversation'
 import TabBar from '../components/TabBar'
 import DynamicMenu from '../components/DynamicMenu'
@@ -46,7 +42,7 @@ const AdjustableView: React.FC = () => {
   // Margins.
   const margin = useSelector((state: State) => state.settings.margin)
   // Lang.
-  const lang = useSelector((state: State) => state.settings.lang)
+  // const lang = useSelector((state: State) => state.settings.lang)
   const locale = useSelector((state: State) => state.settings.locale)
   // Edit content box margins.
   const contentBoxMargins = { marginBottom: margin, marginRight: margin }
@@ -222,12 +218,19 @@ const AdjustableView: React.FC = () => {
   // -------------------------- START SECTION ---------------------------------
   // Preparation for panels' content.
 
+  const users = useSelector((state: State) => state.users)
+  const applies = useSelector((state: State) => state.applies)
+  const activeUser = useSelector((state: State) => state.activeUser)
+
   const panelChildren = {
     [panelKeys[0]]: (
-      <InformationList information={getFakeDataOfUserInfo(lang, 9)} />
+      <InformationList information={users[activeUser]} trueKey={panelKeys[0]} />
     ),
     [panelKeys[1]]: (
-      <InformationList information={getFakeDataOfReplyInfo(lang, 16)} />
+      <InformationList
+        information={applies[activeUser]}
+        trueKey={panelKeys[1]}
+      />
     ),
     [panelKeys[2]]: <FixedMenu />,
     [panelKeys[3]]: <DynamicMenu />,

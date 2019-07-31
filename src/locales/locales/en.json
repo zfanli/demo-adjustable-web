@@ -30,5 +30,8 @@
   ],
   "customer": "Customer",
   "service": "Call Service",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "switchUser": "Switch User",
+  "language": "Language",
+  "settings": "Setting"
 }

@@ -18,7 +18,7 @@
   "disableDraggingMessage": "ソートにはまだ少しバグが存在しているため、このデモではパネルが最小化されている時はソートできません。",
   "sstFlag": "音声ソース",
   "file": "ファイルから",
-  "files": "複数のファイルから",
+  "files": "2つのファイルから",
   "mic": "マイクロフォンから",
   "fixedMenu": [
     "振込貸付",
@@ -30,5 +30,8 @@
   ],
   "customer": "お客様",
   "service": "コミュニケータ",
-  "loading": "ロード中..."
+  "loading": "ロード中...",
+  "switchUser": "会員番号切り替え",
+  "language": "言語変更",
+  "settings": "セッティング"
 }

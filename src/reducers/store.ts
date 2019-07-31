@@ -1,7 +1,8 @@
 import { cloneDeep, range } from 'lodash'
 import { getCookie, setCookie } from './utils'
 import { locales } from '../locales'
-import configFile from '../config.json'
+import configFile from '../config/config.json'
+import users from '../config/users.json'
 import { State, PanelWithPosition } from '../type'
 
 export default function(): State {
@@ -68,7 +69,7 @@ export default function(): State {
       containerSize: defaultSize,
       messageLeaveDelay,
       messageFlag: true,
-      sstFlag: 'file',
+      sstFlag: 'files',
       panelSizeRatio,
       panelMinSize,
     },
@@ -85,6 +86,9 @@ export default function(): State {
     zIndices: range(5),
     tabs: {},
     pinned: [],
+    users: users.user,
+    applies: users.apply,
+    activeUser: 0,
   }
 
   // ---------------------------- END SECTION -----------------------------------

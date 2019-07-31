@@ -43,6 +43,9 @@ export interface State {
   tabs: { [k: string]: boolean }
   tabsBackup?: { [k: string]: boolean }
   pinned: string[]
+  users: { [k: string]: string }[]
+  applies: { [k: string]: string }[]
+  activeUser: number
 }
 
 export type SingleReducer = [

@@ -18,6 +18,7 @@ import handleSwitchLocale from './handleSwitchLocale'
 import handleSwitchMessageFlag from './handleSwitchMessageFlag'
 import handleSwitchSortable from './handleSwitchSortable'
 import handleSwitchSstFlag from './handleSwitchSstFlag'
+import handleSwitchUser from './handleSwitchUser'
 import handleWindowResize from './handleWindowResize'
 
 // Wrap all reducers in a single array.
@@ -39,6 +40,7 @@ const allReducers = [
   handleSwitchMessageFlag,
   handleSwitchSortable,
   handleSwitchSstFlag,
+  handleSwitchUser,
   handleWindowResize,
 ]
 // Combine reducers into an object.
