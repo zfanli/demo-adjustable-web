@@ -89,6 +89,10 @@ export interface PanelWithPosition {
   tempWidth?: number
   tempHeight?: number
   largest?: boolean
+  tempMinLeft?: number | null
+  tempMinTop?: number | null
+  tempMinWidth?: number
+  tempMinHeight?: number
 }
 
 // localize object

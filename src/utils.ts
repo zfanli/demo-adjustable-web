@@ -355,9 +355,9 @@ export function handleSizeChangeForSortable(
     if (minimizeFlag.includes(p.key)) {
       const pre = tempOrder[i - 1]
       const next = tempOrder[i + 1]
-      if (pre && pre.left === p.tempLeft) {
+      if (pre && pre.left === p.tempMinLeft) {
         nearPanels.push(pre.key)
-      } else if (next && next.left === p.tempLeft) {
+      } else if (next && next.left === p.tempMinLeft) {
         nearPanels.push(next.key)
       }
     }
@@ -372,10 +372,10 @@ export function handleSizeChangeForSortable(
       p.top = thePosition.top
       p.left = thePosition.left
     } else {
-      p.tempWidth = thePosition.width
-      p.tempHeight = thePosition.height
-      p.tempTop = thePosition.top
-      p.tempLeft = thePosition.left
+      p.tempMinWidth = thePosition.width
+      p.tempMinHeight = thePosition.height
+      p.tempMinTop = thePosition.top
+      p.tempMinLeft = thePosition.left
     }
   })
 

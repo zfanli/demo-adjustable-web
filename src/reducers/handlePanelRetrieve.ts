@@ -17,17 +17,22 @@ const handlePanelRetrieve = (state: State, action: BaseAction): State => {
   if (retrieveTarget) {
     const retrieveTabs = cloneDeep(state.tabs)
 
-    const { tempTop, tempLeft, tempWidth, tempHeight } = retrieveTarget
+    const {
+      tempMinTop,
+      tempMinLeft,
+      tempMinWidth,
+      tempMinHeight,
+    } = retrieveTarget
 
-    if (tempTop && tempLeft && tempWidth && tempHeight) {
-      retrieveTarget.top = tempTop
-      retrieveTarget.left = tempLeft
-      retrieveTarget.width = tempWidth
-      retrieveTarget.height = tempHeight
-      retrieveTarget.tempTop = undefined
-      retrieveTarget.tempLeft = undefined
-      retrieveTarget.tempWidth = undefined
-      retrieveTarget.tempHeight = undefined
+    if (tempMinTop && tempMinLeft && tempMinWidth && tempMinHeight) {
+      retrieveTarget.top = tempMinTop
+      retrieveTarget.left = tempMinLeft
+      retrieveTarget.width = tempMinWidth
+      retrieveTarget.height = tempMinHeight
+      retrieveTarget.tempMinTop = undefined
+      retrieveTarget.tempMinLeft = undefined
+      retrieveTarget.tempMinWidth = undefined
+      retrieveTarget.tempMinHeight = undefined
     }
 
     // if (state.settings.sortable) {
@@ -43,12 +48,16 @@ const handlePanelRetrieve = (state: State, action: BaseAction): State => {
       ]
 
       retrievePanels.forEach(p => {
-        if (nearPanels.includes(p.key) && p.left === tempLeft && tempHeight) {
+        if (
+          nearPanels.includes(p.key) &&
+          p.left === tempMinLeft &&
+          tempMinHeight
+        ) {
           p.top =
-            tempTop === state.settings.margin
-              ? tempTop + tempHeight + state.settings.margin
+            tempMinTop === state.settings.margin
+              ? tempMinTop + tempMinHeight + state.settings.margin
               : p.top
-          p.height = tempHeight
+          p.height = tempMinHeight
         }
       })
     }
@@ -73,7 +82,7 @@ const handlePanelRetrieve = (state: State, action: BaseAction): State => {
             state.settings.headerHeight -
             state.settings.footerHeight -
             state.settings.margin,
-          width: window.innerWidth,
+          width: window.innerWidth - state.settings.margin,
         })
       )
     }

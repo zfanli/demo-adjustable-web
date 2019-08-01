@@ -15,21 +15,21 @@ const handlePanelMaximize = (state: State, action: BaseAction): State => {
     const size = state.settings.containerSize
 
     if (flag) {
-      target.tempTop = target.top
-      target.tempLeft = target.left
-      target.tempHeight = target.height
-      target.tempWidth = target.width
+      target.tempMinTop = target.top
+      target.tempMinLeft = target.left
+      target.tempMinHeight = target.height
+      target.tempMinWidth = target.width
 
       target.top = margin
       target.left = margin
-      target.width = size.width - margin * 2
+      target.width = size.width - margin
       target.height = size.height - margin
     } else {
       const checkNumber = (s: any) => (s ? s : 0)
-      target.top = checkNumber(target.tempTop)
-      target.left = checkNumber(target.tempLeft)
-      target.height = checkNumber(target.tempHeight) + margin
-      target.width = checkNumber(target.tempWidth)
+      target.top = checkNumber(target.tempMinTop)
+      target.left = checkNumber(target.tempMinLeft)
+      target.height = checkNumber(target.tempMinHeight) + margin
+      target.width = checkNumber(target.tempMinWidth)
     }
 
     panels[targetIndex] = target

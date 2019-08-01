@@ -18,10 +18,10 @@ const handlePanelMinimize = (state: State, action: BaseAction): State => {
 
     const { width, height, left, top } = minimizeTarget
 
-    minimizeTarget.tempWidth = width
-    minimizeTarget.tempHeight = height
-    minimizeTarget.tempLeft = left
-    minimizeTarget.tempTop = top
+    minimizeTarget.tempMinWidth = width
+    minimizeTarget.tempMinHeight = height
+    minimizeTarget.tempMinLeft = left
+    minimizeTarget.tempMinTop = top
     minimizeTarget.top = height + top
     minimizeTarget.left = width / 2 + left
     minimizeTarget.height = 0
@@ -40,10 +40,15 @@ const handlePanelMinimize = (state: State, action: BaseAction): State => {
       ]
 
       minimizePanels.forEach(p => {
-        if (nearPanels.includes(p.key) && p.left === minimizeTarget.tempLeft) {
-          if (minimizeTarget.tempTop) {
+        if (
+          nearPanels.includes(p.key) &&
+          p.left === minimizeTarget.tempMinLeft
+        ) {
+          if (minimizeTarget.tempMinTop) {
             p.top =
-              p.top < minimizeTarget.tempTop ? p.top : minimizeTarget.tempTop
+              p.top < minimizeTarget.tempMinTop
+                ? p.top
+                : minimizeTarget.tempMinTop
             p.height = p.height * 2 + state.settings.margin
           }
         }
@@ -68,7 +73,7 @@ const handlePanelMinimize = (state: State, action: BaseAction): State => {
             state.settings.footerHeight -
             state.settings.margin -
             state.settings.tabBarHeight,
-          width: window.innerWidth,
+          width: window.innerWidth - state.settings.margin,
         })
       )
     }
