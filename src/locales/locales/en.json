@@ -21,12 +21,12 @@
   "files": "From Two Files",
   "mic": "From Microphone",
   "fixedMenu": [
-    "Fixed Menu1",
-    "Fixed Menu2",
-    "Fixed Menu3",
-    "Fixed Menu4",
-    "Fixed Menu5",
-    "Fixed Menu6"
+    "振込貸付",
+    "書類発送",
+    "一時約束日",
+    "自宅/勤務先変更",
+    "利用限度額/利率変更受付",
+    "カード再発行受付"
   ],
   "customer": "Customer",
   "service": "Call Service",
