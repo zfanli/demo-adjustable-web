@@ -35,18 +35,20 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ```text
 Root
   [DIR] public - for public resources
+    [DIR] audio - for sample audio files
   [DIR] src - for sources
     [DIR] components - for all components
+    [DIR] config - for configuration
     [DIR] css - for all css resources
     [DIR] locales - for localize strings
-    [DIR] views - for layouts
-    [DIR] tests - testing for reducer and utils
+    [DIR] reducers - for redux integration
+    [DIR] tests - testing of reducers and utils
     [DIR] typings - override of type definitions
+    [DIR] views - for layouts
+    [DIR] watson-speech-tool - api of watson speech to text service
     actions.ts - action creators for reducer
     App.tsx - for manage route of entire app
-    config.json - for configure app
     index.tsx - the entry of app
-    store.ts - for manage sate of entire app
     type.ts - for common type interfaces
     utils.ts - for handle main events
     ...
@@ -56,20 +58,22 @@ Root
 
 ## REQUIREMENTS
 
-- [x] Header and Footer
-  - [x] Header has a fixed position on the top of the screen
-  - [x] Footer also has a fixed position but on the bottom
-- [x] 5 Adjustable Panels on the center
-  - [x] a total of 5 panels
-    - [x] 2 for show information
-    - [x] 2 for menu, one is fixed and another is dynamic
-    - [x] last is a larger one, for the conversation
-  - [x] 4 panels in normal size, one is in large size
-  - [x] scrollable inside panel
-  - [x] draggable and re-sortable
-  - [ ] tab bar for manage minimization and maximization
-    - [ ] collapse from panel to tab bar
-    - [ ] expand from tab bar to panel
+- [x] Basic UI elements
+  - [x] Header and Footer
+    - [x] Both are fixed position
+  - [x] 5 Adjustable Panels on the center
+    - [x] 2 panels to show information
+    - [x] 2 for menu
+      - [x] one is a fixed menu
+      - [x] one is for dynamic menu
+    - [x] A larger one for show the conversation
+    - [x] 4 panels in normal size, one is in large size
+    - [x] scrollable inside panel
+- [x] UX
+  - [x] All panels are draggable and re-sortable
+  - [x] tab bar for manage minimization and maximization
+    - [x] minimize and retrieve
+    - [x] maximize and retrieve
 
 ## TODOs
 
@@ -163,8 +167,9 @@ Root
     - [x] only part of reducer
     - [x] only part of utils
 
-* [ ] **[Phase 2] Working Flow: For Tab Bar**
-  - [ ] Entry page(2019/07/30)
+* [x] **[Phase 2 *Force to Done*] Working Flow: For Tab Bar**
+
+  - [x] Entry page (Switch user only) (2019/07/30)
   - [x] IE compatibility(2019/07/30)
   - [x] Save order to backend as a file (2019/07/26)
   - [ ] ~~Make a video to demonstrate the web app (2019/07/26)~~
@@ -181,23 +186,23 @@ Root
           - [x] useEffect hook automatically clean up listener
         - [x] set active panel in resizing
       - [x] set min size to panel
-    - [ ] Add explanation
+    - [x] Add explanation
       - [x] flag for display control of all explanations
-      - [ ] add more explanations
+      - [ ] ~~add more explanations(no need)~~
     - [x] pinned panel
-  - [ ] Refactor the entire structure of the app to be clear
-    - [ ] carding logic of each event
+  - [ ] ~~Refactor the entire structure of the app to be clear (postpone to next phase)~~
+    - [ ] ~~carding logic of each event~~
       - [x] logic on resizing
         - [x] resizing if tab bar is appeared
-          - [ ] a little bug with backup panels (will be fixed but not now)
-      - [ ] logic on resetting
-      - [ ] logic on resorting
-      - [ ] logic on dragging
-    - [ ] design the logic to meet the required new features
-      - [ ] tab bar for collapse and expand panels
+          - [x] a little bug with backup panels (will be fixed but not now)
+      - [ ] ~~logic on resetting~~
+      - [ ] ~~logic on resorting~~
+      - [ ] ~~logic on dragging~~
+    - [x] design the logic to meet the required new features
+      - [x] tab bar for collapse and expand panels
         - [x] collapse button to minimize panel to the tab bar
-        - [ ] maximize button to minimize other panels to the tab bar
-          - [ ] set the target panel to be the max one and minimize other panels
+        - [x] maximize button to minimize other panels to the tab bar
+          - [x] set the target panel to be the max one and minimize other panels
         - [x] retrieve panel from the tab bar to the main screen
       - [x] deal with z-index on operation on the tab bar
         - [x] set top z-index to the active tab/panel
@@ -205,7 +210,7 @@ Root
           - [x] set top z-index if tab is in active
             - [x] in un-sortable mode
         - [x] the z-index maybe should to be managed by a individual array
-  - [ ] Add tab bar to the view
+  - [x] Add tab bar to the view
     - [x] basic tab bar placeholder
     - [x] useTransitions to animate add and remove action
     - [x] ~~info icon to show some messages (no needed)~~
@@ -221,15 +226,18 @@ Root
       - [x] minimize others
       - [x] stretch itself
   - [x] Fill fixed menu with 6 items
-  - [ ] Dynamic add/remove items to dynamic menu according to the result keywords of watson speech
+  - [x] Dynamic add/remove items to dynamic menu according to the result keywords of watson speech
     - [x] adding/removing items dynamically by the spotted times of keywords
-    - [ ] keep only five items on the screen
+    - [ ] ~~keep only five items on the screen (next phase)~~
     - [x] transition animation when items changes
-  - [ ] Reconsideration
-    - [ ] Maybe remove `order` and animate with `useTransitions` instead of `useSprings`
-    - [ ] resizable panels
-  - [ ] Testing
-    - [ ] improvement
+  - [ ] ~~Reconsideration (next phase)~~
+    - [ ] ~~Maybe remove `order` and animate with `useTransitions` instead of `useSprings`~~
+    - [ ] ~~resizable panels~~
+  - [ ] ~~Testing (next phase)~~
+    - [ ] ~~improvement~~
+
+* [ ] **[Phase 3] Waiting**
+  - [ ] Planning
 
 **UI Logic**
 
