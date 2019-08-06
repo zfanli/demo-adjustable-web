@@ -16,6 +16,7 @@ import {
   handlePanelPinned,
   handlePanelRetrieve,
   handlePanelMaximize,
+  handleSwitchModalFlag,
 } from '../actions'
 import { throttle, range } from 'lodash'
 
@@ -26,6 +27,7 @@ interface Props {
   index: number
   trueKey: string
   bind: {}
+  modal?: boolean
 }
 
 const Panel: React.FC<Props> = (props: Props) => {
@@ -60,6 +62,14 @@ const Panel: React.FC<Props> = (props: Props) => {
   const headerHeight = useSelector(
     (state: State) => state.settings.headerHeight
   )
+
+  // --------------------------------------------------------------------------
+  // ------------------------ Modal Support Start -----------------------------
+
+  const closeModal = () => dispatch(handleSwitchModalFlag(false))
+
+  // ------------------------- Modal Support End ------------------------------
+  // --------------------------------------------------------------------------
 
   // --------------------------------------------------------------------------
   // -------------------------- START SECTION ---------------------------------
@@ -385,31 +395,43 @@ const Panel: React.FC<Props> = (props: Props) => {
         </div>
 
         <div className="panel-buttons">
-          <Tooltip
-            trigger="click"
-            title={locale['panelWasPinned']}
-            visible={minimizePinned}
-          >
-            <button className="minimize" onClick={handleMinimize}>
-              <Icon type="vertical-right" />
+          {props.modal ? (
+            <button className="close" onClick={closeModal}>
+              <Icon type="close" />
             </button>
-          </Tooltip>
-          <button onClick={triggerPinned}>
-            {pinned ? (
-              <Icon type="pushpin" theme="filled" />
-            ) : (
-              <Icon type="pushpin" />
-            )}
-          </button>
-          <Tooltip
-            trigger="click"
-            title={locale['panelWasPinned']}
-            visible={maximizePinned}
-          >
-            <button onClick={triggerMaximized}>
-              {maximized ? <Icon type="shrink" /> : <Icon type="arrows-alt" />}
-            </button>
-          </Tooltip>
+          ) : (
+            <>
+              <Tooltip
+                trigger="click"
+                title={locale['panelWasPinned']}
+                visible={minimizePinned}
+              >
+                <button className="minimize" onClick={handleMinimize}>
+                  <Icon type="vertical-right" />
+                </button>
+              </Tooltip>
+              <button onClick={triggerPinned}>
+                {pinned ? (
+                  <Icon type="pushpin" theme="filled" />
+                ) : (
+                  <Icon type="pushpin" />
+                )}
+              </button>
+              <Tooltip
+                trigger="click"
+                title={locale['panelWasPinned']}
+                visible={maximizePinned}
+              >
+                <button onClick={triggerMaximized}>
+                  {maximized ? (
+                    <Icon type="shrink" />
+                  ) : (
+                    <Icon type="arrows-alt" />
+                  )}
+                </button>
+              </Tooltip>
+            </>
+          )}
         </div>
       </header>
 

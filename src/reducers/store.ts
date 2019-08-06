@@ -89,6 +89,17 @@ export default function(): State {
     users: users.user,
     applies: users.apply,
     activeUser: 0,
+    modal: {
+      title: '',
+      panel: {
+        key: 'modal',
+        top: 0,
+        left: 0,
+        height: 0,
+        width: 0,
+      },
+    },
+    modalVisible: false,
   }
 
   // ---------------------------- END SECTION -----------------------------------

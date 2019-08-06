@@ -16,6 +16,7 @@ import handlePanelRetrieve from './handlePanelRetrieve'
 import handleSwitchActive from './handleSwitchActive'
 import handleSwitchLocale from './handleSwitchLocale'
 import handleSwitchMessageFlag from './handleSwitchMessageFlag'
+import handleSwitchModalFlag from './handleSwitchModalFlag'
 import handleSwitchSortable from './handleSwitchSortable'
 import handleSwitchSstFlag from './handleSwitchSstFlag'
 import handleSwitchUser from './handleSwitchUser'
@@ -38,6 +39,7 @@ const allReducers = [
   handleSwitchLocale,
   handlePanelPinned,
   handleSwitchMessageFlag,
+  handleSwitchModalFlag,
   handleSwitchSortable,
   handleSwitchSstFlag,
   handleSwitchUser,

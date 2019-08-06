@@ -31,6 +31,7 @@ import TabBar from '../components/TabBar'
 import DynamicMenu from '../components/DynamicMenu'
 import FixedMenu from '../components/FixedMenu'
 import { getPanels } from '../reducers/utils'
+import ModalPanel from '../components/ModalPanel'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -67,6 +68,8 @@ const AdjustableView: React.FC = () => {
   const sortable = useSelector((state: State) => state.settings.sortable)
   const tabs = useSelector((state: State) => state.tabs)
   const minimizedTabs = Object.keys(tabs).filter(k => tabs[k])
+  // For modal support.
+  const modalVisible = useSelector((state: State) => state.modalVisible)
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
@@ -320,6 +323,7 @@ const AdjustableView: React.FC = () => {
       </div>
       <TabBar handleResize={resizeHandler} />
       <Footer />
+      {modalVisible ? <ModalPanel /> : <></>}
     </>
   )
 }

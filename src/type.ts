@@ -46,6 +46,11 @@ export interface State {
   users: { [k: string]: string }[]
   applies: { [k: string]: string }[]
   activeUser: number
+  modal: {
+    title: string
+    panel: PanelWithPosition
+  }
+  modalVisible: boolean
 }
 
 export type SingleReducer = [
