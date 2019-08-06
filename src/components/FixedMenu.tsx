@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { State } from '../type'
+import MenuItem from './MenuItem'
 
 const FixedMenu: React.FC = () => {
   const fixedMenuItems = useSelector(
@@ -10,9 +11,7 @@ const FixedMenu: React.FC = () => {
   return (
     <div className="normal-menu">
       {fixedMenuItems.map(f => (
-        <div key={f} className="normal-menu-item">
-          {f}
-        </div>
+        <MenuItem key={f} name={f} style={{}} />
       ))}
     </div>
   )

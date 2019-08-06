@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Empty } from 'antd'
-import { useTransition, animated as a } from 'react-spring/web.cjs'
-import { State } from '../type'
+import { useTransition } from 'react-spring/web.cjs'
 import { uniq, isEqual } from 'lodash'
+import { State } from '../type'
+import MenuItem from './MenuItem'
 
 const DynamicMenu: React.FC = () => {
   const keywords = useSelector(
@@ -43,9 +44,7 @@ const DynamicMenu: React.FC = () => {
   ) : (
     <div className="normal-menu">
       {transition.map(({ item, props, key }) => (
-        <a.div key={key} style={props} className="normal-menu-item">
-          {item}
-        </a.div>
+        <MenuItem key={key} style={props} name={item} />
       ))}
     </div>
   )
