@@ -33,5 +33,7 @@
   "loading": "ロード中...",
   "switchUser": "会員番号切り替え",
   "language": "言語変更",
-  "settings": "セッティング"
+  "settings": "セッティング",
+  "ok": "確認",
+  "cancel": "キャンセル"
 }

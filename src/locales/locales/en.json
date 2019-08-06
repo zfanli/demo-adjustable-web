@@ -33,5 +33,7 @@
   "loading": "Loading...",
   "switchUser": "Switch User",
   "language": "Language",
-  "settings": "Setting"
+  "settings": "Setting",
+  "ok": "OK",
+  "cancel": "Cancel"
 }
