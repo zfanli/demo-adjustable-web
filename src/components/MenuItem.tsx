@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { Modal } from 'antd'
-import { AnimatedValue, animated as a } from 'react-spring'
 import { useSelector } from 'react-redux'
 import { range } from 'lodash'
 import { State } from '../type'
 
 interface Props {
   name: string
-  style: AnimatedValue<any>
 }
 
 const MenuItem: React.FC<Props> = (props: Props) => {
@@ -19,13 +17,7 @@ const MenuItem: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <a.div
-        style={props.style}
-        className="normal-menu-item"
-        onClick={toggleModalFlag}
-      >
-        {props.name}
-      </a.div>
+      <div onClick={toggleModalFlag}>{props.name}</div>
       <Modal
         title={props.name}
         visible={modalFlag}

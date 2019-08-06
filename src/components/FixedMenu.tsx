@@ -11,7 +11,9 @@ const FixedMenu: React.FC = () => {
   return (
     <div className="normal-menu">
       {fixedMenuItems.map(f => (
-        <MenuItem key={f} name={f} style={{}} />
+        <div key={f} className="normal-menu-item">
+          <MenuItem name={f} />
+        </div>
       ))}
     </div>
   )
