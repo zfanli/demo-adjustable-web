@@ -2,6 +2,7 @@ import React from 'react'
 import Panel from './Panel'
 import { useDispatch } from 'react-redux'
 import { handleSwitchModalFlag } from '../actions'
+import { useGesture } from 'react-use-gesture'
 
 const ModalPanel: React.FC = () => {
   const maxHeight = window.innerHeight * 0.6
@@ -23,6 +24,17 @@ const ModalPanel: React.FC = () => {
   const dispatch = useDispatch()
 
   const closeModal = () => dispatch(handleSwitchModalFlag(false))
+
+  const bind = useGesture(
+    ({ xy, down, delta, last, event }) => {
+      // Preventing text selection caused by dragging.
+      !last && event && event.preventDefault()
+      // Dispatch current position.
+      // dispatch(handlePanelDragging(xy, delta, originalIndex, down))
+    },
+    // Configure to enable operation on event directly.
+    { event: { capture: true, passive: false } }
+  )
 
   return (
     <>

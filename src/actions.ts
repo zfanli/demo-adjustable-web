@@ -207,3 +207,7 @@ export function handleSwitchModalFlag(flag: boolean): BaseAction {
     payload: { flag },
   }
 }
+
+export const HANDLE_MODAL_DRAGGING = 'HANDLE_MODAL_DRAGGING'
+
+// export function handleModalDragging()
