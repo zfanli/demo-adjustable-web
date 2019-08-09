@@ -1,36 +1,48 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import Panel from './Panel'
-import { useDispatch } from 'react-redux'
-import { handleSwitchModalFlag } from '../actions'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  handleSwitchModalFlag,
+  handleModalDragging,
+  handleModalInitialize,
+} from '../actions'
 import { useGesture } from 'react-use-gesture'
+import { State } from '../type'
 
 const ModalPanel: React.FC = () => {
-  const maxHeight = window.innerHeight * 0.6
-  const maxWidth = window.innerWidth * 0.6
-  const top = window.innerHeight / 2 - maxHeight / 2
-  const left = window.innerWidth / 2 - maxWidth / 2
+  const dispatch = useDispatch()
+
+  useLayoutEffect(() => {
+    const height = window.innerHeight * 0.6
+    const width = window.innerWidth * 0.6
+    const top = window.innerHeight / 2 - height / 2
+    const left = window.innerWidth / 2 - width / 2
+
+    dispatch(handleModalInitialize(height, width, top, left))
+  }, [dispatch])
+
+  const { height, width, top, left } = useSelector(
+    (state: State) => state.modal.panel
+  )
+
   const styled: React.CSSProperties = {
-    maxHeight,
-    maxWidth,
     overflow: 'auto',
     position: 'absolute',
-    height: maxHeight,
-    width: maxWidth,
+    height,
+    width,
     zIndex: 9999,
     top,
     left,
   }
 
-  const dispatch = useDispatch()
-
   const closeModal = () => dispatch(handleSwitchModalFlag(false))
 
   const bind = useGesture(
-    ({ xy, down, delta, last, event }) => {
+    ({ down, delta, last, event }) => {
       // Preventing text selection caused by dragging.
       !last && event && event.preventDefault()
       // Dispatch current position.
-      // dispatch(handlePanelDragging(xy, delta, originalIndex, down))
+      dispatch(handleModalDragging(delta, down))
     },
     // Configure to enable operation on event directly.
     { event: { capture: true, passive: false } }
@@ -41,7 +53,7 @@ const ModalPanel: React.FC = () => {
       <Panel
         title="test modal"
         style={{ ...styled }}
-        bind={{}}
+        bind={bind()}
         index={0}
         trueKey=""
         modal

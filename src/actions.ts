@@ -210,4 +210,26 @@ export function handleSwitchModalFlag(flag: boolean): BaseAction {
 
 export const HANDLE_MODAL_DRAGGING = 'HANDLE_MODAL_DRAGGING'
 
-// export function handleModalDragging()
+export function handleModalDragging(
+  offset: number[],
+  moving: boolean
+): BaseAction {
+  return {
+    type: HANDLE_MODAL_DRAGGING,
+    payload: { offset, moving },
+  }
+}
+
+export const HANDLE_MODAL_INITIALIZE = 'HANDLE_MODAL_INITIALIZE'
+
+export function handleModalInitialize(
+  height: number,
+  width: number,
+  top: number,
+  left: number
+): BaseAction {
+  return {
+    type: HANDLE_MODAL_INITIALIZE,
+    payload: { height, width, top, left },
+  }
+}

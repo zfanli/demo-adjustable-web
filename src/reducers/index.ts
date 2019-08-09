@@ -5,6 +5,8 @@ import handleConversation from './handleConversation'
 import handleInitialPanels from './handleInitialPanels'
 import handleInitialUnsortedPanels from './handleInitialUnsortedPanels'
 import handleKeywords from './handleKeywords'
+import handleModalDragging from './handleModalDragging'
+import handleModalInitialize from './handleModalInitialize'
 import handlePanelDragging from './handlePanelDragging'
 import handlePanelMaximize from './handlePanelMaximize'
 import handlePanelMinimize from './handlePanelMinimize'
@@ -28,6 +30,8 @@ const allReducers = [
   handleInitialPanels,
   handleInitialUnsortedPanels,
   handleKeywords,
+  handleModalDragging,
+  handleModalInitialize,
   handlePanelDragging,
   handlePanelMaximize,
   handlePanelMinimize,
