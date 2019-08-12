@@ -10,8 +10,8 @@ import { useGesture } from 'react-use-gesture'
 import { message, Spin } from 'antd'
 import { debounce } from 'lodash'
 
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../layouts/Header'
+import Footer from '../layouts/Footer'
 import Panel from '../components/Panel'
 import InformationList from '../components/InformationList'
 
