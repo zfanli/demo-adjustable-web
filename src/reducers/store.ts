@@ -22,6 +22,7 @@ export default function(): State {
     panelSizeRatio,
     panelMinSize,
     panelKeys,
+    fixedMenu,
     watsonSpeech: { defaultKeywords },
     api: { accessTokenURL },
   } = configFile
@@ -100,6 +101,7 @@ export default function(): State {
       },
     },
     modalVisible: false,
+    fixedMenu,
   }
 
   // ---------------------------- END SECTION -----------------------------------

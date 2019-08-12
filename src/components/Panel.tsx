@@ -8,7 +8,7 @@ import React, {
 import { Icon, Empty, Tooltip } from 'antd'
 import { animated as a } from 'react-spring/web.cjs'
 import { useSelector, useDispatch } from 'react-redux'
-import { State } from '../type'
+import { State, Locale } from '../type'
 import {
   handlePanelResize,
   handleSwitchActive,
@@ -28,9 +28,15 @@ interface Props {
   trueKey: string
   bind: {}
   modal?: boolean
+  sortable: boolean
+  panelMinSize: { minHeight: number; minWidth: number }
+  locale: Locale
+  messageFlag: boolean
+  messageLEaveDelay: number
+  pinned: string[]
 }
 
-const Panel: React.FC<Props> = (props: Props) => {
+const Panel: React.FC<Props> = props => {
   const [maximized, setMaximized] = useState(false)
   const [panelResizeFlag, setPanelResizeFlag] = useState(false)
   const [originalXY, setOriginalXY] = useState([0, 0])

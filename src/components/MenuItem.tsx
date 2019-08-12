@@ -1,17 +1,14 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { handleSwitchModalFlag } from '../actions'
 
 interface Props {
   name: string
+  onClick: () => void
 }
 
-const MenuItem: React.FC<Props> = (props: Props) => {
-  const dispatch = useDispatch()
+const MenuItem: React.FC<Props> = props => {
+  const { name, onClick } = props
 
-  const toggleModalFlag = () => dispatch(handleSwitchModalFlag(true))
-
-  return <div onClick={toggleModalFlag}>{props.name}</div>
+  return <div onClick={onClick}>{name}</div>
 }
 
 export default MenuItem

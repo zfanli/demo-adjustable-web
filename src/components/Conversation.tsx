@@ -7,46 +7,40 @@ import React, {
   useEffect,
 } from 'react'
 import { Input, Button, Icon, Empty, Tooltip } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { debounce, throttle, range } from 'lodash'
 
 import sstService from '../watson-speech-tool/sst-service'
 
-import { State, ResultResponse } from '../type'
+import { ResultResponse, Locale, TextWithLabel } from '../type'
 import { handleResultKeywords, handleConversationChanged } from '../actions'
 
-const Conversation: React.FC = () => {
+interface Props {
+  defaultKeywords: string[]
+  tokenUrl: string
+  locale: Locale
+  messageLeaveDelay: number
+  sstFlag: string
+  conversation: TextWithLabel[]
+}
+
+const Conversation: React.FC<Props> = props => {
   // Get data from store.
-  const defaultKeywords = useSelector(
-    (state: State) => state.watsonSpeech.defaultKeywords
-  )
-  const tokenUrl = useSelector(
-    (state: State) => state.watsonSpeech.accessTokenURL
-  )
+  const {
+    defaultKeywords,
+    tokenUrl,
+    messageLeaveDelay,
+    sstFlag,
+    conversation,
+  } = props
+
   const dispatch = useDispatch()
 
   // Display texts.
-  const tooltipText = useSelector(
-    (state: State) => state.settings.locale.editNotAllowedWhileRecording
-  )
-  // const speaker = useSelector((state: State) => state.settings.locale.speaker)
-  const customer = useSelector(
-    (state: State) => state.settings.locale.customer
-  ) as string
-  const service = useSelector(
-    (state: State) => state.settings.locale.service
-  ) as string
+  const { tooltipText, customer, service, analyzing } = props.locale as {
+    [k: string]: string
+  }
   const mapSpeakers: { [k: string]: string } = { customer, service }
-  const analyzing = useSelector(
-    (state: State) => state.settings.locale.analyzing
-  )
-  const messageLeaveDelay = useSelector(
-    (state: State) => state.settings.messageLeaveDelay
-  )
-  const sstFlag = useSelector((state: State) => state.settings.sstFlag)
-  const conversation = useSelector(
-    (state: State) => state.watsonSpeech.conversation
-  )
 
   // State for local control.
   const [sst, setSst] = useState(

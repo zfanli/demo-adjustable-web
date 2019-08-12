@@ -7,10 +7,12 @@ interface Props {
   trueKey?: string
 }
 
-const InformationList: React.FC<Props> = (props: Props) => {
+const InformationList: React.FC<Props> = props => {
   const info = props.information
   const keys = Object.keys(info)
 
+  // Need refactor.
+  // Date will be fetched from an api.
   const applyKey = useSelector((state: State) => state.panelKeys)[1]
 
   return (

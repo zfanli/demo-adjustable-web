@@ -221,9 +221,33 @@ const AdjustableView: React.FC = () => {
   // -------------------------- START SECTION ---------------------------------
   // Preparation for panels' content.
 
+  // For information.
   const users = useSelector((state: State) => state.users)
   const applies = useSelector((state: State) => state.applies)
   const activeUser = useSelector((state: State) => state.activeUser)
+
+  // For dynamic menu.
+  const keywords = useSelector(
+    (state: State) => state.watsonSpeech.resultKeywords
+  )
+
+  // For fixed menu.
+  const fixedMenu = useSelector((state: State) => state.fixedMenu)
+
+  // For conversation.
+  const defaultKeywords = useSelector(
+    (state: State) => state.watsonSpeech.defaultKeywords
+  )
+  const tokenUrl = useSelector(
+    (state: State) => state.watsonSpeech.accessTokenURL
+  )
+  const conversation = useSelector(
+    (state: State) => state.watsonSpeech.conversation
+  )
+  const sstFlag = useSelector((state: State) => state.settings.sstFlag)
+  const messageLeaveDelay = useSelector(
+    (state: State) => state.settings.messageLeaveDelay
+  )
 
   const panelChildren = {
     [panelKeys[0]]: (
@@ -235,9 +259,18 @@ const AdjustableView: React.FC = () => {
         trueKey={panelKeys[1]}
       />
     ),
-    [panelKeys[2]]: <FixedMenu />,
-    [panelKeys[3]]: <DynamicMenu />,
-    [panelKeys[4]]: <Conversation />,
+    [panelKeys[2]]: <FixedMenu fixedMenuItems={fixedMenu} />,
+    [panelKeys[3]]: <DynamicMenu keywords={keywords} />,
+    [panelKeys[4]]: (
+      <Conversation
+        messageLeaveDelay={messageLeaveDelay}
+        locale={locale}
+        sstFlag={sstFlag}
+        defaultKeywords={defaultKeywords}
+        tokenUrl={tokenUrl}
+        conversation={conversation}
+      />
+    ),
   }
 
   // --------------------------- END SECTION ----------------------------------
@@ -321,7 +354,13 @@ const AdjustableView: React.FC = () => {
           )
         )}
       </div>
-      <TabBar handleResize={resizeHandler} />
+      <TabBar
+        names={locale.panels as string[]}
+        panels={panels}
+        sortable={sortable}
+        tabs={tabs}
+        handleResize={resizeHandler}
+      />
       <Footer />
       {modalVisible ? <ModalPanel /> : <></>}
     </>

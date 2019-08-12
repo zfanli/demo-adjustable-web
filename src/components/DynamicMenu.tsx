@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { Empty } from 'antd'
 import { useTransition, animated as a } from 'react-spring/web.cjs'
 import { uniq, isEqual } from 'lodash'
-import { State } from '../type'
+import { Keyword } from '../type'
 import MenuItem from './MenuItem'
+import { useDispatch } from 'react-redux'
+import { handleSwitchModalFlag } from '../actions'
 
-const DynamicMenu: React.FC = () => {
-  const keywords = useSelector(
-    (state: State) => state.watsonSpeech.resultKeywords
-  )
+interface Props {
+  keywords: Keyword[]
+}
+
+const DynamicMenu: React.FC<Props> = props => {
+  const keywords = props.keywords
   const [menuItems, setMenuItems] = useState<string[]>([])
 
   const menuMap = [
@@ -39,13 +42,20 @@ const DynamicMenu: React.FC = () => {
     enter: { opacity: 1, height: '2rem' },
   })
 
+  const dispatch = useDispatch()
+
+  const handleClick = () => {
+    // Put some data for modal.
+    dispatch(handleSwitchModalFlag(true))
+  }
+
   return keywords.length === 0 ? (
     <Empty description="No Data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
   ) : (
     <div className="normal-menu">
       {transition.map(({ item, props, key }) => (
         <a.div key={key} style={props} className="normal-menu-item">
-          <MenuItem name={item} />
+          <MenuItem name={item} onClick={handleClick} />
         </a.div>
       ))}
     </div>

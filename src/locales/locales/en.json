@@ -20,14 +20,6 @@
   "file": "Play Single File",
   "files": "Play Two Files",
   "mic": "Use Microphone",
-  "fixedMenu": [
-    "振込貸付",
-    "書類発送",
-    "一時約束日",
-    "自宅/勤務先変更",
-    "利用限度額/利率変更受付",
-    "カード再発行受付"
-  ],
   "customer": "Customer",
   "service": "Call Service",
   "loading": "Loading...",

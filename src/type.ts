@@ -51,6 +51,7 @@ export interface State {
     panel: PanelWithPosition
   }
   modalVisible: boolean
+  fixedMenu: string[]
 }
 
 export type SingleReducer = [

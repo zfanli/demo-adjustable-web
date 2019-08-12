@@ -1,25 +1,22 @@
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useTransition, animated as a } from 'react-spring/web.cjs'
 import { Icon } from 'antd'
-import { State } from '../type'
+import { PanelWithPosition } from '../type'
 import { handleSwitchActive, handlePanelRetrieve } from '../actions'
 
 interface Props {
   handleResize: () => void
+  names: string[]
+  panels: PanelWithPosition[]
+  sortable: boolean
+  tabs: { [k: string]: boolean }
 }
 
 const TabBar: React.FC<Props> = (props: Props) => {
-  const names = useSelector(
-    (state: State) => state.settings.locale.panels
-  ) as string[]
-  const panels = useSelector((state: State) => state.panels)
-  const sortable = useSelector((state: State) => state.settings.sortable)
-  const tabs = useSelector((state: State) => state.tabs)
-
   const dispatch = useDispatch()
 
-  const { handleResize } = props
+  const { names, panels, sortable, tabs, handleResize } = props
 
   useEffect(() => {
     !sortable && setTimeout(handleResize, 100)
