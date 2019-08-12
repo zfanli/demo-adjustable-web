@@ -7,7 +7,7 @@ import {
   mapToPanels,
 } from '../utils'
 import { ExtendSize, PanelWithPosition } from '../type'
-import config from '../config.json'
+import config from '../config/config.json'
 
 // Test size.
 const size = { width: 300, height: 200 }
