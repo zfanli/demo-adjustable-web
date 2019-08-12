@@ -115,6 +115,7 @@ Root
 **Working Flow**
 
 - [x] **[Phase 1 *Done*] Working Flow**
+
   - [x] build the basic workspace
     - [x] add some basic dependencies
     - [x] do some basic configs
@@ -167,7 +168,7 @@ Root
     - [x] only part of reducer
     - [x] only part of utils
 
-* [x] **[Phase 2 *Force to Done*] Working Flow: For Tab Bar**
+- [x] **[Phase 2 *Force to Done*] Working Flow: For Tab Bar**
 
   - [x] Entry page (Switch user only) (2019/07/30)
   - [x] IE compatibility(2019/07/30)
@@ -236,8 +237,17 @@ Root
   - [ ] ~~Testing (next phase)~~
     - [ ] ~~improvement~~
 
-* [ ] **[Phase 3] Waiting**
-  - [ ] Planning
+- [ ] **[Phase 3] Refactor and New Requirements**
+  - [ ] Dynamic menu
+    - [ ] new items show on the top
+  - [ ] Switch content inside panel
+    - [ ] add a switch button
+    - [ ] about title change
+      - [ ] change title if tab minimized
+  - [ ] Refactor
+    - [ ] auto sort algorism
+    - [ ] size changes in sortable mode
+  - [ ] Decoupling component for further use
 
 **UI Logic**
 
