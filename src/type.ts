@@ -45,7 +45,7 @@ export interface State {
   tabsBackup?: { [k: string]: boolean }
   pinned: string[]
   users: { [k: string]: string }[]
-  replies: { [k: string]: string }[]
+  replies: { [k: string]: string }[][]
   activeUser: number
   modal: Modal
   modalVisible: boolean

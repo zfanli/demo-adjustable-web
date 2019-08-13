@@ -14,6 +14,7 @@ import Header from '../layouts/Header'
 import Footer from '../layouts/Footer'
 import Panel from '../components/Panel'
 import InformationList from '../components/InformationList'
+import ReplyInformationAuto from '../components/ReplyInformationAuto'
 
 import {
   handleWindowResize,
@@ -246,7 +247,7 @@ const AdjustableView: React.FC = () => {
 
   // For information.
   const users = useSelector((state: State) => state.users)
-  const applies = useSelector((state: State) => state.replies)
+  const replies = useSelector((state: State) => state.replies)
   const activeUser = useSelector((state: State) => state.activeUser)
 
   // For dynamic menu.
@@ -277,9 +278,10 @@ const AdjustableView: React.FC = () => {
       <InformationList information={users[activeUser]} trueKey={panelKeys[0]} />
     ),
     [panelKeys[1]]: (
-      <InformationList
-        information={applies[activeUser]}
-        trueKey={panelKeys[1]}
+      <ReplyInformationAuto
+        name="test"
+        userId="1234556"
+        list={replies[activeUser]}
       />
     ),
     [panelKeys[2]]: replyInputFlag ? (

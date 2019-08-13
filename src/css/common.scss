@@ -94,6 +94,7 @@ body {
     display: flex;
     height: 100%;
     margin: 0 0.5rem;
+    padding: 0.5rem 0;
     flex-direction: column;
 
     .conversation-body {
@@ -254,7 +255,7 @@ body {
     .panel-content {
       flex-grow: 1;
       overflow: auto;
-      padding: 0.5rem 0;
+      // padding: 0.5rem 0;
     }
 
     .resize-border {
@@ -336,5 +337,25 @@ body {
     width: 100vw;
     z-index: 9990;
     background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .reply-auto {
+    .reply-auto-header,
+    .reply-auto-body {
+      width: 100%;
+    }
+
+    thead {
+      background-color: #fafafa;
+    }
+
+    th,
+    td {
+      padding: 0 0.5rem;
+      border-bottom: 1px solid #e8e8e8;
+      &:not(:last-child) {
+        border-right: 1px solid #e8e8e8;
+      }
+    }
   }
 }
