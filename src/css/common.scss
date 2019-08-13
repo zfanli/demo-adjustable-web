@@ -351,10 +351,76 @@ body {
 
     th,
     td {
+      font-weight: normal;
       padding: 0 0.5rem;
       border-bottom: 1px solid #e8e8e8;
       &:not(:last-child) {
         border-right: 1px solid #e8e8e8;
+      }
+    }
+  }
+
+  .user-information {
+    .user-information-body {
+      width: 100%;
+
+      .special-start {
+        td,
+        th {
+          border-top: 2px solid #e8e8e8;
+        }
+      }
+
+      .special-end {
+        td,
+        th {
+          border-bottom: 2px solid #e8e8e8;
+        }
+      }
+
+      .inline-input {
+        display: inline-block;
+        height: 1.1rem;
+        outline: none;
+        border-radius: 3px;
+        border: 1px solid #e8e8e8;
+
+        &.amount {
+          max-width: 4rem;
+          text-align: right;
+          margin-right: 5px;
+        }
+
+        &[disabled] {
+          background-color: #efefef;
+        }
+      }
+
+      select {
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 0 0.5rem;
+        border-bottom: 1px solid #e8e8e8;
+
+        &:not(:last-child) {
+          border-right: 1px solid #e8e8e8;
+        }
+      }
+
+      td {
+        text-align: right;
+
+        &.center {
+          text-align: center;
+        }
+      }
+
+      th {
+        background-color: #fafafa;
+        font-weight: normal;
       }
     }
   }

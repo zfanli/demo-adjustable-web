@@ -1,7 +1,8 @@
 import React from 'react'
+import { Reply } from '../type'
 
 interface Props {
-  list: { [k: string]: string }[]
+  list: Reply[]
   userId: string
   name: string
 }
@@ -44,8 +45,8 @@ const ReplyInformationAuto: React.FC<Props> = props => {
         <tbody>
           {list.map((line, i) => (
             <tr key={i}>
-              <td>{line.cotDatetime}</td>
-              <td>{line.cotInfo}</td>
+              <td>{line.timestamp}</td>
+              <td>{line.information}</td>
             </tr>
           ))}
         </tbody>

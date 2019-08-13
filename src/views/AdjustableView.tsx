@@ -13,8 +13,13 @@ import { debounce } from 'lodash'
 import Header from '../layouts/Header'
 import Footer from '../layouts/Footer'
 import Panel from '../components/Panel'
-import InformationList from '../components/InformationList'
+import Conversation from '../components/Conversation'
+import TabBar from '../components/TabBar'
+import DynamicMenu from '../components/DynamicMenu'
+import FixedMenu from '../components/FixedMenu'
 import ReplyInformationAuto from '../components/ReplyInformationAuto'
+import ModalPanel from '../components/ModalPanel'
+import UserInformation from '../components/UserInformation'
 
 import {
   handleWindowResize,
@@ -22,18 +27,12 @@ import {
   handleSwitchActive,
   handleInitialPanels,
   handleSwitchReplyInputFlag,
-  // handleInitialUnsortedPanels,
 } from '../actions'
-import { State, PanelWithPosition } from '../type'
-
-import '../css/adjustableView.scss'
 import { handleResortWithDebounce } from '../utils'
-import Conversation from '../components/Conversation'
-import TabBar from '../components/TabBar'
-import DynamicMenu from '../components/DynamicMenu'
-import FixedMenu from '../components/FixedMenu'
 import { getPanels } from '../reducers/utils'
-import ModalPanel from '../components/ModalPanel'
+
+import { State, PanelWithPosition } from '../type'
+import '../css/adjustableView.scss'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -274,9 +273,7 @@ const AdjustableView: React.FC = () => {
   )
 
   const panelChildren = {
-    [panelKeys[0]]: (
-      <InformationList information={users[activeUser]} trueKey={panelKeys[0]} />
-    ),
+    [panelKeys[0]]: <UserInformation userInformation={users[activeUser]} />,
     [panelKeys[1]]: (
       <ReplyInformationAuto
         name="test"

@@ -44,8 +44,8 @@ export interface State {
   tabs: { [k: string]: boolean }
   tabsBackup?: { [k: string]: boolean }
   pinned: string[]
-  users: { [k: string]: string }[]
-  replies: { [k: string]: string }[][]
+  users: UserInformation[]
+  replies: Reply[][]
   activeUser: number
   modal: Modal
   modalVisible: boolean
@@ -56,6 +56,33 @@ export type SingleReducer = [
   string,
   (state: State, action: BaseAction) => State
 ]
+
+export interface UserInformation {
+  userId: string
+  nameKn: string
+  name: string
+  birthday: string
+  genderCode: string
+  gender: string
+  age: number
+  team: string
+  loanLimit: number
+  contractLimit: number
+  firstLoanLimit: number
+  totalLimit: number
+  annualIncome: number
+  jobTypeCode: string
+  jobType: string
+  repaymentCode: string
+  repayment: string
+  purposeCode: string
+  purpose: string
+}
+
+export interface Reply {
+  timestamp: string
+  information: string
+}
 
 export interface Modal {
   title: string
