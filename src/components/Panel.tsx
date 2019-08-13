@@ -16,7 +16,6 @@ import {
   handlePanelPinned,
   handlePanelRetrieve,
   handlePanelMaximize,
-  handleSwitchModalFlag,
 } from '../actions'
 import { throttle, range } from 'lodash'
 
@@ -39,6 +38,8 @@ interface Props {
   locale: Locale
   messageFlag: boolean
   messageLeaveDelay: number
+  header?: any
+  hideHeaderButton?: boolean
 }
 
 const Panel: React.FC<Props> = props => {
@@ -63,6 +64,8 @@ const Panel: React.FC<Props> = props => {
     children,
     normal,
     modal,
+    header,
+    hideHeaderButton,
   } = props
 
   let thisPanel: PanelWithPosition | null = null
@@ -90,14 +93,6 @@ const Panel: React.FC<Props> = props => {
   const headerHeight = useSelector(
     (state: State) => state.settings.headerHeight
   )
-
-  // --------------------------------------------------------------------------
-  // ------------------------ Modal Support Start -----------------------------
-
-  const closeModal = () => dispatch(handleSwitchModalFlag(false))
-
-  // ------------------------- Modal Support End ------------------------------
-  // --------------------------------------------------------------------------
 
   // --------------------------------------------------------------------------
   // -------------------------- START SECTION ---------------------------------
@@ -423,11 +418,8 @@ const Panel: React.FC<Props> = props => {
         </div>
 
         <div className="panel-buttons">
-          {modal ? (
-            <button className="close" onClick={closeModal}>
-              <Icon type="close" />
-            </button>
-          ) : (
+          {header ? header : null}
+          {!hideHeaderButton ? (
             <>
               <Tooltip
                 trigger="click"
@@ -459,7 +451,7 @@ const Panel: React.FC<Props> = props => {
                 </button>
               </Tooltip>
             </>
-          )}
+          ) : null}
         </div>
       </header>
 

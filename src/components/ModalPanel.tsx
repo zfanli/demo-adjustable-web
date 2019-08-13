@@ -1,12 +1,13 @@
 import React, { useLayoutEffect } from 'react'
-import Panel from './Panel'
 import { useDispatch } from 'react-redux'
+import { useGesture } from 'react-use-gesture'
+import { Icon } from 'antd'
 import {
   handleSwitchModalFlag,
   handleModalDragging,
   handleModalInitialize,
 } from '../actions'
-import { useGesture } from 'react-use-gesture'
+import Panel from './Panel'
 import { Modal, Locale } from '../type'
 
 interface Props {
@@ -67,6 +68,12 @@ const ModalPanel: React.FC<Props> = props => {
         messageLeaveDelay={messageLeaveDelay}
         panelMinSize={panelMinSize}
         locale={locale}
+        hideHeaderButton
+        header={
+          <button className="close" onClick={closeModal}>
+            <Icon type="close" />
+          </button>
+        }
       >
         1
       </Panel>
