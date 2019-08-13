@@ -13,6 +13,7 @@ export interface State {
     messageLeaveDelay: number
     messageFlag: boolean
     sstFlag: string
+    applyInputFlag: boolean
     panelMinSize: {
       minHeight: number
       minWidth: number

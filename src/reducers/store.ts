@@ -73,6 +73,7 @@ export default function(): State {
       sstFlag: 'files',
       panelSizeRatio,
       panelMinSize,
+      applyInputFlag: false,
     },
     watsonSpeech: {
       defaultKeywords,

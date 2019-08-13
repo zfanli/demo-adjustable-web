@@ -7,7 +7,7 @@ import {
   useTransition,
 } from 'react-spring/web.cjs'
 import { useGesture } from 'react-use-gesture'
-import { message, Spin } from 'antd'
+import { message, Spin, Switch, Tooltip } from 'antd'
 import { debounce } from 'lodash'
 
 import Header from '../layouts/Header'
@@ -20,6 +20,7 @@ import {
   handlePanelDragging,
   handleSwitchActive,
   handleInitialPanels,
+  handleSwitchApplyInputFlag,
   // handleInitialUnsortedPanels,
 } from '../actions'
 import { State, PanelWithPosition } from '../type'
@@ -227,6 +228,22 @@ const AdjustableView: React.FC = () => {
   // -------------------------- START SECTION ---------------------------------
   // Preparation for panels' content.
 
+  // Switch for apply information input panel.
+  const applyInputFlag = useSelector(
+    (state: State) => state.settings.applyInputFlag
+  )
+  const applyInputTargetKey = panelKeys[2]
+  const applyInputSwitch = (
+    <Tooltip title={locale.applyInputSwitch}>
+      <Switch
+        className="apply-input-switch"
+        checked={applyInputFlag}
+        onChange={flag => dispatch(handleSwitchApplyInputFlag(flag))}
+        size="small"
+      />
+    </Tooltip>
+  )
+
   // For information.
   const users = useSelector((state: State) => state.users)
   const applies = useSelector((state: State) => state.applies)
@@ -265,7 +282,11 @@ const AdjustableView: React.FC = () => {
         trueKey={panelKeys[1]}
       />
     ),
-    [panelKeys[2]]: <FixedMenu fixedMenuItems={fixedMenu} />,
+    [panelKeys[2]]: applyInputFlag ? (
+      <div>This is reply information input panel</div>
+    ) : (
+      <FixedMenu fixedMenuItems={fixedMenu} />
+    ),
     [panelKeys[3]]: <DynamicMenu keywords={keywords} />,
     [panelKeys[4]]: (
       <Conversation
@@ -359,8 +380,17 @@ const AdjustableView: React.FC = () => {
                     ),
                     ...rest,
                   }}
-                  title={panelNames[i]}
+                  title={
+                    panelKeys[i] === applyInputTargetKey && applyInputFlag
+                      ? panelNames[panelNames.length - 1]
+                      : panelNames[i]
+                  }
                   bind={bind(i)}
+                  header={
+                    panelKeys[i] === applyInputTargetKey
+                      ? applyInputSwitch
+                      : undefined
+                  }
                 >
                   {panelChildren[panelKeys[i]]}
                 </Panel>

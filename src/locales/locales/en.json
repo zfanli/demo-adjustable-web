@@ -3,10 +3,11 @@
   "footer": "Assistant messages or marketing messages or other messages.",
   "panels": [
     "User Information",
-    "Reply Information",
+    "Reply Information (Auto)",
     "Fixed Menu",
     "Dynamic Menu",
-    "Conversation"
+    "Conversation",
+    "Reply Information (Input)"
   ],
   "sortable": "Sortable",
   "resetPosition": "Reset Position",
@@ -27,5 +28,6 @@
   "language": "Language",
   "settings": "Setting",
   "ok": "OK",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "applyInputSwitch": "Switch to Apply Information Input"
 }

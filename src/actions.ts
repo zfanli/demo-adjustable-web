@@ -233,3 +233,12 @@ export function handleModalInitialize(
     payload: { height, width, top, left },
   }
 }
+
+export const HANDLE_SWITCH_APPLY_INPUT_FLAG = 'HANDLE_SWITCH_APPLY_INPUT_FLAG'
+
+export function handleSwitchApplyInputFlag(flag: boolean): BaseAction {
+  return {
+    type: HANDLE_SWITCH_APPLY_INPUT_FLAG,
+    payload: { flag },
+  }
+}
