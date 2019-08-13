@@ -70,6 +70,12 @@ const AdjustableView: React.FC = () => {
   const minimizedTabs = Object.keys(tabs).filter(k => tabs[k])
   // For modal support.
   const modalVisible = useSelector((state: State) => state.modalVisible)
+  const pinned = useSelector((state: State) => state.pinned)
+  const messageFlag = useSelector((state: State) => state.settings.messageFlag)
+  const modal = useSelector((state: State) => state.modal)
+  const panelMinSize = useSelector(
+    (state: State) => state.settings.panelMinSize
+  )
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
@@ -334,8 +340,17 @@ const AdjustableView: React.FC = () => {
               {springs.map(({ x, y, scale, ...rest }, i) => (
                 <Panel
                   key={i}
-                  index={i}
-                  trueKey={panelKeys[i]}
+                  normal={{
+                    sortable,
+                    pinned,
+                    panels,
+                    index: i,
+                    trueKey: panelKeys[i],
+                  }}
+                  messageFlag={messageFlag}
+                  messageLeaveDelay={messageLeaveDelay}
+                  panelMinSize={panelMinSize}
+                  locale={locale}
                   style={{
                     transform: interpolate(
                       [x, y, scale],
@@ -362,7 +377,17 @@ const AdjustableView: React.FC = () => {
         handleResize={resizeHandler}
       />
       <Footer />
-      {modalVisible ? <ModalPanel /> : <></>}
+      {modalVisible ? (
+        <ModalPanel
+          messageFlag={messageFlag}
+          messageLeaveDelay={messageLeaveDelay}
+          panelMinSize={panelMinSize}
+          locale={locale}
+          modal={modal}
+        />
+      ) : (
+        <></>
+      )}
     </>
   )
 }

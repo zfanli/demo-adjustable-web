@@ -8,7 +8,7 @@ import React, {
 import { Icon, Empty, Tooltip } from 'antd'
 import { animated as a } from 'react-spring/web.cjs'
 import { useSelector, useDispatch } from 'react-redux'
-import { State, Locale } from '../type'
+import { State, Locale, PanelWithPosition } from '../type'
 import {
   handlePanelResize,
   handleSwitchActive,
@@ -21,19 +21,24 @@ import {
 import { throttle, range } from 'lodash'
 
 interface Props {
+  normal?: {
+    index: number
+    sortable: boolean
+    trueKey: string
+    pinned: string[]
+    panels: PanelWithPosition[]
+  }
   style: CSSProperties
   title: string
   children: any
-  index: number
-  trueKey: string
   bind: {}
-  modal?: boolean
-  sortable: boolean
+  modal?: {
+    panel: PanelWithPosition
+  }
   panelMinSize: { minHeight: number; minWidth: number }
   locale: Locale
   messageFlag: boolean
-  messageLEaveDelay: number
-  pinned: string[]
+  messageLeaveDelay: number
 }
 
 const Panel: React.FC<Props> = props => {
@@ -47,19 +52,34 @@ const Panel: React.FC<Props> = props => {
   const [maximizePinned, setMaximizePinned] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
 
-  const sortable = useSelector((state: State) => state.settings.sortable)
-  const thisPanel = useSelector((state: State) => state.panels)[props.index]
-  const panelMinSize = useSelector(
-    (state: State) => state.settings.panelMinSize
-  )
-  const locale = useSelector((state: State) => state.settings.locale)
-  const messageFlag = useSelector((state: State) => state.settings.messageFlag)
-  const messageLeaveDelay = useSelector(
-    (state: State) => state.settings.messageLeaveDelay
-  )
-  const pinned = useSelector((state: State) => state.pinned).includes(
-    props.trueKey
-  )
+  const {
+    style,
+    title,
+    bind,
+    panelMinSize,
+    locale,
+    messageFlag,
+    messageLeaveDelay,
+    children,
+  } = props
+
+  let thisPanel: PanelWithPosition | null = null
+  let sortable = false
+  let index = -1
+  let pinned = false
+  let trueKey = ''
+
+  if (props.normal) {
+    let { index, panels, trueKey } = props.normal
+    thisPanel = panels[index]
+    pinned = props.normal.pinned.includes(trueKey)
+
+    sortable = props.normal.sortable
+  } else if (props.modal) {
+    thisPanel = null
+    trueKey = 'modal'
+  }
+
   const dispatch = useDispatch()
 
   // For calculate the resize border.
@@ -71,6 +91,8 @@ const Panel: React.FC<Props> = props => {
 
   // --------------------------------------------------------------------------
   // ------------------------ Modal Support Start -----------------------------
+
+  const modal = props.modal
 
   const closeModal = () => dispatch(handleSwitchModalFlag(false))
 
@@ -140,7 +162,7 @@ const Panel: React.FC<Props> = props => {
             height = panelSize[1] + distanceY
 
             dispatch(
-              handlePanelResize(props.trueKey, [
+              handlePanelResize(trueKey, [
                 width < minWidth ? minWidth : width,
                 height < minHeight ? minHeight : height,
                 panelPosition[0],
@@ -161,7 +183,7 @@ const Panel: React.FC<Props> = props => {
             height = panelSize[1] - distanceY
 
             dispatch(
-              handlePanelResize(props.trueKey, [
+              handlePanelResize(trueKey, [
                 width < minWidth ? minWidth : width,
                 height < minHeight ? minHeight : height,
                 panelPosition[0],
@@ -184,7 +206,7 @@ const Panel: React.FC<Props> = props => {
             height = panelSize[1] + distanceY
 
             dispatch(
-              handlePanelResize(props.trueKey, [
+              handlePanelResize(trueKey, [
                 width < minWidth ? minWidth : width,
                 height < minHeight ? minHeight : height,
                 // Left + width - minWidth for keep min Width.
@@ -207,7 +229,7 @@ const Panel: React.FC<Props> = props => {
             height = panelSize[1] - distanceY
 
             dispatch(
-              handlePanelResize(props.trueKey, [
+              handlePanelResize(trueKey, [
                 width < minWidth ? minWidth : width,
                 height < minHeight ? minHeight : height,
                 // Left + width - minWidth for keep min Width.
@@ -231,7 +253,7 @@ const Panel: React.FC<Props> = props => {
             height = panelSize[1] - distanceY
 
             dispatch(
-              handlePanelResize(props.trueKey, [
+              handlePanelResize(trueKey, [
                 panelSize[0],
                 height < minHeight ? minHeight : height,
                 panelPosition[0],
@@ -250,7 +272,7 @@ const Panel: React.FC<Props> = props => {
             height = panelSize[1] + distanceY
 
             dispatch(
-              handlePanelResize(props.trueKey, [
+              handlePanelResize(trueKey, [
                 panelSize[0],
                 height < minHeight ? minHeight : height,
                 panelPosition[0],
@@ -266,7 +288,7 @@ const Panel: React.FC<Props> = props => {
             width = panelSize[0] + distanceX
 
             dispatch(
-              handlePanelResize(props.trueKey, [
+              handlePanelResize(trueKey, [
                 width < minWidth ? minWidth : width,
                 panelSize[1],
                 panelPosition[0],
@@ -283,7 +305,7 @@ const Panel: React.FC<Props> = props => {
             width = panelSize[0] - distanceX
 
             dispatch(
-              handlePanelResize(props.trueKey, [
+              handlePanelResize(trueKey, [
                 width < minWidth ? minWidth : width,
                 panelSize[1],
                 width < minWidth
@@ -310,7 +332,7 @@ const Panel: React.FC<Props> = props => {
     panelSize,
     dispatch,
     panelResizeFlag,
-    props.trueKey,
+    trueKey,
     originalXY,
     panelPosition,
     resizeType,
@@ -321,8 +343,8 @@ const Panel: React.FC<Props> = props => {
   ])
 
   const setCurrentPanelActive = useCallback(
-    () => dispatch(handleSwitchActive(props.index)),
-    [dispatch, props.index]
+    () => dispatch(handleSwitchActive(index)),
+    [dispatch, index]
   )
 
   // Register trigger.
@@ -337,13 +359,13 @@ const Panel: React.FC<Props> = props => {
             panelRef.current.clientHeight,
           ])
         }
-        setPanelPosition([thisPanel.left, thisPanel.top])
+        thisPanel && setPanelPosition([thisPanel.left, thisPanel.top])
         setResizeType(type)
         setOriginalXY([e.clientX, e.clientY])
         setPanelResizeFlag(true)
       }
     },
-    [setCurrentPanelActive, pinned, thisPanel.left, thisPanel.top]
+    [setCurrentPanelActive, pinned, thisPanel]
   )
 
   // --------------------------- END SECTION ----------------------------------
@@ -352,7 +374,7 @@ const Panel: React.FC<Props> = props => {
   // Handle button click.
 
   const handleMinimize = () => {
-    !pinned && dispatch(handlePanelMinimize(props.index))
+    !pinned && dispatch(handlePanelMinimize(index))
     // Show a message tells that this panel was pinned.
     if (pinned && messageFlag) {
       setMinimizePinned(true)
@@ -360,7 +382,7 @@ const Panel: React.FC<Props> = props => {
     }
   }
 
-  const triggerPinned = () => dispatch(handlePanelPinned(props.index))
+  const triggerPinned = () => dispatch(handlePanelPinned(index))
 
   const triggerMaximized = () => {
     if (!pinned) {
@@ -368,12 +390,12 @@ const Panel: React.FC<Props> = props => {
 
       range(5).forEach(
         i =>
-          i !== props.index &&
+          i !== index &&
           dispatch(maximized ? handlePanelRetrieve(i) : handlePanelMinimize(i))
       )
 
       // Maximize panel for now.
-      dispatch(handlePanelMaximize(props.index, !maximized))
+      dispatch(handlePanelMaximize(index, !maximized))
     }
     // Show a message tells that this panel was pinned.
     if (pinned && messageFlag) {
@@ -386,22 +408,22 @@ const Panel: React.FC<Props> = props => {
   // --------------------------------------------------------------------------
 
   // Trigger dragging gesture only when the panel is not be pinned.
-  const bound = pinned ? {} : props.bind
+  const bound = pinned ? {} : bind
 
   return (
     <a.div
       className="panel"
-      style={props.style}
+      style={style}
       ref={panelRef}
       onClick={setCurrentPanelActive}
     >
       <header className="panel-header">
         <div className={`panel-title ${pinned ? 'disabled' : ''}`} {...bound}>
-          {props.title}
+          {title}
         </div>
 
         <div className="panel-buttons">
-          {props.modal ? (
+          {modal ? (
             <button className="close" onClick={closeModal}>
               <Icon type="close" />
             </button>
@@ -442,8 +464,8 @@ const Panel: React.FC<Props> = props => {
       </header>
 
       <div className="panel-content">
-        {props.children ? (
-          props.children
+        {children ? (
+          children
         ) : (
           <Empty description="No Data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
         )}

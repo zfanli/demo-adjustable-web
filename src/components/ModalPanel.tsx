@@ -1,15 +1,23 @@
 import React, { useLayoutEffect } from 'react'
 import Panel from './Panel'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   handleSwitchModalFlag,
   handleModalDragging,
   handleModalInitialize,
 } from '../actions'
 import { useGesture } from 'react-use-gesture'
-import { State } from '../type'
+import { Modal, Locale } from '../type'
 
-const ModalPanel: React.FC = () => {
+interface Props {
+  modal: Modal
+  panelMinSize: { minHeight: number; minWidth: number }
+  locale: Locale
+  messageFlag: boolean
+  messageLeaveDelay: number
+}
+
+const ModalPanel: React.FC<Props> = props => {
   const dispatch = useDispatch()
 
   useLayoutEffect(() => {
@@ -21,9 +29,9 @@ const ModalPanel: React.FC = () => {
     dispatch(handleModalInitialize(height, width, top, left))
   }, [dispatch])
 
-  const { height, width, top, left } = useSelector(
-    (state: State) => state.modal.panel
-  )
+  const { modal, panelMinSize, locale, messageFlag, messageLeaveDelay } = props
+
+  const { height, width, top, left } = modal.panel
 
   const styled: React.CSSProperties = {
     overflow: 'auto',
@@ -54,9 +62,11 @@ const ModalPanel: React.FC = () => {
         title="test modal"
         style={{ ...styled }}
         bind={bind()}
-        index={0}
-        trueKey=""
-        modal
+        modal={{ panel: modal.panel }}
+        messageFlag={messageFlag}
+        messageLeaveDelay={messageLeaveDelay}
+        panelMinSize={panelMinSize}
+        locale={locale}
       >
         1
       </Panel>
