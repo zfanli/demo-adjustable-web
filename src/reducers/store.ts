@@ -73,7 +73,7 @@ export default function(): State {
       sstFlag: 'files',
       panelSizeRatio,
       panelMinSize,
-      applyInputFlag: false,
+      replyInputFlag: false,
     },
     watsonSpeech: {
       defaultKeywords,
@@ -89,7 +89,7 @@ export default function(): State {
     tabs: {},
     pinned: [],
     users: users.user,
-    applies: users.apply,
+    replies: users.reply,
     activeUser: 0,
     modal: {
       title: '',

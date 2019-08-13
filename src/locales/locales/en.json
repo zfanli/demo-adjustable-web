@@ -29,5 +29,5 @@
   "settings": "Setting",
   "ok": "OK",
   "cancel": "Cancel",
-  "applyInputSwitch": "Switch to Apply Information Input"
+  "replyInputSwitch": "Switch to Reply Information Input"
 }

@@ -20,7 +20,7 @@ import {
   handlePanelDragging,
   handleSwitchActive,
   handleInitialPanels,
-  handleSwitchApplyInputFlag,
+  handleSwitchReplyInputFlag,
   // handleInitialUnsortedPanels,
 } from '../actions'
 import { State, PanelWithPosition } from '../type'
@@ -228,17 +228,17 @@ const AdjustableView: React.FC = () => {
   // -------------------------- START SECTION ---------------------------------
   // Preparation for panels' content.
 
-  // Switch for apply information input panel.
-  const applyInputFlag = useSelector(
-    (state: State) => state.settings.applyInputFlag
+  // Switch for reply information input panel.
+  const replyInputFlag = useSelector(
+    (state: State) => state.settings.replyInputFlag
   )
-  const applyInputTargetKey = panelKeys[2]
-  const applyInputSwitch = (
-    <Tooltip title={locale.applyInputSwitch}>
+  const replyInputTargetKey = panelKeys[2]
+  const replyInputSwitch = (
+    <Tooltip title={locale.replyInputSwitch}>
       <Switch
-        className="apply-input-switch"
-        checked={applyInputFlag}
-        onChange={flag => dispatch(handleSwitchApplyInputFlag(flag))}
+        className="reply-input-switch"
+        checked={replyInputFlag}
+        onChange={flag => dispatch(handleSwitchReplyInputFlag(flag))}
         size="small"
       />
     </Tooltip>
@@ -246,7 +246,7 @@ const AdjustableView: React.FC = () => {
 
   // For information.
   const users = useSelector((state: State) => state.users)
-  const applies = useSelector((state: State) => state.applies)
+  const applies = useSelector((state: State) => state.replies)
   const activeUser = useSelector((state: State) => state.activeUser)
 
   // For dynamic menu.
@@ -282,7 +282,7 @@ const AdjustableView: React.FC = () => {
         trueKey={panelKeys[1]}
       />
     ),
-    [panelKeys[2]]: applyInputFlag ? (
+    [panelKeys[2]]: replyInputFlag ? (
       <div>This is reply information input panel</div>
     ) : (
       <FixedMenu fixedMenuItems={fixedMenu} />
@@ -381,14 +381,14 @@ const AdjustableView: React.FC = () => {
                     ...rest,
                   }}
                   title={
-                    panelKeys[i] === applyInputTargetKey && applyInputFlag
+                    panelKeys[i] === replyInputTargetKey && replyInputFlag
                       ? panelNames[panelNames.length - 1]
                       : panelNames[i]
                   }
                   bind={bind(i)}
                   header={
-                    panelKeys[i] === applyInputTargetKey
-                      ? applyInputSwitch
+                    panelKeys[i] === replyInputTargetKey
+                      ? replyInputSwitch
                       : undefined
                   }
                 >

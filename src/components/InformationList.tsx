@@ -13,11 +13,11 @@ const InformationList: React.FC<Props> = props => {
 
   // Need refactor.
   // Date will be fetched from an api.
-  const applyKey = useSelector((state: State) => state.panelKeys)[1]
+  const replyKey = useSelector((state: State) => state.panelKeys)[1]
 
   return (
     <table className="information-list">
-      {props.trueKey === applyKey ? (
+      {props.trueKey === replyKey ? (
         keys.map(k => (
           <tbody key={k}>
             <tr>

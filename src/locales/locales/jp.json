@@ -29,5 +29,5 @@
   "settings": "セッティング",
   "ok": "確認",
   "cancel": "キャンセル",
-  "applyInputSwitch": "応対情報（手入力）に切り替える"
+  "replyInputSwitch": "応対情報（手入力）に切り替える"
 }

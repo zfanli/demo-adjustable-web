@@ -234,11 +234,11 @@ export function handleModalInitialize(
   }
 }
 
-export const HANDLE_SWITCH_APPLY_INPUT_FLAG = 'HANDLE_SWITCH_APPLY_INPUT_FLAG'
+export const HANDLE_SWITCH_REPLY_INPUT_FLAG = 'HANDLE_SWITCH_REPLY_INPUT_FLAG'
 
-export function handleSwitchApplyInputFlag(flag: boolean): BaseAction {
+export function handleSwitchReplyInputFlag(flag: boolean): BaseAction {
   return {
-    type: HANDLE_SWITCH_APPLY_INPUT_FLAG,
+    type: HANDLE_SWITCH_REPLY_INPUT_FLAG,
     payload: { flag },
   }
 }

@@ -13,7 +13,7 @@ export interface State {
     messageLeaveDelay: number
     messageFlag: boolean
     sstFlag: string
-    applyInputFlag: boolean
+    replyInputFlag: boolean
     panelMinSize: {
       minHeight: number
       minWidth: number
@@ -45,7 +45,7 @@ export interface State {
   tabsBackup?: { [k: string]: boolean }
   pinned: string[]
   users: { [k: string]: string }[]
-  applies: { [k: string]: string }[]
+  replies: { [k: string]: string }[]
   activeUser: number
   modal: Modal
   modalVisible: boolean
