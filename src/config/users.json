@@ -79,5 +79,83 @@
     ],
     [{ "timestamp": "201908120407", "information": "テスト応対情報5" }],
     [{ "timestamp": "201908120423", "information": "テスト応対情報6" }]
+  ],
+  "replyInput": [
+    [
+      {
+        "date": "20190801",
+        "time": "12:11",
+        "dealing": "架電",
+        "contact": "携帯電話",
+        "circuit": "正常",
+        "target": "本人",
+        "staff": "担当者名1",
+        "team": "営業システム部",
+        "business": "結果告知",
+        "result": "",
+        "detail": "契約額変更",
+        "information": "書類受領しました。（源泉）"
+      },
+      {
+        "date": "20190801",
+        "time": "14:11",
+        "dealing": "架電",
+        "contact": "携帯電話",
+        "circuit": "正常",
+        "target": "本人",
+        "staff": "担当者名2",
+        "team": "営業システム部",
+        "business": "結果告知",
+        "result": "",
+        "detail": "契約額変更",
+        "information": "書類受領しました。（源泉）"
+      },
+      {
+        "date": "20190801",
+        "time": "15:11",
+        "dealing": "架電",
+        "contact": "携帯電話",
+        "circuit": "正常",
+        "target": "本人",
+        "staff": "担当者名3",
+        "team": "営業システム部",
+        "business": "結果告知",
+        "result": "",
+        "detail": "契約額変更",
+        "information": "書類受領しました。（源泉）"
+      }
+    ],
+    [
+      {
+        "date": "20190801",
+        "time": "12:11",
+        "dealing": "架電",
+        "contact": "携帯電話",
+        "circuit": "正常",
+        "target": "本人",
+        "staff": "担当者名1",
+        "team": "営業システム部",
+        "business": "結果告知",
+        "result": "",
+        "detail": "契約額変更",
+        "information": "書類受領しました。（源泉）"
+      }
+    ],
+    [
+      {
+        "date": "20190801",
+        "time": "12:11",
+        "dealing": "架電",
+        "contact": "携帯電話",
+        "circuit": "正常",
+        "target": "本人",
+        "staff": "担当者名1",
+        "team": "営業システム部",
+        "business": "結果告知",
+        "result": "",
+        "detail": "契約額変更",
+        "information": "書類受領しました。（源泉）"
+      }
+    ]
   ]
 }

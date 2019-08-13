@@ -46,6 +46,7 @@ export interface State {
   pinned: string[]
   users: UserInformation[]
   replies: Reply[][]
+  inputReplies: ReplyInput[][]
   activeUser: number
   modal: Modal
   modalVisible: boolean
@@ -56,6 +57,21 @@ export type SingleReducer = [
   string,
   (state: State, action: BaseAction) => State
 ]
+
+export interface ReplyInput {
+  date: string
+  time: string
+  dealing: string
+  contact: string
+  circuit: string
+  target: string
+  staff: string
+  team: string
+  business: string
+  result: string
+  detail: string
+  information: string
+}
 
 export interface UserInformation {
   userId: string

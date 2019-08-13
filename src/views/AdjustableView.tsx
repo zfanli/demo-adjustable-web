@@ -18,6 +18,7 @@ import TabBar from '../components/TabBar'
 import DynamicMenu from '../components/DynamicMenu'
 import FixedMenu from '../components/FixedMenu'
 import ReplyInformationAuto from '../components/ReplyInformationAuto'
+import ReplyInformationInput from '../components/ReplyInformationInput'
 import ModalPanel from '../components/ModalPanel'
 import UserInformation from '../components/UserInformation'
 
@@ -247,6 +248,7 @@ const AdjustableView: React.FC = () => {
   // For information.
   const users = useSelector((state: State) => state.users)
   const replies = useSelector((state: State) => state.replies)
+  const inputReplies = useSelector((state: State) => state.inputReplies)
   const activeUser = useSelector((state: State) => state.activeUser)
 
   // For dynamic menu.
@@ -282,7 +284,7 @@ const AdjustableView: React.FC = () => {
       />
     ),
     [panelKeys[2]]: replyInputFlag ? (
-      <div>This is reply information input panel</div>
+      <ReplyInformationInput list={inputReplies[activeUser]} />
     ) : (
       <FixedMenu fixedMenuItems={fixedMenu} />
     ),

@@ -90,6 +90,7 @@ export default function(): State {
     pinned: [],
     users: users.user,
     replies: users.reply,
+    inputReplies: users.replyInput,
     activeUser: 0,
     modal: {
       title: '',
