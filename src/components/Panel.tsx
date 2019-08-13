@@ -75,11 +75,12 @@ const Panel: React.FC<Props> = props => {
   let trueKey = ''
 
   if (normal) {
-    let { index, panels, trueKey } = normal
+    const { panels, trueKey } = normal
+    index = normal.index
+    sortable = normal.sortable
+
     thisPanel = panels[index]
     pinned = normal.pinned.includes(trueKey)
-
-    sortable = normal.sortable
   } else if (modal) {
     thisPanel = modal.panel
     trueKey = 'modal'
