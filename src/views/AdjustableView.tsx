@@ -406,6 +406,7 @@ const AdjustableView: React.FC = () => {
         sortable={sortable}
         tabs={tabs}
         handleResize={resizeHandler}
+        replyInputFlag={replyInputFlag}
       />
       <Footer />
       {modalVisible ? (

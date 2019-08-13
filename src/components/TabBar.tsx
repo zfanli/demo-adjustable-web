@@ -11,12 +11,13 @@ interface Props {
   panels: PanelWithPosition[]
   sortable: boolean
   tabs: { [k: string]: boolean }
+  replyInputFlag: boolean
 }
 
 const TabBar: React.FC<Props> = (props: Props) => {
   const dispatch = useDispatch()
 
-  const { names, panels, sortable, tabs, handleResize } = props
+  const { names, panels, sortable, tabs, handleResize, replyInputFlag } = props
 
   useEffect(() => {
     !sortable && setTimeout(handleResize, 100)
@@ -24,7 +25,10 @@ const TabBar: React.FC<Props> = (props: Props) => {
 
   const keyMapToName = panels.map((p, i) => ({
     key: p.key,
-    name: names[i],
+    name:
+      p.key === 'fixedMenu' && replyInputFlag
+        ? names[names.length - 1]
+        : names[i],
     index: i,
   }))
 
