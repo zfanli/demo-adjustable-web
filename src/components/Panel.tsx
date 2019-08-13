@@ -61,6 +61,8 @@ const Panel: React.FC<Props> = props => {
     messageFlag,
     messageLeaveDelay,
     children,
+    normal,
+    modal,
   } = props
 
   let thisPanel: PanelWithPosition | null = null
@@ -69,14 +71,14 @@ const Panel: React.FC<Props> = props => {
   let pinned = false
   let trueKey = ''
 
-  if (props.normal) {
-    let { index, panels, trueKey } = props.normal
+  if (normal) {
+    let { index, panels, trueKey } = normal
     thisPanel = panels[index]
-    pinned = props.normal.pinned.includes(trueKey)
+    pinned = normal.pinned.includes(trueKey)
 
-    sortable = props.normal.sortable
-  } else if (props.modal) {
-    thisPanel = null
+    sortable = normal.sortable
+  } else if (modal) {
+    thisPanel = modal.panel
     trueKey = 'modal'
   }
 
@@ -91,8 +93,6 @@ const Panel: React.FC<Props> = props => {
 
   // --------------------------------------------------------------------------
   // ------------------------ Modal Support Start -----------------------------
-
-  const modal = props.modal
 
   const closeModal = () => dispatch(handleSwitchModalFlag(false))
 

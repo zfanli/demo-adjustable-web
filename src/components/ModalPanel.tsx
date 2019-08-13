@@ -60,7 +60,7 @@ const ModalPanel: React.FC<Props> = props => {
     <>
       <Panel
         title="test modal"
-        style={{ ...styled }}
+        style={{ ...styled, boxShadow: 'none' }}
         bind={bind()}
         modal={{ panel: modal.panel }}
         messageFlag={messageFlag}

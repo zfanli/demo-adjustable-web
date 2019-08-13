@@ -13,20 +13,35 @@ const handleSetPanels = debounce(
 const handlePanelResize = (state: State, action: BaseAction): State => {
   const panelKey = action.payload.key
   const [width, height, left, top] = action.payload.size
-  const forPanelResizeUse = cloneDeep(state.panels)
-  forPanelResizeUse.forEach(p => {
-    if (p.key === panelKey) {
-      p.width = width
-      p.height = height
-      p.left = left
-      p.top = top
-    }
-  })
+  if (panelKey === 'modal') {
+    const modalPanel = cloneDeep(state.modal.panel)
+    modalPanel.width = width
+    modalPanel.height = height
+    modalPanel.top = top
+    modalPanel.left = left
 
-  // Save panels to server.
-  handleSetPanels(forPanelResizeUse, state.settings.sortable)
+    return Object.assign({}, state, {
+      modal: {
+        ...state.modal,
+        panel: modalPanel,
+      },
+    })
+  } else {
+    const forPanelResizeUse = cloneDeep(state.panels)
+    forPanelResizeUse.forEach(p => {
+      if (p.key === panelKey) {
+        p.width = width
+        p.height = height
+        p.left = left
+        p.top = top
+      }
+    })
 
-  return Object.assign({}, state, { panels: forPanelResizeUse })
+    // Save panels to server.
+    handleSetPanels(forPanelResizeUse, state.settings.sortable)
+
+    return Object.assign({}, state, { panels: forPanelResizeUse })
+  }
 }
 
 export default [HANDLE_PANEL_RESIZE, handlePanelResize] as SingleReducer
