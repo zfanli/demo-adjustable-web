@@ -14,6 +14,7 @@ interface Props {
 const DynamicMenu: React.FC<Props> = props => {
   const keywords = props.keywords
   const [menuItems, setMenuItems] = useState<string[]>([])
+  const [previousKeywords, setPreviousKeywords] = useState<Keyword[]>([])
 
   const menuMap = [
     [['振込', '振り込み', '貸付', '出金'], ['振込貸付']],
@@ -25,15 +26,21 @@ const DynamicMenu: React.FC<Props> = props => {
   ]
 
   useEffect(() => {
-    keywords.forEach(k => {
-      menuMap.forEach(m => {
-        if (m[0].includes(k.word)) {
-          const newMenuItems = uniq(menuItems.concat(m[1]))
-          !isEqual(menuItems, newMenuItems) && setMenuItems(newMenuItems)
-        }
+    let newMenuItems = menuItems
+
+    keywords
+      .filter(k => previousKeywords.findIndex(p => p.word === k.word) < 0)
+      .forEach(k => {
+        menuMap.forEach(m => {
+          if (m[0].includes(k.word)) {
+            newMenuItems = uniq(m[1].concat(newMenuItems))
+          }
+        })
       })
-    })
-  }, [keywords, menuItems, menuMap])
+
+    !isEqual(menuItems, newMenuItems) && setMenuItems(newMenuItems)
+    setPreviousKeywords(keywords)
+  }, [keywords, menuItems, menuMap, previousKeywords])
 
   const transition = useTransition(menuItems, (m: any) => m, {
     from: { opacity: 0, height: '0rem' },
