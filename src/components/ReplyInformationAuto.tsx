@@ -1,8 +1,8 @@
 import React from 'react'
-import { Reply } from '../type'
+import { Replies } from '../type'
 
 interface Props {
-  list: Reply[]
+  list: Replies[]
   userId: string
   name: string
 }

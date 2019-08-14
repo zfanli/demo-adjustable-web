@@ -278,9 +278,9 @@ const AdjustableView: React.FC = () => {
     [panelKeys[0]]: <UserInformation userInformation={users[activeUser]} />,
     [panelKeys[1]]: (
       <ReplyInformationAuto
-        name="test"
-        userId="1234556"
-        list={replies[activeUser]}
+        name={replies[activeUser].name}
+        userId={replies[activeUser].userId}
+        list={replies[activeUser].replies}
       />
     ),
     [panelKeys[2]]: replyInputFlag ? (

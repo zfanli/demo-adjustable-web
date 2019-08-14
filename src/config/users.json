@@ -65,20 +65,37 @@
     }
   ],
   "reply": [
-    [
-      { "timestamp": "201901011001", "information": "テスト応対情報0" },
-      { "timestamp": "201901011001", "information": "テスト応対情報1" },
-      { "timestamp": "201901011001", "information": "テスト応対情報2" },
-      { "timestamp": "201901011001", "information": "テスト応対情報3" },
-      { "timestamp": "201901011001", "information": "テスト応対情報4" },
-      { "timestamp": "201901011001", "information": "テスト応対情報5" },
-      { "timestamp": "201901011001", "information": "テスト応対情報6" },
-      { "timestamp": "201901011001", "information": "テスト応対情報7" },
-      { "timestamp": "201901011001", "information": "テスト応対情報8" },
-      { "timestamp": "201901011001", "information": "テスト応対情報9" }
-    ],
-    [{ "timestamp": "201908120407", "information": "テスト応対情報5" }],
-    [{ "timestamp": "201908120423", "information": "テスト応対情報6" }]
+    {
+      "userId": "10000000",
+      "name": "若草 太郎",
+      "replies": [
+        { "timestamp": "201901011001", "information": "テスト応対情報0" },
+        { "timestamp": "201901011001", "information": "テスト応対情報1" },
+        { "timestamp": "201901011001", "information": "テスト応対情報2" },
+        { "timestamp": "201901011001", "information": "テスト応対情報3" },
+        { "timestamp": "201901011001", "information": "テスト応対情報4" },
+        { "timestamp": "201901011001", "information": "テスト応対情報5" },
+        { "timestamp": "201901011001", "information": "テスト応対情報6" },
+        { "timestamp": "201901011001", "information": "テスト応対情報7" },
+        { "timestamp": "201901011001", "information": "テスト応対情報8" },
+        { "timestamp": "201901011001", "information": "テスト応対情報9" }
+      ]
+    },
+
+    {
+      "userId": "20000000",
+      "name": "若草 次郎",
+      "replies": [
+        { "timestamp": "201908120407", "information": "テスト応対情報5" }
+      ]
+    },
+    {
+      "userId": "30000000",
+      "name": "若草 三郎",
+      "replies": [
+        { "timestamp": "201908120423", "information": "テスト応対情報6" }
+      ]
+    }
   ],
   "replyInput": [
     [

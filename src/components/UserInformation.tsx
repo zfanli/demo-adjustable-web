@@ -57,7 +57,7 @@ const UserInformation: React.FC<Props> = props => {
           </tr>
           <tr>
             <th>生年月日</th>
-            <td>{birthday}</td>
+            <td className="center">{birthday}</td>
             <th>年齢</th>
             <td className="center">{age}</td>
           </tr>

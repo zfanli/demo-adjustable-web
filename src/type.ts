@@ -45,7 +45,7 @@ export interface State {
   tabsBackup?: { [k: string]: boolean }
   pinned: string[]
   users: UserInformation[]
-  replies: Reply[][]
+  replies: Reply[]
   inputReplies: ReplyInput[][]
   activeUser: number
   modal: Modal
@@ -96,6 +96,12 @@ export interface UserInformation {
 }
 
 export interface Reply {
+  userId: string
+  name: string
+  replies: Replies[]
+}
+
+export interface Replies {
   timestamp: string
   information: string
 }
