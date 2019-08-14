@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
   const height = useSelector((state: State) => state.settings.footerHeight)
   return (
     <footer className="footer" style={{ height }}>
-      {footer}
+      <span className="footer-body">{footer}</span>
     </footer>
   )
 }
