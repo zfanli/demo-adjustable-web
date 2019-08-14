@@ -453,4 +453,27 @@ body {
       }
     }
   }
+
+  .reloading {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .spin {
+      span {
+        z-index: 99999;
+      }
+    }
+
+    .mask {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.7);
+      z-index: 99998;
+    }
+  }
 }

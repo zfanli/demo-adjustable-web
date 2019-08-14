@@ -2,7 +2,6 @@ import { cloneDeep, range } from 'lodash'
 import { getCookie, setCookie } from './utils'
 import { locales } from '../locales'
 import configFile from '../config/config.json'
-import users from '../config/users.json'
 import { State, PanelWithPosition } from '../type'
 
 export default function(): State {
@@ -23,6 +22,8 @@ export default function(): State {
     panelMinSize,
     panelKeys,
     fixedMenu,
+    userId,
+    availableUserId,
     watsonSpeech: { defaultKeywords },
     api: { accessTokenURL },
   } = configFile
@@ -74,6 +75,7 @@ export default function(): State {
       panelSizeRatio,
       panelMinSize,
       replyInputFlag: false,
+      availableUserId,
     },
     watsonSpeech: {
       defaultKeywords,
@@ -88,9 +90,10 @@ export default function(): State {
     zIndices: range(5),
     tabs: {},
     pinned: [],
-    users: users.user,
-    replies: users.reply,
-    inputReplies: users.replyInput,
+    userId: userId,
+    user: undefined,
+    replies: undefined,
+    inputReplies: undefined,
     activeUser: 0,
     modal: {
       title: '',
@@ -104,6 +107,7 @@ export default function(): State {
     },
     modalVisible: false,
     fixedMenu,
+    reloadFlag: {},
   }
 
   // ---------------------------- END SECTION -----------------------------------

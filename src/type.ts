@@ -14,6 +14,7 @@ export interface State {
     messageFlag: boolean
     sstFlag: string
     replyInputFlag: boolean
+    availableUserId: string[]
     panelMinSize: {
       minHeight: number
       minWidth: number
@@ -44,9 +45,11 @@ export interface State {
   tabs: { [k: string]: boolean }
   tabsBackup?: { [k: string]: boolean }
   pinned: string[]
-  users: UserInformation[]
-  replies: Reply[]
-  inputReplies: ReplyInput[][]
+  userId: string
+  user?: UserInformation
+  replies?: Reply[]
+  inputReplies?: ReplyInput[]
+  reloadFlag: { [k: string]: number }
   activeUser: number
   modal: Modal
   modalVisible: boolean
@@ -96,12 +99,6 @@ export interface UserInformation {
 }
 
 export interface Reply {
-  userId: string
-  name: string
-  replies: Replies[]
-}
-
-export interface Replies {
   timestamp: string
   information: string
 }

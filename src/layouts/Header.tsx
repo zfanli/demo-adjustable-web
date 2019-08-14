@@ -17,6 +17,9 @@ const Header: React.FC = () => {
   const header = useSelector((state: State) => state.settings.locale.header)
   const height = useSelector((state: State) => state.settings.headerHeight)
   const sstFlag = useSelector((state: State) => state.settings.sstFlag)
+  const availableUserId = useSelector(
+    (state: State) => state.settings.availableUserId
+  )
   const dispatch = useDispatch()
 
   const handleI18nMenuClick = (e: ClickParam) => {
@@ -73,9 +76,9 @@ const Header: React.FC = () => {
           <Dropdown
             overlay={
               <Menu onClick={handleSwitchUserClick}>
-                <Menu.Item key="0">会員ID:100001</Menu.Item>
-                <Menu.Item key="1">会員ID:100002</Menu.Item>
-                <Menu.Item key="2">会員ID:100003</Menu.Item>
+                {availableUserId.map(id => (
+                  <Menu.Item key={id}>会員ID:{id}</Menu.Item>
+                ))}
               </Menu>
             }
             trigger={['click']}

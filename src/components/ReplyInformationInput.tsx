@@ -20,7 +20,7 @@ const ReplyInformationInput: React.FC<Props> = props => {
           <tbody key={i}>
             <tr>
               <th className="bold" colSpan={3}>
-                No.{i + 1}
+                履歴 No.{i + 1}
               </th>
             </tr>
             <tr>

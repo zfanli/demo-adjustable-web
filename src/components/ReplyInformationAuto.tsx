@@ -1,8 +1,8 @@
 import React from 'react'
-import { Replies } from '../type'
+import { Reply } from '../type'
 
 interface Props {
-  list: Replies[]
+  list: Reply[]
   userId: string
   name: string
 }
@@ -45,8 +45,16 @@ const ReplyInformationAuto: React.FC<Props> = props => {
         <tbody>
           {list.map((line, i) => (
             <tr key={i}>
-              <td>{line.timestamp}</td>
-              <td>{line.information}</td>
+              <td>
+                {line.timestamp.slice(0, 8)}
+                <br />
+                {line.timestamp.slice(8)}
+              </td>
+              <td
+                dangerouslySetInnerHTML={{
+                  __html: line.information.split('\n').join('<br>'),
+                }}
+              />
             </tr>
           ))}
         </tbody>

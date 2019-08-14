@@ -18,8 +18,13 @@
   },
   "api": {
     "accessTokenURL": "/api/v1/credentials",
-    "panels": "/api/panels"
+    "panels": "/api/panels",
+    "userInformation": "/userinfo/",
+    "replyAutoInformation": "/cotinfo/right/",
+    "replyInputInformation": "/cotinfo/left/"
   },
+  "availableUserId": ["10000000", "20000000", "30000000"],
+  "userId": "10000000",
   "headerHeight": 60,
   "footerHeight": 50,
   "tabBarHeight": 18,

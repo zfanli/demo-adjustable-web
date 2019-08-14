@@ -21,6 +21,7 @@ import ReplyInformationAuto from '../components/ReplyInformationAuto'
 import ReplyInformationInput from '../components/ReplyInformationInput'
 import ModalPanel from '../components/ModalPanel'
 import UserInformation from '../components/UserInformation'
+import ReloadSpin from '../components/ReloadSpin'
 
 import {
   handleWindowResize,
@@ -28,12 +29,28 @@ import {
   handleSwitchActive,
   handleInitialPanels,
   handleSwitchReplyInputFlag,
+  handleFetchUserInfo,
+  handleFetchReplyAuto,
+  handleFetchReplyInput,
 } from '../actions'
 import { handleResortWithDebounce } from '../utils'
-import { getPanels } from '../reducers/utils'
+import {
+  getPanels,
+  getUserInformation,
+  getReplyAutoInformation,
+  getReplyInputInformation,
+} from '../reducers/utils'
 
 import { State, PanelWithPosition } from '../type'
 import '../css/adjustableView.scss'
+import {
+  userInformationAdapter,
+  replyAutoInformationAdapter,
+  replyInputInformationAdapter,
+} from '../adapters/apiAdapter'
+
+// Fallback data.
+import users from '../config/users.json'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -246,10 +263,10 @@ const AdjustableView: React.FC = () => {
   )
 
   // For information.
-  const users = useSelector((state: State) => state.users)
+  const user = useSelector((state: State) => state.user)
   const replies = useSelector((state: State) => state.replies)
   const inputReplies = useSelector((state: State) => state.inputReplies)
-  const activeUser = useSelector((state: State) => state.activeUser)
+  // const activeUser = useSelector((state: State) => state.activeUser)
 
   // For dynamic menu.
   const keywords = useSelector(
@@ -275,16 +292,16 @@ const AdjustableView: React.FC = () => {
   )
 
   const panelChildren = {
-    [panelKeys[0]]: <UserInformation userInformation={users[activeUser]} />,
+    [panelKeys[0]]: <UserInformation userInformation={user} />,
     [panelKeys[1]]: (
       <ReplyInformationAuto
-        name={replies[activeUser].name}
-        userId={replies[activeUser].userId}
-        list={replies[activeUser].replies}
+        name={user ? user.name : ''}
+        userId={user ? user.userId : ''}
+        list={replies ? replies : []}
       />
     ),
     [panelKeys[2]]: replyInputFlag ? (
-      <ReplyInformationInput list={inputReplies[activeUser]} />
+      <ReplyInformationInput list={inputReplies ? inputReplies : []} />
     ) : (
       <FixedMenu fixedMenuItems={fixedMenu} />
     ),
@@ -304,7 +321,10 @@ const AdjustableView: React.FC = () => {
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
   // -------------------------- START SECTION ---------------------------------
-  // Retrieve panels.
+  // Data initialization.
+
+  const userId = useSelector((state: State) => state.userId)
+  const reloadFlag = useSelector((state: State) => state.reloadFlag)
 
   const LOADED = 'LOADED'
   const LOADING = 'LOADING'
@@ -313,7 +333,7 @@ const AdjustableView: React.FC = () => {
   const outStyle = { opacity: 0 }
 
   const isLoadingTransition = useTransition(
-    [panels.length > 0 ? LOADED : LOADING],
+    [panels.length > 0 && user && replies && inputReplies ? LOADED : LOADING],
     (k: string) => k,
     {
       from: outStyle,
@@ -325,6 +345,7 @@ const AdjustableView: React.FC = () => {
 
   useEffect(() => {
     if (av && av.current) {
+      // Stored panels' position information.
       getPanels(true).then(panels => {
         if (av && av.current) {
           dispatch(
@@ -335,11 +356,44 @@ const AdjustableView: React.FC = () => {
           )
         }
       })
-      // getPanels(false).then(panels => {
-      //   dispatch(handleInitialUnsortedPanels(panels))
-      // })
+
+      const fallback = Number(String(userId).slice(0, 1)) - 1
+
+      // Get user information.
+      getUserInformation(userId)
+        .then(res =>
+          dispatch(handleFetchUserInfo(userInformationAdapter(res.data)))
+        )
+        .catch(() => {
+          message.warn('会員情報取得失敗、モックデータを表示しています。')
+          dispatch(handleFetchUserInfo(users.user[fallback]))
+        })
+      // Get reply auto information.
+      getReplyAutoInformation(userId)
+        .then(res =>
+          dispatch(handleFetchReplyAuto(replyAutoInformationAdapter(res.data)))
+        )
+        .catch(() => {
+          message.warn(
+            '応対情報（自動）取得失敗、モックデータを表示しています。'
+          )
+          dispatch(handleFetchReplyAuto(users.reply[fallback]))
+        })
+      // Get reply input information.
+      getReplyInputInformation(userId)
+        .then(res =>
+          dispatch(
+            handleFetchReplyInput(replyInputInformationAdapter(res.data))
+          )
+        )
+        .catch(() => {
+          message.warn(
+            '応対情報（手入力）取得失敗、モックデータを表示しています。'
+          )
+          dispatch(handleFetchReplyInput(users.replyInput[fallback]))
+        })
     }
-  }, [dispatch, resizeHandler, av])
+  }, [dispatch, resizeHandler, av, userId])
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
@@ -396,6 +450,13 @@ const AdjustableView: React.FC = () => {
                   {panelChildren[panelKeys[i]]}
                 </Panel>
               ))}
+
+              <ReloadSpin
+                spinning={
+                  Object.values(reloadFlag).length === 0 ||
+                  Object.values(reloadFlag).reduce((a, b) => a + b) !== 3
+                }
+              />
             </a.div>
           )
         )}

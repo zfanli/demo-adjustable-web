@@ -2,9 +2,10 @@ import { HANDLE_SWITCH_USER } from '../actions'
 import { State, BaseAction, SingleReducer } from '../type'
 
 const handleSwitchUser = (state: State, action: BaseAction): State => {
-  const activeUser = action.payload.id
+  const userId = action.payload.id
   return Object.assign({}, state, {
-    activeUser,
+    userId,
+    reloadFlag: {},
     watsonSpeech: {
       ...state.watsonSpeech,
       resultKeywords: [],

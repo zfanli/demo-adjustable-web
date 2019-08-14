@@ -1,4 +1,11 @@
-import { BaseAction, Size, PanelWithPosition } from './type'
+import {
+  BaseAction,
+  Size,
+  PanelWithPosition,
+  UserInformation,
+  Reply,
+  ReplyInput,
+} from './type'
 
 export const HANDLE_WINDOW_RESIZE = 'HANDLE_WINDOW_RESIZE'
 
@@ -240,5 +247,34 @@ export function handleSwitchReplyInputFlag(flag: boolean): BaseAction {
   return {
     type: HANDLE_SWITCH_REPLY_INPUT_FLAG,
     payload: { flag },
+  }
+}
+
+export const HANDLE_FETCH_USER_INFO = 'HANDLE_FETCH_USER_INFO'
+
+export function handleFetchUserInfo(
+  userInformation: UserInformation
+): BaseAction {
+  return {
+    type: HANDLE_FETCH_USER_INFO,
+    payload: { userInformation },
+  }
+}
+
+export const HANDLE_FETCH_REPLY_AUTO = 'HANDLE_FETCH_REPLY_AUTO'
+
+export function handleFetchReplyAuto(replies: Reply[]): BaseAction {
+  return {
+    type: HANDLE_FETCH_REPLY_AUTO,
+    payload: { replies },
+  }
+}
+
+export const HANDLE_FETCH_REPLY_INPUT = 'HANDLE_FETCH_REPLY_INPUT'
+
+export function handleFetchReplyInput(replies: ReplyInput[]): BaseAction {
+  return {
+    type: HANDLE_FETCH_REPLY_INPUT,
+    payload: { replies },
   }
 }

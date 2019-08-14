@@ -53,6 +53,18 @@ export async function setPanels(
   }
 }
 
+export function getUserInformation(userId: string) {
+  return axios.get(api.userInformation + userId)
+}
+
+export function getReplyInputInformation(userId: string) {
+  return axios.get(api.replyInputInformation + userId)
+}
+
+export function getReplyAutoInformation(userId: string) {
+  return axios.get(api.replyAutoInformation + userId)
+}
+
 /**
  * Set cookie.
  * @param key

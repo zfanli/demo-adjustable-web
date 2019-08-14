@@ -2,10 +2,15 @@ import React from 'react'
 import { UserInformation as UserInformationType } from '../type'
 
 interface Props {
-  userInformation: UserInformationType
+  userInformation?: UserInformationType
 }
 
 const UserInformation: React.FC<Props> = props => {
+  // Do nothing if user information does not exist.
+  if (!props.userInformation) {
+    return null
+  }
+
   const {
     userId,
     nameKn,
