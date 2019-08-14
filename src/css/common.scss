@@ -426,24 +426,6 @@ body {
         }
       }
 
-      .inline-input {
-        display: inline-block;
-        height: 1.1rem;
-        outline: none;
-        border-radius: 3px;
-        border: 1px solid #e8e8e8;
-
-        &.amount {
-          max-width: 4rem;
-          text-align: right;
-          margin-right: 5px;
-        }
-
-        &[disabled] {
-          background-color: #efefef;
-        }
-      }
-
       select {
         width: 100%;
       }
@@ -477,6 +459,10 @@ body {
     .reply-input-body {
       width: 100%;
 
+      .inline-input {
+        width: 100%;
+      }
+
       tbody {
         margin-bottom: 1rem;
       }
@@ -499,6 +485,25 @@ body {
         background-color: #fafafa;
         font-weight: normal;
       }
+    }
+  }
+
+  .inline-input {
+    display: inline-block;
+    height: 1.1rem;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #e8e8e8;
+    padding: 0 0.3rem;
+
+    &.amount {
+      max-width: 4rem;
+      text-align: right;
+      margin-right: 5px;
+    }
+
+    &[disabled] {
+      background-color: #efefef;
     }
   }
 
