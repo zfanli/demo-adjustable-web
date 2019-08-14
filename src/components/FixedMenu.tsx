@@ -12,16 +12,16 @@ const FixedMenu: React.FC<Props> = props => {
 
   const dispatch = useDispatch()
 
-  const handleClick = () => {
+  const handleClick = (title: string) => {
     // Put some data for modal.
-    dispatch(handleSwitchModalFlag(true))
+    return () => dispatch(handleSwitchModalFlag(title, true))
   }
 
   return (
     <div className="normal-menu">
       {fixedMenuItems.map(f => (
         <div key={f} className="normal-menu-item">
-          <MenuItem name={f} onClick={handleClick} />
+          <MenuItem name={f} onClick={handleClick(f)} />
         </div>
       ))}
     </div>

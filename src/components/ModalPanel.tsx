@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useGesture } from 'react-use-gesture'
-import { Icon } from 'antd'
+import { Icon, DatePicker, Button } from 'antd'
 import {
   handleSwitchModalFlag,
   handleModalDragging,
@@ -22,8 +22,8 @@ const ModalPanel: React.FC<Props> = props => {
   const dispatch = useDispatch()
 
   useLayoutEffect(() => {
-    const height = window.innerHeight * 0.6
-    const width = window.innerWidth * 0.6
+    const height = 200
+    const width = 300
     const top = window.innerHeight / 2 - height / 2
     const left = window.innerWidth / 2 - width / 2
 
@@ -32,7 +32,9 @@ const ModalPanel: React.FC<Props> = props => {
 
   const { modal, panelMinSize, locale, messageFlag, messageLeaveDelay } = props
 
-  const { height, width, top, left } = modal.panel
+  const { title, panel } = modal
+
+  const { height, width, top, left } = panel
 
   const styled: React.CSSProperties = {
     overflow: 'auto',
@@ -44,7 +46,7 @@ const ModalPanel: React.FC<Props> = props => {
     left,
   }
 
-  const closeModal = () => dispatch(handleSwitchModalFlag(false))
+  const closeModal = () => dispatch(handleSwitchModalFlag('', false))
 
   const bind = useGesture(
     ({ down, delta, last, event }) => {
@@ -60,7 +62,8 @@ const ModalPanel: React.FC<Props> = props => {
   return (
     <>
       <Panel
-        title="test modal"
+        title={title}
+        className="modal"
         style={{ ...styled, boxShadow: 'none' }}
         bind={bind()}
         modal={{ panel: modal.panel }}
@@ -75,7 +78,16 @@ const ModalPanel: React.FC<Props> = props => {
           </button>
         }
       >
-        1
+        <div className="modal-wrapper">
+          <div className="modal-date-input">
+            <DatePicker dropdownClassName="modal-date-picker" />
+          </div>
+          <div className="modal-button">
+            <Button type="primary" size="small">
+              送信
+            </Button>
+          </div>
+        </div>
       </Panel>
       <div className="modal-mask" onClick={closeModal}></div>
     </>

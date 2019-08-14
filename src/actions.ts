@@ -208,10 +208,13 @@ export function handleSwitchUser(id: number): BaseAction {
 
 export const HANDLE_SWITCH_MODAL_FLAG = 'HANDLE_SWITCH_MODAL_FLAG'
 
-export function handleSwitchModalFlag(flag: boolean): BaseAction {
+export function handleSwitchModalFlag(
+  title: string,
+  flag: boolean
+): BaseAction {
   return {
     type: HANDLE_SWITCH_MODAL_FLAG,
-    payload: { flag },
+    payload: { title, flag },
   }
 }
 

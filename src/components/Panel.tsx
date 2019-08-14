@@ -40,6 +40,7 @@ interface Props {
   messageLeaveDelay: number
   header?: any
   hideHeaderButton?: boolean
+  className?: string
 }
 
 const Panel: React.FC<Props> = props => {
@@ -66,6 +67,7 @@ const Panel: React.FC<Props> = props => {
     modal,
     header,
     hideHeaderButton,
+    className,
   } = props
 
   let thisPanel: PanelWithPosition | null = null
@@ -408,7 +410,7 @@ const Panel: React.FC<Props> = props => {
 
   return (
     <a.div
-      className="panel"
+      className={`panel ${className ? className : ''}`}
       style={style}
       ref={panelRef}
       onClick={setCurrentPanelActive}

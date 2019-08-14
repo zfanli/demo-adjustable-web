@@ -44,9 +44,9 @@ const DynamicMenu: React.FC<Props> = props => {
 
   const dispatch = useDispatch()
 
-  const handleClick = () => {
+  const handleClick = (title: string) => {
     // Put some data for modal.
-    dispatch(handleSwitchModalFlag(true))
+    return () => dispatch(handleSwitchModalFlag(title, true))
   }
 
   return keywords.length === 0 ? (
@@ -55,7 +55,7 @@ const DynamicMenu: React.FC<Props> = props => {
     <div className="normal-menu">
       {transition.map(({ item, props, key }) => (
         <a.div key={key} style={props} className="normal-menu-item">
-          <MenuItem name={item} onClick={handleClick} />
+          <MenuItem name={item} onClick={handleClick(item)} />
         </a.div>
       ))}
     </div>

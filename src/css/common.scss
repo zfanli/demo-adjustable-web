@@ -350,6 +350,29 @@ body {
     }
   }
 
+  .panel.modal {
+    .modal-wrapper {
+      padding: 1rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .modal-date-input {
+        flex-grow: 1;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-button {
+        width: 100%;
+        height: 1.5rem;
+        text-align: right;
+      }
+    }
+  }
+
   .modal-mask {
     position: absolute;
     top: 0;
@@ -358,6 +381,10 @@ body {
     width: 100vw;
     z-index: 9990;
     background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-date-picker {
+    z-index: 19999;
   }
 
   .reply-auto {
