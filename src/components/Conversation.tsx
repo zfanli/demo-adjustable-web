@@ -1,22 +1,16 @@
-import React, {
-  useState,
-  ChangeEvent,
-  useRef,
-  useCallback,
-  useMemo,
-  useEffect,
-} from 'react'
-import { Input, Button, Icon, Empty, Tooltip } from 'antd'
+import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react'
+import { Button, Icon, Empty } from 'antd'
 import { useDispatch } from 'react-redux'
 import { debounce, throttle, range } from 'lodash'
 
 import sstService from '../watson-speech-tool/sst-service'
 
-import { ResultResponse, Locale, TextWithLabel } from '../type'
+import { ResultResponse, Locale, TextWithLabel, Keyword } from '../type'
 import { handleResultKeywords, handleConversationChanged } from '../actions'
 
 interface Props {
   defaultKeywords: string[]
+  keywords: Keyword[]
   tokenUrl: string
   locale: Locale
   messageLeaveDelay: number
@@ -26,18 +20,12 @@ interface Props {
 
 const Conversation: React.FC<Props> = props => {
   // Get data from store.
-  const {
-    defaultKeywords,
-    tokenUrl,
-    messageLeaveDelay,
-    sstFlag,
-    conversation,
-  } = props
+  const { defaultKeywords, tokenUrl, sstFlag, conversation, keywords } = props
 
   const dispatch = useDispatch()
 
   // Display texts.
-  const { tooltipText, customer, service, analyzing } = props.locale as {
+  const { customer, service, analyzing } = props.locale as {
     [k: string]: string
   }
   const mapSpeakers: { [k: string]: string } = { customer, service }
@@ -49,8 +37,6 @@ const Conversation: React.FC<Props> = props => {
     )
   )
   const [recordFlag, setRecordFlag] = useState(false)
-  const [tooltipVisible, setTooltipVisible] = useState(false)
-  const [keywords, setKeywords] = useState(defaultKeywords)
   // Handle scroll of messages box.
   const messageBox = useRef<HTMLDivElement>(null)
   const [scrollToBottom, setScrollToBottom] = useState(true)
@@ -78,27 +64,13 @@ const Conversation: React.FC<Props> = props => {
     }
   }
 
-  // Handle keywords changes.
-  // Show a message if edit is not allowed.
-  const handleKeywordsChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (recordFlag) {
-      setTooltipVisible(true)
-      setTimeout(() => {
-        setTooltipVisible(false)
-      }, messageLeaveDelay)
-    } else {
-      const k = e.target.value.split(',').map(k => k.trim())
-      setKeywords(k)
-    }
-  }
-
   useEffect(() => {
     setSst(
       range(sstFlag === 'files' ? 2 : 1).map(() =>
-        sstService({ tokenUrl, keywords })
+        sstService({ tokenUrl, keywords: defaultKeywords })
       )
     )
-  }, [keywords, sstFlag, tokenUrl, setSst])
+  }, [defaultKeywords, sstFlag, tokenUrl, setSst])
 
   // Trigger colors.
   const type = recordFlag ? 'danger' : 'primary'
@@ -263,14 +235,18 @@ const Conversation: React.FC<Props> = props => {
             <Icon type="audio" />
           )}
         </Button>
-        <Tooltip title={tooltipText} visible={tooltipVisible}>
-          <Input
-            size="small"
-            value={keywords.join(',')}
-            onChange={handleKeywordsChange}
-            placeholder="Keywords..."
-          />
-        </Tooltip>
+        <div className="conversation-keywords">
+          {defaultKeywords.map(k => (
+            <span
+              key={k}
+              className={`keyword ${
+                keywords.findIndex(w => w.word === k) > -1 ? 'spotted' : ''
+              }`}
+            >
+              {k}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   )

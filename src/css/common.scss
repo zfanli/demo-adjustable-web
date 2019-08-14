@@ -136,6 +136,29 @@ body {
     .conversation-buttons {
       display: flex;
 
+      .conversation-keywords {
+        overflow-x: auto;
+
+        .keyword {
+          border: 1px solid #e8e8e8;
+          border-radius: 3px;
+          padding: 0 0.3rem;
+          white-space: nowrap;
+          transition: all 0.2s ease;
+          background-color: inherit;
+          color: inherit;
+
+          &.spotted {
+            background-color: #096dd9;
+            color: white;
+          }
+
+          &:not(:last-child) {
+            margin-right: 3px;
+          }
+        }
+      }
+
       button {
         margin-right: 0.5rem;
         display: inline-block;

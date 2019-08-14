@@ -312,6 +312,7 @@ const AdjustableView: React.FC = () => {
         locale={locale}
         sstFlag={sstFlag}
         defaultKeywords={defaultKeywords}
+        keywords={keywords}
         tokenUrl={tokenUrl}
         conversation={conversation}
       />
