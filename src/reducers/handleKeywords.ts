@@ -8,7 +8,7 @@ const handleKeywords = (state: State, action: BaseAction): State => {
   const keywords = action.payload.resultKeywords
   const label = action.payload.label as string
   const { resultKeywords, tempResultKeywords } = tempWatsonSpeech
-  if (label) {
+  if (label && label !== 'reset') {
     tempResultKeywords[label] = keywords
     tempResultKeywords[label].forEach(({ word, count }) => {
       const index = resultKeywords.findIndex(k => k.word === word)

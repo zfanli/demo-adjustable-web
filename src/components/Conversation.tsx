@@ -102,9 +102,17 @@ const Conversation: React.FC<Props> = props => {
     [dispatchResultKeywordsWithThrottle, dispatchResultConversationWithThrottle]
   )
 
+  // Reset conversation.
+  // Still some bugs need to be fixed.
+  const resetConversation = () => {
+    dispatch(handleResultKeywords([], 'reset'))
+    dispatch(handleConversationChanged([]))
+  }
+
   // Handle audio button.
   const handleAudioButtonClick = () => {
     if (!recordFlag && sstFlag === 'mic') {
+      // resetConversation()
       // Set start flag.
       setRecordFlag(true)
 
@@ -123,6 +131,7 @@ const Conversation: React.FC<Props> = props => {
       // Stop.
       sst[0] && sst[0].record(undefined, undefined, true)
     } else if (!recordFlag && sstFlag === 'files') {
+      // resetConversation()
       // Set start flag.
       setRecordFlag(true)
 
@@ -165,6 +174,7 @@ const Conversation: React.FC<Props> = props => {
       sst[0] && sst[0].playFile(undefined, 0, undefined, undefined, true)
       sst[1] && sst[1].playFile(undefined, 0, undefined, undefined, true)
     } else if (!recordFlag && sstFlag === 'file') {
+      // resetConversation()
       // Set start flag.
       setRecordFlag(true)
 

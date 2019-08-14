@@ -7,7 +7,7 @@ const handleConversation = (state: State, action: BaseAction): State => {
   const conversation = cloneDeep(state.watsonSpeech)
   const resultConversation = action.payload.conversation as TextWithLabel[]
 
-  if (state.settings.sstFlag === 'files') {
+  if (state.settings.sstFlag === 'files' && resultConversation.length > 0) {
     const label = resultConversation[0].speaker
     let tempConversation = conversation.conversation.filter(
       c => c.speaker !== label && c.speaker !== 'analyzing'
