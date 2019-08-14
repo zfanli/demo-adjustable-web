@@ -19,6 +19,11 @@ const ReplyInformationInput: React.FC<Props> = props => {
         {list.map((line, i) => (
           <tbody key={i}>
             <tr>
+              <th className="bold" colSpan={3}>
+                No.{i + 1}
+              </th>
+            </tr>
+            <tr>
               <th>日付</th>
               <th>時間</th>
               <th>処理</th>
