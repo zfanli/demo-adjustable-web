@@ -80,7 +80,10 @@ const ModalPanel: React.FC<Props> = props => {
       >
         <div className="modal-wrapper">
           <div className="modal-date-input">
-            <DatePicker dropdownClassName="modal-date-picker" />
+            <DatePicker
+              format="YYYY/MM/DD"
+              dropdownClassName="modal-date-picker"
+            />
           </div>
           <div className="modal-button">
             <Button type="primary" size="small" onClick={closeModal}>

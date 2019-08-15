@@ -5,6 +5,10 @@ interface Props {
   userInformation?: UserInformationType
 }
 
+function formatDate(date: string) {
+  return `${date.slice(0, 4)}/${date.slice(4, 6)}/${date.slice(6)}`
+}
+
 const UserInformation: React.FC<Props> = props => {
   // Do nothing if user information does not exist.
   if (!props.userInformation) {
@@ -62,7 +66,7 @@ const UserInformation: React.FC<Props> = props => {
           </tr>
           <tr>
             <th>生年月日</th>
-            <td className="center">{birthday}</td>
+            <td className="center">{formatDate(birthday)}</td>
             <th>年齢</th>
             <td className="center">{age}</td>
           </tr>
