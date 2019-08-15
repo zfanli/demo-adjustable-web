@@ -24,6 +24,7 @@ export default function(): State {
     fixedMenu,
     userId,
     availableUserId,
+    defaultInputReply,
     watsonSpeech: { defaultKeywords },
     api: { accessTokenURL },
   } = configFile
@@ -108,6 +109,7 @@ export default function(): State {
     modalVisible: false,
     fixedMenu,
     reloadFlag: {},
+    inputReplyHolder: defaultInputReply,
   }
 
   // ---------------------------- END SECTION -----------------------------------

@@ -281,3 +281,12 @@ export function handleFetchReplyInput(replies: ReplyInput[]): BaseAction {
     payload: { replies },
   }
 }
+
+export const HANDLE_SAVE_INPUT_REPLY = 'HANDLE_SAVE_INPUT_REPLY'
+
+export function handleSaveInputReply(reply: ReplyInput): BaseAction {
+  return {
+    type: HANDLE_SAVE_INPUT_REPLY,
+    payload: { reply },
+  }
+}

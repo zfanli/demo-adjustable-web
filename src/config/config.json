@@ -54,5 +54,19 @@
     "自宅/勤務先変更",
     "利用限度額/利率変更受付",
     "カード再発行受付"
-  ]
+  ],
+  "defaultInputReply": {
+    "date": "",
+    "time": "",
+    "dealing": "架電",
+    "contact": "携帯電話",
+    "circuit": "正常",
+    "target": "本人",
+    "staff": "M05013 担当者13",
+    "team": "営業システム部",
+    "business": "架電反応13",
+    "result": "正常3",
+    "detail": "詳細・受付",
+    "information": "契約額変更3"
+  }
 }

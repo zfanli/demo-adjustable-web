@@ -49,6 +49,7 @@ export interface State {
   user?: UserInformation
   replies?: Reply[]
   inputReplies?: ReplyInput[]
+  inputReplyHolder: ReplyInput
   reloadFlag: { [k: string]: number }
   activeUser: number
   modal: Modal

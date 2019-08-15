@@ -266,6 +266,7 @@ const AdjustableView: React.FC = () => {
   const user = useSelector((state: State) => state.user)
   const replies = useSelector((state: State) => state.replies)
   const inputReplies = useSelector((state: State) => state.inputReplies)
+  const inputReplyHolder = useSelector((state: State) => state.inputReplyHolder)
   // const activeUser = useSelector((state: State) => state.activeUser)
 
   // For dynamic menu.
@@ -301,7 +302,10 @@ const AdjustableView: React.FC = () => {
       />
     ),
     [panelKeys[2]]: replyInputFlag ? (
-      <ReplyInformationInput list={inputReplies ? inputReplies : []} />
+      <ReplyInformationInput
+        input={inputReplyHolder}
+        list={inputReplies ? inputReplies : []}
+      />
     ) : (
       <FixedMenu fixedMenuItems={fixedMenu} />
     ),
