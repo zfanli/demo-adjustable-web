@@ -29,5 +29,10 @@
   "settings": "セッティング",
   "ok": "確認",
   "cancel": "キャンセル",
-  "replyInputSwitch": "応対情報（手入力）・定番メニューに切り替える"
+  "replyInputSwitch": "応対情報（手入力）・定番メニューに切り替える",
+  "uploadFiles": "音声ファイルアップロード",
+  "source": "ファイル",
+  "oneFile": "1つ",
+  "twoFiles": "2つ",
+  "inDevelopment": "開発中です。"
 }
