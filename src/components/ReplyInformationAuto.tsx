@@ -7,6 +7,14 @@ interface Props {
   name: string
 }
 
+function formatTime(time: string) {
+  return `${time.slice(0, 2)}:${time.slice(2)}`
+}
+
+function formatDate(date: string) {
+  return `${date.slice(0, 4)}/${date.slice(4, 6)}/${date.slice(6)}`
+}
+
 const ReplyInformationAuto: React.FC<Props> = props => {
   const { list, userId, name } = props
 
@@ -46,9 +54,9 @@ const ReplyInformationAuto: React.FC<Props> = props => {
           {list.map((line, i) => (
             <tr key={i}>
               <td>
-                {line.timestamp.slice(0, 8)}
+                {formatDate(line.timestamp.slice(0, 8))}
                 <br />
-                {line.timestamp.slice(8)}
+                {formatTime(line.timestamp.slice(8))}
               </td>
               <td
                 dangerouslySetInnerHTML={{
