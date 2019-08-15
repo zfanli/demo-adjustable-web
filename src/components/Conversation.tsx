@@ -104,10 +104,10 @@ const Conversation: React.FC<Props> = props => {
 
   // Reset conversation.
   // Still some bugs need to be fixed.
-  const resetConversation = () => {
-    dispatch(handleResultKeywords([], 'reset'))
-    dispatch(handleConversationChanged([]))
-  }
+  // const resetConversation = () => {
+  //   dispatch(handleResultKeywords([], 'reset'))
+  //   dispatch(handleConversationChanged([]))
+  // }
 
   // Handle audio button.
   const handleAudioButtonClick = () => {
