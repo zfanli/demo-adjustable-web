@@ -29,5 +29,10 @@
   "settings": "Setting",
   "ok": "OK",
   "cancel": "Cancel",
-  "replyInputSwitch": "Switch to 'Reply Input' / 'Fixed Menu'"
+  "replyInputSwitch": "Switch to 'Reply Input' / 'Fixed Menu'",
+  "uploadFiles": "Upload Voice Files",
+  "source": "File(s)",
+  "oneFile": "1",
+  "twoFiles": "2",
+  "inDevelopment": "Still in development."
 }

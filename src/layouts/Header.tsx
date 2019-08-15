@@ -1,7 +1,17 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Icon, Menu, Dropdown, Switch, Radio, Tooltip } from 'antd'
+import {
+  Icon,
+  Menu,
+  Dropdown,
+  Switch,
+  Radio,
+  Tooltip,
+  Upload,
+  Button,
+} from 'antd'
 import { ClickParam } from 'antd/lib/menu'
+import { range } from 'lodash'
 import { State } from '../type'
 import {
   handleSwitchLocale,
@@ -32,6 +42,8 @@ const Header: React.FC = () => {
 
   const [settingsVisible, setSettingsVisible] = useState(false)
 
+  const [uploadFilesCount, setUploadFilesCount] = useState(1)
+
   const resetText = useSelector(
     (state: State) => state.settings.locale.resetPosition
   )
@@ -52,6 +64,10 @@ const Header: React.FC = () => {
 
   const handleSstSwitchChange = (e: any) => {
     dispatch(handleSwitchSstFlag(e.target.value))
+  }
+
+  const handleUploadFilesCountChange = (e: any) => {
+    setUploadFilesCount(e.target.value)
   }
 
   const handleResetPosition = () => {
@@ -128,6 +144,7 @@ const Header: React.FC = () => {
                     />
                   </label>
                 </Menu.Item>
+
                 <Menu.Item key="2">
                   <label className="settings-switch">
                     <span>{locale.messageFlag}</span>
@@ -137,6 +154,7 @@ const Header: React.FC = () => {
                     />
                   </label>
                 </Menu.Item>
+
                 <Menu.Item key="3">
                   <label style={radioStyle} className="settings-switch">
                     {locale.sstFlag}
@@ -153,7 +171,38 @@ const Header: React.FC = () => {
                     </Radio>
                   </Radio.Group>
                 </Menu.Item>
-                <Menu.Item onClick={handleResetPosition}>
+
+                <Menu.Item key="4">
+                  <label style={radioStyle} className="settings-switch">
+                    {locale.uploadFiles}
+                  </label>
+                  <Tooltip title={locale.inDevelopment} placement="left">
+                    <label>
+                      <span style={{ marginRight: '.5rem' }}>
+                        {locale.source}
+                      </span>
+                      <Radio.Group
+                        onChange={handleUploadFilesCountChange}
+                        value={uploadFilesCount}
+                      >
+                        <Radio value={1}>{locale.oneFile}</Radio>
+                        <Radio value={2}>{locale.twoFiles}</Radio>
+                      </Radio.Group>
+                    </label>
+                    {range(uploadFilesCount).map(i => (
+                      <div key={i}>
+                        <Upload>
+                          <Button size="small">
+                            <Icon type="upload" />
+                            Select File
+                          </Button>
+                        </Upload>
+                      </div>
+                    ))}
+                  </Tooltip>
+                </Menu.Item>
+
+                <Menu.Item key="5" onClick={handleResetPosition}>
                   <Icon type="appstore" />
                   {resetText}
                 </Menu.Item>
