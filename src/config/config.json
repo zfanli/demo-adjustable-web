@@ -21,7 +21,8 @@
     "panels": "/api/panels",
     "userInformation": "/userinfo/",
     "replyAutoInformation": "/cotinfo/right/",
-    "replyInputInformation": "/cotinfo/left/"
+    "replyInputInformation": "/cotinfo/left/",
+    "timeout": 5000
   },
   "availableUserId": ["10000000", "20000000", "30000000"],
   "userId": "10000000",

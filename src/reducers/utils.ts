@@ -1,11 +1,13 @@
 // Put some common functions used by reducers.
 
-import axios from 'axios'
+import a from 'axios'
 import { PanelWithPosition } from '../type'
 import { api } from '../config/config.json'
 
-// API fetch.
+// Set default timeout.
+const axios = a.create({ timeout: api.timeout })
 
+// API fetch.
 const API_PANELS = process.env.API_PANELS || api.panels
 
 /**
