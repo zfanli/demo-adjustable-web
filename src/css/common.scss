@@ -137,13 +137,11 @@ body {
       display: flex;
 
       .conversation-keywords {
-        overflow-x: auto;
-
         .keyword {
+          display: inline-block;
           border: 1px solid #e8e8e8;
           border-radius: 3px;
           padding: 0 0.3rem;
-          white-space: nowrap;
           transition: all 0.2s ease;
           background-color: inherit;
           color: inherit;
