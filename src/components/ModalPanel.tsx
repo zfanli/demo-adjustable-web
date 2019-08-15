@@ -83,7 +83,7 @@ const ModalPanel: React.FC<Props> = props => {
             <DatePicker dropdownClassName="modal-date-picker" />
           </div>
           <div className="modal-button">
-            <Button type="primary" size="small">
+            <Button type="primary" size="small" onClick={closeModal}>
               送信
             </Button>
           </div>
