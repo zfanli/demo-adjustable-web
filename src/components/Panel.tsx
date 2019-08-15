@@ -77,7 +77,9 @@ const Panel: React.FC<Props> = props => {
   let trueKey = ''
 
   if (normal) {
-    const { panels, trueKey } = normal
+    const { panels } = normal
+
+    trueKey = normal.trueKey
     index = normal.index
     sortable = normal.sortable
 
