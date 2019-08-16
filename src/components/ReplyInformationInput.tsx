@@ -1,12 +1,14 @@
-import React from 'react'
-import { ReplyInput } from '../type'
+import React, { CSSProperties } from 'react'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
+import { animated as a } from 'react-spring'
 import { handleSaveInputReply } from '../actions'
+import { ReplyInput } from '../type'
 
 interface Props {
   list: ReplyInput[]
   input: ReplyInput
+  style: CSSProperties
 }
 
 function formatTime(time: string) {
@@ -18,7 +20,7 @@ function formatDate(date: string) {
 }
 
 const ReplyInformationInput: React.FC<Props> = props => {
-  const { list, input } = props
+  const { list, input, style } = props
 
   const date = new Date()
   const dispatch = useDispatch()
@@ -32,7 +34,7 @@ const ReplyInformationInput: React.FC<Props> = props => {
   }
 
   return (
-    <div className="reply-input">
+    <a.div style={style} className="reply-input">
       <table className="reply-input-body">
         <colgroup>
           <col width="33%" />
@@ -224,7 +226,7 @@ const ReplyInformationInput: React.FC<Props> = props => {
           </tbody>
         ))}
       </table>
-    </div>
+    </a.div>
   )
 }
 

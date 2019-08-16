@@ -16,12 +16,11 @@ import Panel from '../components/Panel'
 import Conversation from '../components/Conversation'
 import TabBar from '../components/TabBar'
 import DynamicMenu from '../components/DynamicMenu'
-import FixedMenu from '../components/FixedMenu'
 import ReplyInformationAuto from '../components/ReplyInformationAuto'
-import ReplyInformationInput from '../components/ReplyInformationInput'
 import ModalPanel from '../components/ModalPanel'
 import UserInformation from '../components/UserInformation'
 import ReloadSpin from '../components/ReloadSpin'
+import FixedReplyTransition from '../components/FixedReplyTransition'
 
 import {
   handleWindowResize,
@@ -40,14 +39,14 @@ import {
   getReplyAutoInformation,
   getReplyInputInformation,
 } from '../reducers/utils'
-
-import { State, PanelWithPosition } from '../type'
-import '../css/adjustableView.scss'
 import {
   userInformationAdapter,
   replyAutoInformationAdapter,
   replyInputInformationAdapter,
 } from '../adapters/apiAdapter'
+import { State, PanelWithPosition } from '../type'
+
+import '../css/adjustableView.scss'
 
 // Fallback data.
 import users from '../config/users.json'
@@ -267,7 +266,6 @@ const AdjustableView: React.FC = () => {
   const replies = useSelector((state: State) => state.replies)
   const inputReplies = useSelector((state: State) => state.inputReplies)
   const inputReplyHolder = useSelector((state: State) => state.inputReplyHolder)
-  // const activeUser = useSelector((state: State) => state.activeUser)
 
   // For dynamic menu.
   const keywords = useSelector(
@@ -301,13 +299,15 @@ const AdjustableView: React.FC = () => {
         list={replies ? replies : []}
       />
     ),
-    [panelKeys[2]]: replyInputFlag ? (
-      <ReplyInformationInput
-        input={inputReplyHolder}
-        list={inputReplies ? inputReplies : []}
+    [panelKeys[2]]: (
+      <FixedReplyTransition
+        replyInputFlag={replyInputFlag}
+        fixedMenuItems={fixedMenu}
+        reply={{
+          list: inputReplies ? inputReplies : [],
+          input: inputReplyHolder,
+        }}
       />
-    ) : (
-      <FixedMenu fixedMenuItems={fixedMenu} />
     ),
     [panelKeys[3]]: <DynamicMenu keywords={keywords} />,
     [panelKeys[4]]: (

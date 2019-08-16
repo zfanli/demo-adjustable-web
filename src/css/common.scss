@@ -298,7 +298,7 @@ body {
     .panel-content {
       flex-grow: 1;
       overflow: auto;
-      // padding: 0.5rem 0;
+      position: relative;
     }
 
     .resize-border {
