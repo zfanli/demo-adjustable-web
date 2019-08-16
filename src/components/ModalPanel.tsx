@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, CSSProperties } from 'react'
 import { useDispatch } from 'react-redux'
 import { useGesture } from 'react-use-gesture'
 import { Icon, DatePicker, Button } from 'antd'
@@ -9,6 +9,7 @@ import {
 } from '../actions'
 import Panel from './Panel'
 import { Modal, Locale } from '../type'
+import { useTransition, animated as a } from 'react-spring'
 
 interface Props {
   modal: Modal
@@ -16,6 +17,7 @@ interface Props {
   locale: Locale
   messageFlag: boolean
   messageLeaveDelay: number
+  visible: boolean
 }
 
 const ModalPanel: React.FC<Props> = props => {
@@ -30,7 +32,14 @@ const ModalPanel: React.FC<Props> = props => {
     dispatch(handleModalInitialize(height, width, top, left))
   }, [dispatch])
 
-  const { modal, panelMinSize, locale, messageFlag, messageLeaveDelay } = props
+  const {
+    modal,
+    panelMinSize,
+    locale,
+    messageFlag,
+    messageLeaveDelay,
+    visible,
+  } = props
 
   const { title, panel } = modal
 
@@ -46,7 +55,7 @@ const ModalPanel: React.FC<Props> = props => {
     left,
   }
 
-  const closeModal = () => dispatch(handleSwitchModalFlag('', false))
+  const closeModal = () => dispatch(handleSwitchModalFlag(title, false))
 
   const bind = useGesture(
     ({ down, delta, last, event }) => {
@@ -59,40 +68,65 @@ const ModalPanel: React.FC<Props> = props => {
     { event: { capture: true, passive: false } }
   )
 
+  const outStyle: CSSProperties = {
+    opacity: 0,
+  }
+
+  const inStyle: CSSProperties = {
+    opacity: 1,
+  }
+
+  const transition = useTransition(visible, (k: boolean) => k, {
+    from: outStyle,
+    leave: outStyle,
+    enter: inStyle,
+    config: { duration: 100 },
+  })
+
   return (
     <>
-      <Panel
-        title={title}
-        className="modal"
-        style={{ ...styled, boxShadow: 'none' }}
-        bind={bind()}
-        modal={{ panel: modal.panel }}
-        messageFlag={messageFlag}
-        messageLeaveDelay={messageLeaveDelay}
-        panelMinSize={panelMinSize}
-        locale={locale}
-        hideHeaderButton
-        header={
-          <button className="close" onClick={closeModal}>
-            <Icon type="close" />
-          </button>
-        }
-      >
-        <div className="modal-wrapper">
-          <div className="modal-date-input">
-            <DatePicker
-              format="YYYY/MM/DD"
-              dropdownClassName="modal-date-picker"
+      {transition.map(t =>
+        t.item ? (
+          <div key={t.key}>
+            <Panel
+              title={title}
+              className="modal"
+              style={{ ...styled, ...t.props, boxShadow: 'none' }}
+              bind={bind()}
+              modal={{ panel: modal.panel }}
+              messageFlag={messageFlag}
+              messageLeaveDelay={messageLeaveDelay}
+              panelMinSize={panelMinSize}
+              locale={locale}
+              hideHeaderButton
+              header={
+                <button className="close" onClick={closeModal}>
+                  <Icon type="close" />
+                </button>
+              }
+            >
+              <div className="modal-wrapper">
+                <div className="modal-date-input">
+                  <DatePicker
+                    format="YYYY/MM/DD"
+                    dropdownClassName="modal-date-picker"
+                  />
+                </div>
+                <div className="modal-button">
+                  <Button type="primary" size="small" onClick={closeModal}>
+                    送信
+                  </Button>
+                </div>
+              </div>
+            </Panel>
+            <a.div
+              className="modal-mask"
+              onClick={closeModal}
+              style={t.props}
             />
           </div>
-          <div className="modal-button">
-            <Button type="primary" size="small" onClick={closeModal}>
-              送信
-            </Button>
-          </div>
-        </div>
-      </Panel>
-      <div className="modal-mask" onClick={closeModal}></div>
+        ) : null
+      )}
     </>
   )
 }

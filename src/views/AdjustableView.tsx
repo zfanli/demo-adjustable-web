@@ -475,17 +475,14 @@ const AdjustableView: React.FC = () => {
         replyInputFlag={replyInputFlag}
       />
       <Footer />
-      {modalVisible ? (
-        <ModalPanel
-          messageFlag={messageFlag}
-          messageLeaveDelay={messageLeaveDelay}
-          panelMinSize={panelMinSize}
-          locale={locale}
-          modal={modal}
-        />
-      ) : (
-        <></>
-      )}
+      <ModalPanel
+        visible={modalVisible}
+        messageFlag={messageFlag}
+        messageLeaveDelay={messageLeaveDelay}
+        panelMinSize={panelMinSize}
+        locale={locale}
+        modal={modal}
+      />
     </>
   )
 }
