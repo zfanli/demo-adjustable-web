@@ -286,7 +286,7 @@ function sst(config) {
         handleStream(recognizeMicrophone(getRecognizeOptions()))
       })
     },
-    playFile(file, label, callback, endCallback, stop) {
+    playFile(file, label, callback, endCallback, stop, source = 'file') {
       console.log(recordState.keywords)
 
       if (stop) {
@@ -298,7 +298,7 @@ function sst(config) {
       recordEndCallback = endCallback
       getAccessToken(accessToken => {
         reset()
-        recordState.audioSource = 'file'
+        recordState.audioSource = source
         recordState.accessToken = accessToken
         // recordState.speakerLabels = false
         recordState.label = label

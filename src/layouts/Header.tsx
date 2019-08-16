@@ -42,8 +42,6 @@ const Header: React.FC = () => {
 
   const [settingsVisible, setSettingsVisible] = useState(false)
 
-  const [uploadFilesCount, setUploadFilesCount] = useState(1)
-
   const resetText = useSelector(
     (state: State) => state.settings.locale.resetPosition
   )
@@ -64,10 +62,6 @@ const Header: React.FC = () => {
 
   const handleSstSwitchChange = (e: any) => {
     dispatch(handleSwitchSstFlag(e.target.value))
-  }
-
-  const handleUploadFilesCountChange = (e: any) => {
-    setUploadFilesCount(e.target.value)
   }
 
   const handleResetPosition = () => {
@@ -182,23 +176,27 @@ const Header: React.FC = () => {
                         {locale.source}
                       </span>
                       <Radio.Group
-                        onChange={handleUploadFilesCountChange}
-                        value={uploadFilesCount}
+                        onChange={handleSstSwitchChange}
+                        value={sstFlag}
                       >
-                        <Radio value={1}>{locale.oneFile}</Radio>
-                        <Radio value={2}>{locale.twoFiles}</Radio>
+                        <Radio value="upload1">{locale.oneFile}</Radio>
+                        <Radio value="upload2">{locale.twoFiles}</Radio>
                       </Radio.Group>
                     </label>
-                    {range(uploadFilesCount).map(i => (
-                      <div key={i}>
-                        <Upload>
-                          <Button size="small">
-                            <Icon type="upload" />
-                            Select File
-                          </Button>
-                        </Upload>
-                      </div>
-                    ))}
+                    {sstFlag.startsWith('upload')
+                      ? range(Number(sstFlag.slice(sstFlag.length - 1))).map(
+                          i => (
+                            <div key={i}>
+                              <Upload>
+                                <Button size="small">
+                                  <Icon type="upload" />
+                                  Select File
+                                </Button>
+                              </Upload>
+                            </div>
+                          )
+                        )
+                      : null}
                   </Tooltip>
                 </Menu.Item>
 
