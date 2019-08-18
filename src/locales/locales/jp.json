@@ -34,5 +34,6 @@
   "source": "ファイル",
   "oneFile": "1つ",
   "twoFiles": "2つ",
-  "inDevelopment": "開発中です。"
+  "inDevelopment": "開発中です。",
+  "chooseFile": "ファイルを選んでください。"
 }

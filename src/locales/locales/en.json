@@ -34,5 +34,6 @@
   "source": "File(s)",
   "oneFile": "1",
   "twoFiles": "2",
-  "inDevelopment": "Still in development."
+  "inDevelopment": "Still in development.",
+  "chooseFile": "Choose a file"
 }

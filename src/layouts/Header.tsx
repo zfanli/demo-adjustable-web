@@ -1,15 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  Icon,
-  Menu,
-  Dropdown,
-  Switch,
-  Radio,
-  Tooltip,
-  Upload,
-  Button,
-} from 'antd'
+import { Icon, Menu, Dropdown, Switch, Radio, Tooltip } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
 import { range } from 'lodash'
 import { State } from '../type'
@@ -27,6 +18,7 @@ const Header: React.FC = () => {
   const header = useSelector((state: State) => state.settings.locale.header)
   const height = useSelector((state: State) => state.settings.headerHeight)
   const sstFlag = useSelector((state: State) => state.settings.sstFlag)
+  const locale = useSelector((state: State) => state.settings.locale)
   const availableUserId = useSelector(
     (state: State) => state.settings.availableUserId
   )
@@ -42,11 +34,16 @@ const Header: React.FC = () => {
 
   const [settingsVisible, setSettingsVisible] = useState(false)
 
-  const resetText = useSelector(
-    (state: State) => state.settings.locale.resetPosition
-  )
+  const [fileNames, setFileNames] = useState<string[] | { name: string }[]>([
+    locale.chooseFile as string,
+    locale.chooseFile as string,
+  ])
 
-  const locale = useSelector((state: State) => state.settings.locale)
+  const handleChooseFile = (i: number) => (e: any) => {
+    const files = fileNames.slice()
+    files[i] = e.target.files[0]
+    setFileNames(files)
+  }
 
   const handleSettingsVisibleChange = (flag: boolean) => {
     setSettingsVisible(flag)
@@ -186,14 +183,26 @@ const Header: React.FC = () => {
                     {sstFlag.startsWith('upload')
                       ? range(Number(sstFlag.slice(sstFlag.length - 1))).map(
                           i => (
-                            <div key={i}>
-                              <Upload>
-                                <Button size="small">
-                                  <Icon type="upload" />
-                                  Select File
-                                </Button>
-                              </Upload>
-                            </div>
+                            <label
+                              key={i}
+                              className="upload"
+                              title={
+                                typeof fileNames[i] === 'string'
+                                  ? fileNames[i]
+                                  : (fileNames[i] as any).name
+                              }
+                            >
+                              <Icon type="upload" className="upload-icon" />
+                              <span>
+                                {typeof fileNames[i] === 'string'
+                                  ? fileNames[i]
+                                  : (fileNames[i] as any).name}
+                              </span>
+                              <input
+                                type="file"
+                                onChange={handleChooseFile(i)}
+                              />
+                            </label>
                           )
                         )
                       : null}
@@ -202,7 +211,7 @@ const Header: React.FC = () => {
 
                 <Menu.Item key="5" onClick={handleResetPosition}>
                   <Icon type="appstore" />
-                  {resetText}
+                  {locale.resetText}
                 </Menu.Item>
               </Menu>
             }

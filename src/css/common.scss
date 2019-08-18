@@ -37,6 +37,33 @@ body {
   background: #f4f4f4;
   overflow: hidden;
 
+  .upload {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    border: 1px solid #e8e8e8;
+    border-radius: 3px;
+    margin: 0.5rem 0;
+    padding: 0 0.5rem;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+
+    .upload-icon {
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      background-color: #1890ff;
+      color: #fff;
+    }
+
+    input {
+      display: none;
+    }
+  }
+
   #root {
     display: flex;
     flex-direction: column;
