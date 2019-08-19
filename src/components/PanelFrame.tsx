@@ -1,10 +1,6 @@
 import React, { CSSProperties, useState, useEffect, MouseEvent } from 'react'
 import { FrameSize } from '../type'
 
-import config from '../config/config.json'
-
-const panelFrameBorderWidth = config.panelFrameBorderWidth as number
-
 // Constants.
 const Y1 = 'Y1'
 const Y2 = 'Y2'
@@ -42,21 +38,21 @@ const PanelFrame: React.FC<Props> = props => {
     setTrigger(flag)
   }
 
-  const sum = (a: number, b: number) => a + b
-
   const commonStyle: CSSProperties = {
-    border: `${panelFrameBorderWidth}px solid red`,
+    border: `${margin / 2}px solid red`,
     // For test only.
     zIndex: 999,
   }
 
+  const sum = (a: number, b: number) => a + b
+
+  const floor = (n: number) => Math.floor(n)
+
   const stylingY = (i: number): CSSProperties => ({
     ...commonStyle,
     top: `${margin}px`,
-    height: `${size.row.reduce(sum) - margin}px`,
-    left: `${size.col.slice(0, i).reduce(sum) +
-      margin / 2 -
-      panelFrameBorderWidth}px`,
+    height: `${floor(size.row.reduce(sum) - margin)}px`,
+    left: `${floor(size.col.slice(0, i).reduce(sum))}px`,
   })
 
   return (
@@ -65,8 +61,8 @@ const PanelFrame: React.FC<Props> = props => {
         style={{
           ...commonStyle,
           left: `${margin}px`,
-          width: `${size.col.reduce(sum) - margin}px`,
-          top: `${size.row[0] + margin / 2 - panelFrameBorderWidth}px`,
+          width: `${floor(size.col.reduce(sum) - margin)}px`,
+          top: `${floor(size.row[0])}px`,
         }}
         onClick={handleTrigger(X)}
         className="panel-frame-border panel-frame-x"
