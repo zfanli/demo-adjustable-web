@@ -3,6 +3,7 @@ import initState from './store'
 import { State, BaseAction, Reducers } from '../type'
 import handleConversation from './handleConversation'
 import handleFetchData from './handleFetchData'
+import handleFrameResize from './handleFrameResize'
 import handleInitialPanels from './handleInitialPanels'
 import handleInitialUnsortedPanels from './handleInitialUnsortedPanels'
 import handleKeywords from './handleKeywords'
@@ -31,6 +32,7 @@ import handleWindowResize from './handleWindowResize'
 // Wrap all reducers in a single array.
 const allReducers = [
   ...handleFetchData,
+  ...handleFrameResize,
   handleConversation,
   handleInitialPanels,
   handleInitialUnsortedPanels,

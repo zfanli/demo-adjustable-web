@@ -1,8 +1,12 @@
 import React, { CSSProperties, useState, useEffect } from 'react'
-import { FrameSize } from '../type'
 import { useDispatch } from 'react-redux'
 import { throttle } from 'lodash'
-import { handleFrameResize } from '../actions'
+import { FrameSize } from '../type'
+import {
+  handleFrameResize,
+  handleFrameResizeStart,
+  handleFrameResizeEnd,
+} from '../actions'
 
 // Constants.
 const Y1 = 'Y1'
@@ -31,7 +35,10 @@ const PanelFrame: React.FC<Props> = props => {
         dispatch(handleFrameResize(trigger, [disX, disY]))
       }, 40)
 
-      const off = () => setTrigger('')
+      const off = () => {
+        setTrigger('')
+        dispatch(handleFrameResizeEnd())
+      }
 
       window.addEventListener('mousemove', handler)
       window.addEventListener('mouseup', off)
@@ -52,6 +59,7 @@ const PanelFrame: React.FC<Props> = props => {
     e.preventDefault()
     setTrigger(flag)
     setOriginXY([e.clientX, e.clientY])
+    dispatch(handleFrameResizeStart())
   }
 
   const commonStyle: CSSProperties = {

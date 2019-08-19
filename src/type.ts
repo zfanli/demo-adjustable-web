@@ -67,6 +67,7 @@ export type SingleReducer = [
 export interface FrameSize {
   row: number[]
   col: number[]
+  temp?: FrameSize
 }
 
 export interface ReplyInput {

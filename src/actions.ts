@@ -311,3 +311,21 @@ export function handleFrameResize(
     payload: { target, motion },
   }
 }
+
+export const HANDLE_FRAME_RESIZE_START = 'HANDLE_FRAME_RESIZE_START'
+
+export function handleFrameResizeStart(): BaseAction {
+  return {
+    type: HANDLE_FRAME_RESIZE_START,
+    payload: {},
+  }
+}
+
+export const HANDLE_FRAME_RESIZE_END = 'HANDLE_FRAME_RESIZE_END'
+
+export function handleFrameResizeEnd(): BaseAction {
+  return {
+    type: HANDLE_FRAME_RESIZE_END,
+    payload: {},
+  }
+}
