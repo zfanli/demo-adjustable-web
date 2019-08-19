@@ -31,7 +31,7 @@
   "cancel": "Cancel",
   "replyInputSwitch": "Switch to 'Reply Input' / 'Fixed Menu'",
   "uploadFiles": "Upload Voice Files",
-  "uploadFileLabels": ["Bank", "Customer"],
+  "uploadFileLabels": ["S1", "S2"],
   "source": "File(s)",
   "oneFile": "1",
   "twoFiles": "2",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Icon, Menu, Dropdown, Switch, Radio, Tooltip } from 'antd'
 import { ClickParam } from 'antd/lib/menu'
@@ -39,6 +39,12 @@ const Header: React.FC = () => {
     locale.chooseFile as string,
     locale.chooseFile as string,
   ])
+
+  useEffect(
+    () =>
+      setFileNames([locale.chooseFile as string, locale.chooseFile as string]),
+    [setFileNames, locale]
+  )
 
   const handleChooseFile = (i: number) => (e: any) => {
     const files = fileNames.slice()
