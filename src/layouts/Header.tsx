@@ -175,53 +175,51 @@ const Header: React.FC = () => {
                   <label style={radioStyle} className="settings-switch">
                     {locale.uploadFiles}
                   </label>
-                  <Tooltip title={locale.inDevelopment} placement="left">
-                    <label>
-                      <span style={{ marginRight: '.5rem' }}>
-                        {locale.source}
-                      </span>
-                      <Radio.Group
-                        onChange={handleSstSwitchChange}
-                        value={sstFlag}
-                      >
-                        <Radio value="upload1">{locale.oneFile}</Radio>
-                        <Radio value="upload2">{locale.twoFiles}</Radio>
-                      </Radio.Group>
-                    </label>
-                    {sstFlag.startsWith('upload')
-                      ? range(Number(sstFlag.slice(sstFlag.length - 1))).map(
-                          i => (
-                            <label
-                              key={i}
-                              className="upload"
-                              title={
-                                typeof fileNames[i] === 'string'
-                                  ? fileNames[i]
-                                  : (fileNames[i] as any).name
-                              }
-                            >
-                              <Icon type="upload" className="upload-icon" />
-                              <span>
-                                {sstFlag === 'upload2'
-                                  ? (locale.uploadFileLabels as string[])[i] +
-                                    ': '
-                                  : ''}
-                              </span>
-                              <span>
-                                {typeof fileNames[i] === 'string'
-                                  ? fileNames[i]
-                                  : (fileNames[i] as any).name}
-                              </span>
-                              <input
-                                type="file"
-                                accept="audio/*"
-                                onChange={handleChooseFile(i)}
-                              />
-                            </label>
-                          )
+                  <label>
+                    <span style={{ marginRight: '.5rem' }}>
+                      {locale.source}
+                    </span>
+                    <Radio.Group
+                      onChange={handleSstSwitchChange}
+                      value={sstFlag}
+                    >
+                      <Radio value="upload1">{locale.oneFile}</Radio>
+                      <Radio value="upload2">{locale.twoFiles}</Radio>
+                    </Radio.Group>
+                  </label>
+                  {sstFlag.startsWith('upload')
+                    ? range(Number(sstFlag.slice(sstFlag.length - 1))).map(
+                        i => (
+                          <label
+                            key={i}
+                            className="upload"
+                            title={
+                              typeof fileNames[i] === 'string'
+                                ? fileNames[i]
+                                : (fileNames[i] as any).name
+                            }
+                          >
+                            <Icon type="upload" className="upload-icon" />
+                            <span>
+                              {sstFlag === 'upload2'
+                                ? (locale.uploadFileLabels as string[])[i] +
+                                  ': '
+                                : ''}
+                            </span>
+                            <span>
+                              {typeof fileNames[i] === 'string'
+                                ? fileNames[i]
+                                : (fileNames[i] as any).name}
+                            </span>
+                            <input
+                              type="file"
+                              accept="audio/*"
+                              onChange={handleChooseFile(i)}
+                            />
+                          </label>
                         )
-                      : null}
-                  </Tooltip>
+                      )
+                    : null}
                 </Menu.Item>
 
                 <Menu.Item key="5" onClick={handleResetPosition}>
