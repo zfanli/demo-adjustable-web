@@ -238,16 +238,19 @@ Root
     - [ ] ~~improvement~~
 
 - [ ] **[Phase 3] Refactor and New Requirements**
-  - [ ] Dynamic menu
-    - [ ] new items show on the top
-  - [ ] Switch content inside panel
-    - [ ] add a switch button
-    - [ ] about title change
-      - [ ] change title if tab minimized
+  - [x] Dynamic menu
+    - [x] new items show on the top
+  - [x] Switch content inside panel
+    - [x] add a switch button
+    - [x] about title change
+      - [x] change title if tab minimized
+  - [x] Audio files upload
+    - [x] single file pattern
+    - [x] double files pattern
   - [ ] Refactor
     - [ ] auto sort algorism
     - [ ] size changes in sortable mode
-  - [ ] Decoupling component for further use
+  - [x] Decoupling component for further use
 
 **UI Logic**
 
