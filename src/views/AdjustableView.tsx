@@ -50,6 +50,7 @@ import '../css/adjustableView.scss'
 
 // Fallback data.
 import users from '../config/users.json'
+import PanelFrame from '../components/PanelFrame'
 
 const AdjustableView: React.FC = () => {
   // --------------------------------------------------------------------------
@@ -91,6 +92,9 @@ const AdjustableView: React.FC = () => {
   const pinned = useSelector((state: State) => state.pinned)
   const messageFlag = useSelector((state: State) => state.settings.messageFlag)
   const modal = useSelector((state: State) => state.modal)
+  const panelFrameSize = useSelector(
+    (state: State) => state.settings.panelFrameSize
+  )
   const panelMinSize = useSelector(
     (state: State) => state.settings.panelMinSize
   )
@@ -466,6 +470,10 @@ const AdjustableView: React.FC = () => {
                   Object.values(reloadFlag).reduce((a, b) => a + b) !== 3
                 }
               />
+
+              {sortable ? (
+                <PanelFrame size={panelFrameSize} margin={margin} />
+              ) : null}
             </a.div>
           )
         )}

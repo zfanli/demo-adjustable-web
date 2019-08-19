@@ -31,6 +31,7 @@
   "tabBarHeight": 18,
   "shadowSizeWhileDragging": 50,
   "messageLeaveDelay": 1500,
+  "panelFrameBorderWidth": 5,
   "watsonSpeech": {
     "defaultKeywords": [
       "振込",

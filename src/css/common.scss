@@ -433,6 +433,28 @@ body {
     z-index: 19999;
   }
 
+  .panel-frame {
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+
+    .panel-frame-border {
+      position: absolute;
+      border: 2px solid red;
+    }
+
+    .panel-frame-x {
+      height: 0;
+      cursor: ns-resize;
+    }
+
+    .panel-frame-y1,
+    .panel-frame-y2 {
+      width: 0;
+      cursor: ew-resize;
+    }
+  }
+
   .reply-auto {
     .reply-auto-header,
     .reply-auto-body {

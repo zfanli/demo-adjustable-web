@@ -77,6 +77,10 @@ export default function(): State {
       panelMinSize,
       replyInputFlag: false,
       availableUserId,
+      panelFrameSize: {
+        col: [],
+        row: [],
+      },
     },
     watsonSpeech: {
       defaultKeywords,

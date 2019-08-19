@@ -15,6 +15,7 @@ export interface State {
     sstFlag: string
     replyInputFlag: boolean
     availableUserId: string[]
+    panelFrameSize: FrameSize
     panelMinSize: {
       minHeight: number
       minWidth: number
@@ -62,6 +63,11 @@ export type SingleReducer = [
   string,
   (state: State, action: BaseAction) => State
 ]
+
+export interface FrameSize {
+  row: number[]
+  col: number[]
+}
 
 export interface ReplyInput {
   date: string
