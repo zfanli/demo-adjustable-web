@@ -299,3 +299,15 @@ export function handleSetUploadFile(index: number, file: any): BaseAction {
     payload: { index, file },
   }
 }
+
+export const HANDLE_FRAME_RESIZE = 'HANDLE_FRAME_RESIZE'
+
+export function handleFrameResize(
+  target: string,
+  motion: number[]
+): BaseAction {
+  return {
+    type: HANDLE_FRAME_RESIZE,
+    payload: { target, motion },
+  }
+}

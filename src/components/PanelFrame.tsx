@@ -1,5 +1,8 @@
-import React, { CSSProperties, useState, useEffect, MouseEvent } from 'react'
+import React, { CSSProperties, useState, useEffect } from 'react'
 import { FrameSize } from '../type'
+import { useDispatch } from 'react-redux'
+import { throttle } from 'lodash'
+import { handleFrameResize } from '../actions'
 
 // Constants.
 const Y1 = 'Y1'
@@ -14,28 +17,41 @@ interface Props {
 const PanelFrame: React.FC<Props> = props => {
   const { size, margin } = props
 
+  const dispatch = useDispatch()
+
   const [trigger, setTrigger] = useState('')
+  const [originXY, setOriginXY] = useState([0, 0])
 
   useEffect(() => {
-    if (trigger === X) {
-      // Bind event listeners.
-    } else if (trigger === Y1) {
-      // Do something
-    } else if (trigger === Y2) {
-      // Do something
+    if (trigger !== '') {
+      const handler = throttle((e: MouseEvent) => {
+        const disX = e.clientX - originXY[0]
+        const disY = e.clientY - originXY[1]
+
+        dispatch(handleFrameResize(trigger, [disX, disY]))
+      }, 40)
+
+      const off = () => setTrigger('')
+
+      window.addEventListener('mousemove', handler)
+      window.addEventListener('mouseup', off)
+
+      return function cleanup() {
+        window.removeEventListener('mousemove', handler)
+        window.removeEventListener('mouseup', off)
+      }
     } else {
       // Do nothing
       return
     }
+  }, [trigger, setTrigger, dispatch, originXY])
 
-    return function cleanup() {
-      // Do some clean up things.
-    }
-  }, [trigger])
-
-  const handleTrigger = (flag: string) => (e: MouseEvent<HTMLDivElement>) => {
+  const handleTrigger = (flag: string) => (
+    e: React.MouseEvent<HTMLDivElement>
+  ) => {
     e.preventDefault()
     setTrigger(flag)
+    setOriginXY([e.clientX, e.clientY])
   }
 
   const commonStyle: CSSProperties = {
@@ -44,15 +60,13 @@ const PanelFrame: React.FC<Props> = props => {
     zIndex: 999,
   }
 
-  const sum = (a: number, b: number) => a + b
-
   const floor = (n: number) => Math.floor(n)
 
   const stylingY = (i: number): CSSProperties => ({
     ...commonStyle,
     top: `${margin}px`,
-    height: `${floor(size.row.reduce(sum) - margin)}px`,
-    left: `${floor(size.col.slice(0, i).reduce(sum))}px`,
+    height: `${floor(size.row[size.row.length - 1] - margin)}px`,
+    left: `${floor(size.col[i - 1])}px`,
   })
 
   return (
@@ -61,24 +75,24 @@ const PanelFrame: React.FC<Props> = props => {
         style={{
           ...commonStyle,
           left: `${margin}px`,
-          width: `${floor(size.col.reduce(sum) - margin)}px`,
+          width: `${floor(size.col[size.col.length - 1] - margin)}px`,
           top: `${floor(size.row[0])}px`,
         }}
-        onClick={handleTrigger(X)}
+        onMouseDown={handleTrigger(X)}
         className="panel-frame-border panel-frame-x"
       />
       <div
         style={{
           ...stylingY(1),
         }}
-        onClick={handleTrigger(Y1)}
+        onMouseDown={handleTrigger(Y1)}
         className="panel-frame-border panel-frame-y1"
       />
       <div
         style={{
           ...stylingY(2),
         }}
-        onClick={handleTrigger(Y2)}
+        onMouseDown={handleTrigger(Y2)}
         className="panel-frame-border panel-frame-y2"
       />
     </div>

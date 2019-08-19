@@ -8,9 +8,16 @@ import {
 
 const handleWindowResize = (state: State, action: BaseAction): State => {
   const containerSize = action.payload.size as Size
+
+  const cols = range(3).map(() => containerSize.width / 3)
+  const rows = range(2).map(() => containerSize.height / 2)
+
+  const reduce = (i: number, a: number[]) =>
+    a.slice(0, i + 1).reduce((a, b) => a + b)
+
   const panelFrameSize = {
-    col: range(3).map(() => containerSize.width / 3),
-    row: range(2).map(() => containerSize.height / 2),
+    col: range(3).map(i => reduce(i, cols)),
+    row: range(2).map(i => reduce(i, rows)),
   }
 
   // Change relative positions and sizes.
