@@ -34,6 +34,7 @@ export interface State {
     tempResultKeywords: { [k: string]: Keyword[] }
     accessTokenURL: string
     conversation: TextWithLabel[]
+    uploadFiles: any[]
   }
   panelKeys: string[]
   panels: PanelWithPosition[]

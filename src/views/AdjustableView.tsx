@@ -276,6 +276,9 @@ const AdjustableView: React.FC = () => {
   const fixedMenu = useSelector((state: State) => state.fixedMenu)
 
   // For conversation.
+  const uploadFiles = useSelector(
+    (state: State) => state.watsonSpeech.uploadFiles
+  )
   const defaultKeywords = useSelector(
     (state: State) => state.watsonSpeech.defaultKeywords
   )
@@ -319,6 +322,7 @@ const AdjustableView: React.FC = () => {
         keywords={keywords}
         tokenUrl={tokenUrl}
         conversation={conversation}
+        files={uploadFiles}
       />
     ),
   }

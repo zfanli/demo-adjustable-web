@@ -31,9 +31,11 @@
   "cancel": "Cancel",
   "replyInputSwitch": "Switch to 'Reply Input' / 'Fixed Menu'",
   "uploadFiles": "Upload Voice Files",
+  "uploadFileLabels": ["Bank", "Customer"],
   "source": "File(s)",
   "oneFile": "1",
   "twoFiles": "2",
   "inDevelopment": "Still in development.",
-  "chooseFile": "Choose a file"
+  "chooseFile": "Choose a file",
+  "errorNoFileSelected": "File was not selected! Choose a file from settings menu, please!"
 }

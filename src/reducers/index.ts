@@ -17,6 +17,7 @@ import handlePanelResize from './handlePanelResize'
 import handlePanelResort from './handlePanelResort'
 import handlePanelRetrieve from './handlePanelRetrieve'
 import handleSaveInputReply from './handleSaveInputReply'
+import handleSetUploadFile from './handleSetUploadFile'
 import handleSwitchActive from './handleSwitchActive'
 import handleSwitchLocale from './handleSwitchLocale'
 import handleSwitchMessageFlag from './handleSwitchMessageFlag'
@@ -44,6 +45,7 @@ const allReducers = [
   handlePanelResort,
   handlePanelRetrieve,
   handleSaveInputReply,
+  handleSetUploadFile,
   handleSwitchActive,
   handleSwitchLocale,
   handlePanelPinned,

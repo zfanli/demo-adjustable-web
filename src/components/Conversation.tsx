@@ -1,5 +1,5 @@
-import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react'
-import { Button, Icon, Empty } from 'antd'
+import React, { useState, useRef, useCallback, useMemo } from 'react'
+import { Button, Icon, Empty, message } from 'antd'
 import { useDispatch } from 'react-redux'
 import { debounce, throttle, range } from 'lodash'
 
@@ -16,25 +16,36 @@ interface Props {
   messageLeaveDelay: number
   sstFlag: string
   conversation: TextWithLabel[]
+  files: any[]
 }
 
 const Conversation: React.FC<Props> = props => {
   // Get data from store.
-  const { defaultKeywords, tokenUrl, sstFlag, conversation, keywords } = props
+  const {
+    defaultKeywords,
+    tokenUrl,
+    sstFlag,
+    conversation,
+    keywords,
+    files,
+  } = props
 
   const dispatch = useDispatch()
 
   // Display texts.
-  const { customer, service, analyzing } = props.locale as {
+  const {
+    customer,
+    service,
+    analyzing,
+    errorNoFileSelected,
+  } = props.locale as {
     [k: string]: string
   }
   const mapSpeakers: { [k: string]: string } = { customer, service }
 
   // State for local control.
-  const [sst, setSst] = useState(
-    range(sstFlag === 'files' ? 2 : 1).map(() =>
-      sstService({ tokenUrl, keywords: defaultKeywords })
-    )
+  const [sst] = useState(
+    range(2).map(() => sstService({ tokenUrl, keywords: defaultKeywords }))
   )
   const [recordFlag, setRecordFlag] = useState(false)
   // Handle scroll of messages box.
@@ -63,14 +74,6 @@ const Conversation: React.FC<Props> = props => {
         messageBox.current.clientHeight) as any
     }
   }
-
-  useEffect(() => {
-    setSst(
-      range(sstFlag === 'files' ? 2 : 1).map(() =>
-        sstService({ tokenUrl, keywords: defaultKeywords })
-      )
-    )
-  }, [defaultKeywords, sstFlag, tokenUrl, setSst])
 
   // Trigger colors.
   const type = recordFlag ? 'danger' : 'primary'
@@ -104,15 +107,15 @@ const Conversation: React.FC<Props> = props => {
 
   // Reset conversation.
   // Still some bugs need to be fixed.
-  // const resetConversation = () => {
-  //   dispatch(handleResultKeywords([], 'reset'))
-  //   dispatch(handleConversationChanged([]))
-  // }
+  const resetConversation = () => {
+    dispatch(handleResultKeywords([], 'reset'))
+    dispatch(handleConversationChanged([]))
+  }
 
   // Handle audio button.
   const handleAudioButtonClick = () => {
     if (!recordFlag && sstFlag === 'mic') {
-      // resetConversation()
+      resetConversation()
       // Set start flag.
       setRecordFlag(true)
 
@@ -125,13 +128,14 @@ const Conversation: React.FC<Props> = props => {
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
-    } else if (recordFlag && sstFlag === 'mic') {
-      // Set stop flag.
-      setRecordFlag(false)
-      // Stop.
-      sst[0] && sst[0].record(undefined, undefined, true)
-    } else if (!recordFlag && sstFlag === 'files') {
-      // resetConversation()
+    } else if (!recordFlag && (sstFlag === 'files' || sstFlag === 'upload2')) {
+      // check for upload files.
+      if (sstFlag === 'upload2' && (!files[0] || !files[1])) {
+        message.error(errorNoFileSelected)
+        return
+      }
+
+      resetConversation()
       // Set start flag.
       setRecordFlag(true)
 
@@ -144,8 +148,15 @@ const Conversation: React.FC<Props> = props => {
       // const file1 = 'audio/speaker1s.wav'
       // const file2 = 'audio/speaker2s.wav'
 
-      const file1 = 'audio/service.wav'
-      const file2 = 'audio/customer.wav'
+      let file1 = 'audio/service.wav'
+      let file2 = 'audio/customer.wav'
+      let source: string | undefined = undefined
+
+      if (sstFlag === 'upload2') {
+        file1 = files[0]
+        file2 = files[1]
+        source = 'upload'
+      }
 
       // ファイルから、会話解析を実施
       sst[0] &&
@@ -154,7 +165,8 @@ const Conversation: React.FC<Props> = props => {
           'service',
           responseHandler,
           () => setRecordFlag(false),
-          false
+          false,
+          source
         )
       sst[1] &&
         sst[1].playFile(
@@ -162,26 +174,33 @@ const Conversation: React.FC<Props> = props => {
           'customer',
           responseHandler,
           () => setRecordFlag(false),
-          false
+          false,
+          source
         )
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
-    } else if (recordFlag && sstFlag === 'files') {
-      // Set stop flag.
-      setRecordFlag(false)
-      // Stop.
-      sst[0] && sst[0].playFile(undefined, 0, undefined, undefined, true)
-      sst[1] && sst[1].playFile(undefined, 0, undefined, undefined, true)
-    } else if (!recordFlag && sstFlag === 'file') {
-      // resetConversation()
+    } else if (!recordFlag && (sstFlag === 'file' || sstFlag === 'upload1')) {
+      // Check file.
+      if (sstFlag === 'upload1' && !files[0]) {
+        message.error(errorNoFileSelected)
+        return
+      }
+
+      resetConversation()
       // Set start flag.
       setRecordFlag(true)
 
       // ------------------------------------------------------------------------
       // ---------------------- Configure Watson Speech -------------------------
 
-      const file1 = 'audio/conversationSample.wav'
+      let file1 = 'audio/conversationSample.wav'
+      let source: string | undefined = undefined
+
+      if (sstFlag === 'upload1') {
+        file1 = files[0]
+        source = 'upload'
+      }
 
       // ファイルから、会話解析を実施
       sst[0] &&
@@ -190,17 +209,17 @@ const Conversation: React.FC<Props> = props => {
           undefined,
           responseHandler,
           () => setRecordFlag(false),
-          false
+          false,
+          source
         )
 
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
-    } else if (recordFlag && sstFlag === 'file') {
+    } else {
       // Set stop flag.
       setRecordFlag(false)
       // Stop.
-      sst[0] &&
-        sst[0].playFile(undefined, undefined, undefined, undefined, true)
+      sst.map(s => s.record(undefined, undefined, true))
     }
   }
 

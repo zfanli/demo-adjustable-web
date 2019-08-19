@@ -11,6 +11,7 @@ import {
   handleSwitchMessageFlag,
   handleSwitchSstFlag,
   handleSwitchUser,
+  handleSetUploadFile,
 } from '../actions'
 
 const Header: React.FC = () => {
@@ -43,6 +44,7 @@ const Header: React.FC = () => {
     const files = fileNames.slice()
     files[i] = e.target.files[0]
     setFileNames(files)
+    dispatch(handleSetUploadFile(i, files[i]))
   }
 
   const handleSettingsVisibleChange = (flag: boolean) => {
@@ -194,12 +196,19 @@ const Header: React.FC = () => {
                             >
                               <Icon type="upload" className="upload-icon" />
                               <span>
+                                {sstFlag === 'upload2'
+                                  ? (locale.uploadFileLabels as string[])[i] +
+                                    ': '
+                                  : ''}
+                              </span>
+                              <span>
                                 {typeof fileNames[i] === 'string'
                                   ? fileNames[i]
                                   : (fileNames[i] as any).name}
                               </span>
                               <input
                                 type="file"
+                                accept="audio/*"
                                 onChange={handleChooseFile(i)}
                               />
                             </label>
@@ -211,7 +220,7 @@ const Header: React.FC = () => {
 
                 <Menu.Item key="5" onClick={handleResetPosition}>
                   <Icon type="appstore" />
-                  {locale.resetText}
+                  {locale.resetPosition}
                 </Menu.Item>
               </Menu>
             }

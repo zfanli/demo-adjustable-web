@@ -84,6 +84,7 @@ export default function(): State {
       resultKeywords: [],
       tempResultKeywords: {},
       conversation: [],
+      uploadFiles: [],
     },
     panelKeys,
     panels: initialPanels,

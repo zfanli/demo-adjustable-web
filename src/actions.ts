@@ -290,3 +290,12 @@ export function handleSaveInputReply(reply: ReplyInput): BaseAction {
     payload: { reply },
   }
 }
+
+export const HANDLE_SET_UPLOAD_FILE = 'HANDLE_SET_UPLOAD_FILE'
+
+export function handleSetUploadFile(index: number, file: any): BaseAction {
+  return {
+    type: HANDLE_SET_UPLOAD_FILE,
+    payload: { index, file },
+  }
+}
