@@ -23,18 +23,22 @@ const handleFrameResize = (state: State, action: BaseAction): State => {
         panelFrameSize.row[0] =
           minTop > top ? minTop : maxTop < top ? maxTop : top
         break
+
       case 'Y1':
+        const left1 = panelFrameSize.temp.col[0] + motion[0]
+        const minLeft1 = 0 + panelMinSize.minWidth + margin
+        const maxLeft1 = panelFrameSize.col[1] - panelMinSize.minWidth
+        panelFrameSize.col[0] =
+          minLeft1 > left1 ? minLeft1 : maxLeft1 < left1 ? maxLeft1 : left1
+        break
+
       case 'Y2':
-        const index = Number(target.slice(1)) - 1
-        const left = panelFrameSize.temp.col[index] + motion[0]
-        const maxLeft =
-          panelFrameSize.col[index === 1 ? 2 : 1] - panelMinSize.minWidth
-        const minLeft =
-          (index === 1 ? panelFrameSize.col[0] : 0) +
-          margin +
-          panelMinSize.minWidth
-        panelFrameSize.col[index] =
-          minLeft > left ? minLeft : maxLeft < left ? maxLeft : left
+        const left2 = panelFrameSize.temp.col[1] + motion[0]
+        const minLeft2 = panelFrameSize.temp.col[0] + panelMinSize.minWidth
+        const maxLeft2 = panelFrameSize.temp.col[2] - panelMinSize.minWidth
+        panelFrameSize.col[1] =
+          minLeft2 > left2 ? minLeft2 : maxLeft2 < left2 ? maxLeft2 : left2
+        break
     }
 
     return Object.assign({}, state, {
