@@ -31,11 +31,11 @@
   "cancel": "キャンセル",
   "replyInputSwitch": "応対情報（手入力）・定番メニューに切り替える",
   "uploadFiles": "音声ファイルアップロード",
-  "uploadFileLabels": ["銀行", "顧客"],
+  "uploadFileLabels": ["コミュニケータの", "お客様の"],
   "source": "ファイル",
   "oneFile": "1つ",
   "twoFiles": "2つ",
   "inDevelopment": "開発中です。",
-  "chooseFile": "ファイルを選んでください。",
+  "chooseFile": "音声ファイルを選んでください。",
   "errorNoFileSelected": "ファイルが選択されていません。セッティングメニューから選択してください。"
 }

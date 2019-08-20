@@ -195,20 +195,20 @@ const Header: React.FC = () => {
                             className="upload"
                             title={
                               typeof fileNames[i] === 'string'
-                                ? fileNames[i]
+                                ? sstFlag === 'upload2'
+                                  ? (locale.uploadFileLabels as string[])[i] +
+                                    fileNames[i]
+                                  : fileNames[i]
                                 : (fileNames[i] as any).name
                             }
                           >
                             <Icon type="upload" className="upload-icon" />
                             <span>
-                              {sstFlag === 'upload2'
-                                ? (locale.uploadFileLabels as string[])[i] +
-                                  ': '
-                                : ''}
-                            </span>
-                            <span>
                               {typeof fileNames[i] === 'string'
-                                ? fileNames[i]
+                                ? sstFlag === 'upload2'
+                                  ? (locale.uploadFileLabels as string[])[i] +
+                                    fileNames[i]
+                                  : fileNames[i]
                                 : (fileNames[i] as any).name}
                             </span>
                             <input
