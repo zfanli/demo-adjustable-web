@@ -9,15 +9,30 @@ import {
 const handleWindowResize = (state: State, action: BaseAction): State => {
   const containerSize = action.payload.size as Size
 
-  const cols = range(3).map(() => containerSize.width / 3)
-  const rows = range(2).map(() => containerSize.height / 2)
+  let panelFrameSize = state.settings.panelFrameSize
 
-  const reduce = (i: number, a: number[]) =>
-    a.slice(0, i + 1).reduce((a, b) => a + b)
+  if (panelFrameSize.col.length === 0) {
+    const cols = range(3).map(() => containerSize.width / 3)
+    const rows = range(2).map(() => containerSize.height / 2)
 
-  const panelFrameSize = {
-    col: range(3).map(i => reduce(i, cols)),
-    row: range(2).map(i => reduce(i, rows)),
+    const reduce = (i: number, a: number[]) =>
+      a.slice(0, i + 1).reduce((a, b) => a + b)
+
+    panelFrameSize = {
+      col: range(3).map(i => reduce(i, cols)),
+      row: range(2).map(i => reduce(i, rows)),
+    }
+  } else {
+    const newWidth = containerSize.width
+    const newHeight = containerSize.height
+    const oldWidth = panelFrameSize.col[panelFrameSize.col.length - 1]
+    const oldHeight = panelFrameSize.row[panelFrameSize.row.length - 1]
+    panelFrameSize.col = panelFrameSize.col.map(
+      col => newWidth * (col / oldWidth)
+    )
+    panelFrameSize.row = panelFrameSize.row.map(
+      row => newHeight * (row / oldHeight)
+    )
   }
 
   // Change relative positions and sizes.

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   useSprings,
@@ -57,10 +57,17 @@ const AdjustableView: React.FC = () => {
   // -------------------------- START SECTION ---------------------------------
   // Preparations. Get/Set data.
 
-  // A ref object of content box for further use.
-  const av = useRef<HTMLDivElement>(null)
   // Margins.
   const margin = useSelector((state: State) => state.settings.margin)
+  const headerHeight = useSelector(
+    (state: State) => state.settings.headerHeight
+  )
+  const footerHeight = useSelector(
+    (state: State) => state.settings.footerHeight
+  )
+  const tabBarHeight = useSelector(
+    (state: State) => state.settings.tabBarHeight
+  )
   // Lang.
   // const lang = useSelector((state: State) => state.settings.lang)
   const locale = useSelector((state: State) => state.settings.locale)
@@ -220,17 +227,29 @@ const AdjustableView: React.FC = () => {
 
   // Create handler for resize event.
   const resizeHandler = useCallback(() => {
-    if (av && av.current) {
-      const width = av.current.offsetWidth
-      const height = av.current.offsetHeight
-      // Store current content box size.
-      dispatch(handleWindowResize({ width, height }))
-    }
-  }, [dispatch, av])
+    const hasTab =
+      !sortable || Object.keys(tabs).findIndex(key => tabs[key]) > -1
+    const width = document.body.offsetWidth - margin
+    const height =
+      document.body.offsetHeight -
+      headerHeight -
+      footerHeight -
+      margin -
+      (hasTab ? tabBarHeight : 0)
+    dispatch(handleWindowResize({ width, height }))
+  }, [
+    dispatch,
+    footerHeight,
+    headerHeight,
+    tabBarHeight,
+    sortable,
+    tabs,
+    margin,
+  ])
 
   useEffect(() => {
     // Throttle control for optimized performance.
-    const handler = debounce(resizeHandler, 200)
+    const handler = debounce(resizeHandler, 40)
 
     // Listening to resize event.
     window.addEventListener('resize', handler)
@@ -357,56 +376,49 @@ const AdjustableView: React.FC = () => {
   )
 
   useEffect(() => {
-    if (av && av.current) {
-      // Stored panels' position information.
-      getPanels(true).then(panels => {
-        if (av && av.current) {
-          dispatch(
-            handleInitialPanels(panels, {
-              width: av.current.offsetWidth,
-              height: av.current.offsetHeight,
-            })
-          )
-        }
+    // Stored panels' position information.
+    getPanels(true).then(panels => {
+      dispatch(
+        handleInitialPanels(panels, {
+          width: document.body.offsetWidth - margin,
+          height:
+            document.body.offsetHeight - headerHeight - footerHeight - margin,
+        })
+      )
+    })
+
+    const fallback = Number(String(userId).slice(0, 1)) - 1
+
+    // Get user information.
+    getUserInformation(userId)
+      .then(res =>
+        dispatch(handleFetchUserInfo(userInformationAdapter(res.data)))
+      )
+      .catch(() => {
+        message.warn('会員情報取得失敗、モックデータを表示しています。')
+        dispatch(handleFetchUserInfo(users.user[fallback]))
       })
-
-      const fallback = Number(String(userId).slice(0, 1)) - 1
-
-      // Get user information.
-      getUserInformation(userId)
-        .then(res =>
-          dispatch(handleFetchUserInfo(userInformationAdapter(res.data)))
+    // Get reply auto information.
+    getReplyAutoInformation(userId)
+      .then(res =>
+        dispatch(handleFetchReplyAuto(replyAutoInformationAdapter(res.data)))
+      )
+      .catch(() => {
+        message.warn('応対情報（自動）取得失敗、モックデータを表示しています。')
+        dispatch(handleFetchReplyAuto(users.reply[fallback]))
+      })
+    // Get reply input information.
+    getReplyInputInformation(userId)
+      .then(res =>
+        dispatch(handleFetchReplyInput(replyInputInformationAdapter(res.data)))
+      )
+      .catch(() => {
+        message.warn(
+          '応対情報（手入力）取得失敗、モックデータを表示しています。'
         )
-        .catch(() => {
-          message.warn('会員情報取得失敗、モックデータを表示しています。')
-          dispatch(handleFetchUserInfo(users.user[fallback]))
-        })
-      // Get reply auto information.
-      getReplyAutoInformation(userId)
-        .then(res =>
-          dispatch(handleFetchReplyAuto(replyAutoInformationAdapter(res.data)))
-        )
-        .catch(() => {
-          message.warn(
-            '応対情報（自動）取得失敗、モックデータを表示しています。'
-          )
-          dispatch(handleFetchReplyAuto(users.reply[fallback]))
-        })
-      // Get reply input information.
-      getReplyInputInformation(userId)
-        .then(res =>
-          dispatch(
-            handleFetchReplyInput(replyInputInformationAdapter(res.data))
-          )
-        )
-        .catch(() => {
-          message.warn(
-            '応対情報（手入力）取得失敗、モックデータを表示しています。'
-          )
-          dispatch(handleFetchReplyInput(users.replyInput[fallback]))
-        })
-    }
-  }, [dispatch, resizeHandler, av, userId])
+        dispatch(handleFetchReplyInput(users.replyInput[fallback]))
+      })
+  }, [dispatch, footerHeight, headerHeight, margin, userId])
 
   // --------------------------- END SECTION ----------------------------------
   // --------------------------------------------------------------------------
@@ -414,7 +426,7 @@ const AdjustableView: React.FC = () => {
   return (
     <>
       <Header />
-      <div ref={av} className="av-content" style={contentBoxMargins}>
+      <div className="av-content" style={contentBoxMargins}>
         {isLoadingTransition.map(({ item, props, key }) =>
           item === LOADING ? (
             <a.div className="content-loading" style={props} key={key}>
