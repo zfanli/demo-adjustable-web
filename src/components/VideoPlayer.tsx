@@ -1,5 +1,6 @@
 import React, { CSSProperties, useRef, useEffect } from 'react'
 import { useTransition, animated as a } from 'react-spring'
+import { Icon } from 'antd'
 
 interface Props {
   src: string
@@ -51,14 +52,19 @@ const VideoPlayer: React.FC<Props> = props => {
       {transition.map(t =>
         t.item ? (
           <a.div key={t.key} style={t.props} className="video-player">
-            <video
-              ref={player}
-              className="video-js"
-              src={src}
-              controls
-              autoPlay
-              height={height}
-            />
+            <div className="video-wrapper">
+              <video
+                ref={player}
+                className="video-js"
+                src={src}
+                controls
+                autoPlay
+                height={height}
+              ></video>
+              <div className="video-close" onClick={close}>
+                <Icon type="close-circle" />
+              </div>
+            </div>
             <a.div className="mask" onClick={close} />
           </a.div>
         ) : null

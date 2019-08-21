@@ -48,9 +48,24 @@ body {
     justify-content: center;
     align-items: center;
 
-    video {
+    .video-wrapper {
       z-index: 1030;
-      outline: none;
+      position: relative;
+
+      video {
+        outline: none;
+      }
+
+      .video-close {
+        z-index: 1040;
+        font-size: 1.5rem;
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translate3d(100%, -100%, 0);
+        color: white;
+      }
     }
 
     .mask {

@@ -37,5 +37,6 @@
   "twoFiles": "2",
   "inDevelopment": "Still in development.",
   "chooseFile": "Choose a file",
-  "errorNoFileSelected": "File was not selected! Choose a file from settings menu, please!"
+  "errorNoFileSelected": "File was not selected! Choose a file from settings menu, please!",
+  "playVideo": "Play a video"
 }

@@ -90,9 +90,16 @@ const Header: React.FC = () => {
       <header className="header" style={{ height }}>
         <div className="header-title">{header}</div>
         <div className="header-buttons">
-          <button onClick={handleVideoPlayer()}>
-            <Icon type="play-circle" />
-          </button>
+          <Tooltip
+            title={locale.playVideo}
+            placement="left"
+            overlayClassName="tooltip"
+            mouseLeaveDelay={0.05}
+          >
+            <button onClick={handleVideoPlayer()}>
+              <Icon type="play-circle" />
+            </button>
+          </Tooltip>
           <Tooltip
             title={locale.switchUser}
             placement="left"

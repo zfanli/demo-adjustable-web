@@ -37,5 +37,6 @@
   "twoFiles": "2つ",
   "inDevelopment": "開発中です。",
   "chooseFile": "音声ファイルを選んでください。",
-  "errorNoFileSelected": "ファイルが選択されていません。セッティングメニューから選択してください。"
+  "errorNoFileSelected": "ファイルが選択されていません。セッティングメニューから選択してください。",
+  "playVideo": "ヘルプビデオ再生"
 }
