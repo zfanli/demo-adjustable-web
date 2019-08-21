@@ -20,15 +20,21 @@ export async function getPanels(
   // Do nothing if api does not exist.
   if (!API_PANELS) return []
 
-  try {
-    const res = await axios.get(API_PANELS, {
-      params: { sortable },
-    })
-    return res.data as PanelWithPosition[]
-  } catch (error) {
-    console.log(error)
-  }
-  return []
+  // ----------- SAVE TO SERVER START -----------
+
+  // try {
+  //   const res = await axios.get(API_PANELS, {
+  //     params: { sortable },
+  //   })
+  //   return res.data as PanelWithPosition[]
+  // } catch (error) {
+  //   console.log(error)
+  // }
+  // return []
+
+  // ----------- SAVE TO SERVER END -----------
+
+  return JSON.parse(localStorage.getItem(API_PANELS) || '[]')
 }
 
 /**
@@ -43,16 +49,23 @@ export async function setPanels(
   // Do nothing if api does not exist.
   if (!API_PANELS) return true
 
-  try {
-    const res = await axios.post(API_PANELS, {
-      panels,
-      sortable,
-    })
-    return res.status === 200
-  } catch (error) {
-    console.log(error)
-    return false
-  }
+  // ----------- SAVE TO SERVER START -----------
+
+  // try {
+  //   const res = await axios.post(API_PANELS, {
+  //     panels,
+  //     sortable,
+  //   })
+  //   return res.status === 200
+  // } catch (error) {
+  //   console.log(error)
+  //   return false
+  // }
+
+  // ----------- SAVE TO SERVER END -----------
+
+  localStorage.setItem(API_PANELS, JSON.stringify(panels))
+  return true
 }
 
 export function getUserInformation(userId: string) {
