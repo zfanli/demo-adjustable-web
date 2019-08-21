@@ -37,6 +37,31 @@ body {
   background: #f4f4f4;
   overflow: hidden;
 
+  .video-player {
+    position: absolute;
+    z-index: 1010;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    video {
+      z-index: 1030;
+      outline: none;
+    }
+
+    .mask {
+      z-index: 1020;
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
   .upload {
     max-width: 400px;
     overflow: hidden;

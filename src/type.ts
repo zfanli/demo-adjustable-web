@@ -16,6 +16,7 @@ export interface State {
     replyInputFlag: boolean
     availableUserId: string[]
     panelFrameSize: FrameSize
+    videoSrc: string
     panelMinSize: {
       minHeight: number
       minWidth: number

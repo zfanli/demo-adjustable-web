@@ -25,6 +25,7 @@ export default function(): State {
     userId,
     availableUserId,
     defaultInputReply,
+    videoSrc,
     watsonSpeech: { defaultKeywords },
     api: { accessTokenURL },
   } = configFile
@@ -77,6 +78,7 @@ export default function(): State {
       panelMinSize,
       replyInputFlag: false,
       availableUserId,
+      videoSrc,
       panelFrameSize: {
         col: [],
         row: [],

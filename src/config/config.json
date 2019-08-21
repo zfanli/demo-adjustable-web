@@ -31,6 +31,7 @@
   "tabBarHeight": 18,
   "shadowSizeWhileDragging": 50,
   "messageLeaveDelay": 1500,
+  "videoSrc": "/video/demo_200k.mp4",
   "watsonSpeech": {
     "defaultKeywords": [
       "振込",
