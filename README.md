@@ -248,8 +248,14 @@ Root
     - [x] single file pattern
     - [x] double files pattern
   - [ ] Refactor
+    - [x] resize frame
     - [ ] auto sort algorism
     - [ ] size changes in sortable mode
+    - [ ] save panels' position to cookie
+  - [x] Video player
+    - [x] mask
+    - [x] close
+    - [x] video
   - [x] Decoupling component for further use
 
 **UI Logic**
