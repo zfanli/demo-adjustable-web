@@ -8,7 +8,6 @@ import {
   handleSwitchLocale,
   handleSwitchSortable,
   handlePanelReset,
-  handleSwitchMessageFlag,
   handleSwitchSstFlag,
   handleSwitchUser,
   handleSetUploadFile,
@@ -66,10 +65,6 @@ const Header: React.FC = () => {
 
   const handleSortableSwitchChange = (checked: boolean) => {
     dispatch(handleSwitchSortable(checked))
-  }
-
-  const handleMessageSwitchChange = (checked: boolean) => {
-    dispatch(handleSwitchMessageFlag(checked))
   }
 
   const handleSstSwitchChange = (e: any) => {
@@ -158,16 +153,6 @@ const Header: React.FC = () => {
                       <Switch
                         defaultChecked
                         onChange={handleSortableSwitchChange}
-                      />
-                    </label>
-                  </Menu.Item>
-
-                  <Menu.Item key="2">
-                    <label className="settings-switch">
-                      <span>{locale.messageFlag}</span>
-                      <Switch
-                        defaultChecked
-                        onChange={handleMessageSwitchChange}
                       />
                     </label>
                   </Menu.Item>
