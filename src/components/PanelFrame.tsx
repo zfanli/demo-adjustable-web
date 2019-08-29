@@ -75,6 +75,7 @@ const PanelFrame: React.FC<Props> = props => {
     top: `${margin}px`,
     height: `${floor(size.row[size.row.length - 1] - margin)}px`,
     left: `${floor(size.col[i - 1])}px`,
+    display: size.row[i - 1] === size.row[i] ? 'none' : 'block',
   })
 
   return (
