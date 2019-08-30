@@ -104,3 +104,25 @@ export function getCookie(key: string) {
   })
   return coo[key]
 }
+
+/**
+ * Calculate for columns.
+ * @param p
+ * @param tabs
+ */
+export function getAvailableColumns(
+  p: PanelWithPosition[],
+  tabs: { [k: string]: boolean }
+): number {
+  return (
+    p
+      .filter(
+        p =>
+          !Object.keys(tabs)
+            .filter(k => tabs[k])
+            .includes(p.key)
+      )
+      .map(p => (p.largest ? 2 : 1) as number)
+      .reduce((a, b) => a + b) / 2
+  )
+}
