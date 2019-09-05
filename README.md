@@ -237,7 +237,8 @@ Root
   - [ ] ~~Testing (next phase)~~
     - [ ] ~~improvement~~
 
-- [ ] **[Phase 3] Refactor and New Requirements**
+- [x] **[Phase 3 　*Force to DONE*] Refactor and New Requirements**
+
   - [x] Dynamic menu
     - [x] new items show on the top
   - [x] Switch content inside panel
@@ -257,6 +258,15 @@ Root
     - [x] close
     - [x] video
   - [x] Decoupling component for further use
+
+- [ ] **[Phase 4] Refactor and Improvement**
+  - [ ] Refactor
+    - [ ] new resort algorism
+  - [ ] Improvement
+    - [ ] iPad
+      - [ ] message div overflow
+      - [ ] no keyboard to input date
+      - [ ] keywords align to bottom
 
 **UI Logic**
 
