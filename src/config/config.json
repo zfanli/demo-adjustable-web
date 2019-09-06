@@ -7,7 +7,7 @@
     "dynamicMenu",
     "speechToTextPanel"
   ],
-  "margin": 15,
+  "margin": 5,
   "panelSizeRatio": {
     "normalWidth": 0.3,
     "largeWidth": 0.4
@@ -26,8 +26,8 @@
   },
   "availableUserId": ["10000000", "20000000", "30000000"],
   "userId": "10000000",
-  "headerHeight": 60,
-  "footerHeight": 50,
+  "headerHeight": 35,
+  "footerHeight": 25,
   "tabBarHeight": 18,
   "shadowSizeWhileDragging": 50,
   "messageLeaveDelay": 1500,

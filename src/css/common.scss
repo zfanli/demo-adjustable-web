@@ -25,17 +25,24 @@
   }
 }
 
+// Define `rem` size.
+html {
+  font-size: 12px;
+  overflow-x: hidden;
+}
+
 body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-size: 12px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #f4f4f4;
-  overflow: hidden;
+  overflow-x: hidden;
 
   .video-player {
     position: absolute;
@@ -107,9 +114,7 @@ body {
   #root {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    // For fix with flex-grow of the main content in IE. f*ck IE.
-    height: 0;
+    // min-height: 100vh;
 
     .header {
       @include for-header-and-footer();
@@ -180,13 +185,13 @@ body {
 
   .conversation {
     display: flex;
-    height: 100%;
     margin: 0 0.5rem;
     padding: 0.5rem 0;
     flex-direction: column;
 
     .conversation-body {
       flex-grow: 1;
+      -webkit-flex-grow: 1;
       overflow-y: auto;
 
       .conversation-message {
@@ -202,6 +207,8 @@ body {
 
     .conversation-buttons {
       display: flex;
+      flex-grow: 0;
+      flex-shrink: 0;
 
       .conversation-keywords {
         .keyword {
@@ -323,9 +330,11 @@ body {
 
     .panel-header {
       display: flex;
+      flex-shrink: 0;
       border-bottom: 1px solid #ddd;
-      line-height: 2rem;
+      line-height: 1.8rem;
       font-weight: bold;
+      align-items: center;
 
       .panel-title {
         padding: 0 0.5rem;
@@ -363,6 +372,12 @@ body {
       flex-grow: 1;
       overflow: auto;
       position: relative;
+      display: flex;
+      justify-content: center;
+
+      button {
+        font-size: 1rem;
+      }
     }
 
     .resize-border {
@@ -496,6 +511,9 @@ body {
   }
 
   .reply-auto {
+    width: 100%;
+    text-align: left;
+
     .reply-auto-header,
     .reply-auto-body {
       width: 100%;
@@ -517,6 +535,9 @@ body {
   }
 
   .user-information {
+    width: 100%;
+    text-align: left;
+
     .user-information-body {
       width: 100%;
 
@@ -564,6 +585,9 @@ body {
   }
 
   .reply-input {
+    width: 100%;
+    text-align: left;
+
     .reply-input-body {
       width: 100%;
 
@@ -612,8 +636,10 @@ body {
   }
 
   .inline-input {
+    -webkit-appearance: none;
     display: inline-block;
-    height: 1.1rem;
+    height: 1.3rem;
+    line-height: 1rem;
     outline: none;
     border-radius: 3px;
     border: 1px solid #e8e8e8;
