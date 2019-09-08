@@ -106,14 +106,16 @@ const ModalPanel: React.FC<Props> = props => {
               }
             >
               <div className="modal-wrapper">
-                <div className="modal-date-input">
+                <div
+                  className="modal-date-input"
+                  onClick={() => {
+                    document.activeElement &&
+                      (document.activeElement as any).blur()
+                  }}
+                >
                   <DatePicker
                     format="YYYY/MM/DD"
                     dropdownClassName="modal-date-picker"
-                    onOpenChange={
-                      document.activeElement &&
-                      (document.activeElement as any).blur()
-                    }
                   />
                 </div>
                 <div className="modal-button">
