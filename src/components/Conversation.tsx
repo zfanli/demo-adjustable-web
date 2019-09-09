@@ -51,6 +51,7 @@ const Conversation: React.FC<Props> = props => {
   // Handle scroll of messages box.
   const messageBox = useRef<HTMLDivElement>(null)
   const [scrollToBottom, setScrollToBottom] = useState(true)
+  const [players] = useState(range(2).map(() => new Audio()))
 
   const handleMessageBoxScroll = debounce(() => {
     if (!messageBox || !messageBox.current) {
@@ -178,6 +179,11 @@ const Conversation: React.FC<Props> = props => {
           source
         )
 
+      // Play audios.
+      players[0].src = file1
+      players[1].src = file2
+      players.forEach(p => p.play())
+
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
     } else if (!recordFlag && (sstFlag === 'file' || sstFlag === 'upload1')) {
@@ -213,6 +219,10 @@ const Conversation: React.FC<Props> = props => {
           source
         )
 
+      // Play audio.
+      players[0].src = file1
+      players[0].play()
+
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
     } else {
@@ -220,6 +230,7 @@ const Conversation: React.FC<Props> = props => {
       setRecordFlag(false)
       // Stop.
       sst.map(s => s.record(undefined, undefined, true))
+      players.forEach(p => p.pause())
     }
   }
 

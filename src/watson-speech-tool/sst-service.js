@@ -306,7 +306,7 @@ function sst(config) {
           recognizeFile(
             getRecognizeOptions({
               file,
-              play: true, // play the audio out loud
+              play: false, // play the audio out loud
               // use a helper stream to slow down the transcript output to match the audio speed
               realtime: true,
             })
