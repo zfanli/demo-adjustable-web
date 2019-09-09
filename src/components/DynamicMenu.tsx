@@ -47,6 +47,11 @@ const DynamicMenu: React.FC<Props> = props => {
     leave: { opacity: 0, height: '0rem' },
     to: { opacity: 1, height: '2rem' },
     enter: { opacity: 1, height: '2rem' },
+    config: {
+      friction: 250,
+      mass: 1,
+      tension: 350,
+    },
   })
 
   const dispatch = useDispatch()
