@@ -52,6 +52,7 @@ const Conversation: React.FC<Props> = props => {
   const messageBox = useRef<HTMLDivElement>(null)
   const [scrollToBottom, setScrollToBottom] = useState(true)
   const [players] = useState(range(2).map(() => new Audio()))
+  const [waitingFlag, setWaitingFlag] = useState(false)
 
   const handleMessageBoxScroll = debounce(() => {
     if (!messageBox || !messageBox.current) {
@@ -127,6 +128,9 @@ const Conversation: React.FC<Props> = props => {
       sst[0] &&
         sst[0].record(responseHandler, () => setRecordFlag(false), false)
 
+      // Waiting flag for show some message before getting data from watson.
+      setWaitingFlag(true)
+
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
     } else if (!recordFlag && (sstFlag === 'files' || sstFlag === 'upload2')) {
@@ -184,6 +188,9 @@ const Conversation: React.FC<Props> = props => {
       players[1].src = file2
       players.forEach(p => p.play())
 
+      // Waiting flag for show some message before getting data from watson.
+      setWaitingFlag(true)
+
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
     } else if (!recordFlag && (sstFlag === 'file' || sstFlag === 'upload1')) {
@@ -223,6 +230,9 @@ const Conversation: React.FC<Props> = props => {
       players[0].src = file1
       players[0].play()
 
+      // Waiting flag for show some message before getting data from watson.
+      setWaitingFlag(true)
+
       // ------------------------------ Ending ----------------------------------
       // ------------------------------------------------------------------------
     } else {
@@ -231,6 +241,9 @@ const Conversation: React.FC<Props> = props => {
       // Stop.
       sst.map(s => s.record(undefined, undefined, true))
       players.forEach(p => p.pause())
+
+      // Set waiting flag to false.
+      setWaitingFlag(false)
     }
   }
 
@@ -258,6 +271,8 @@ const Conversation: React.FC<Props> = props => {
               <span className="transcript">{piece.transcript}</span>
             </div>
           ))
+        ) : waitingFlag ? (
+          <div className="conversation-message analyzing">{analyzing}</div>
         ) : (
           <Empty description="No Data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
         )}
