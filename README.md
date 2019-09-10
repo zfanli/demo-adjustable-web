@@ -264,9 +264,11 @@ Root
     - [ ] new resort algorism
   - [ ] Improvement
     - [ ] iPad
-      - [ ] message div overflow
-      - [ ] no keyboard to input date
-      - [ ] keywords align to bottom
+      - [x] message div overflow
+      - [x] no keyboard to input date
+      - [x] keywords align to bottom
+    - [ ] message for wait data from watson
+    - [x] play audio by user action
 
 **UI Logic**
 
