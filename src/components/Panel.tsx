@@ -460,7 +460,12 @@ const Panel: React.FC<Props> = props => {
         </div>
       </header>
 
-      <div className="panel-content">
+      <div
+        className="panel-content"
+        style={{
+          overflowY: trueKey === 'speechToTextPanel' ? 'hidden' : 'scroll',
+        }}
+      >
         {children ? (
           children
         ) : (

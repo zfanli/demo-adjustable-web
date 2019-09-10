@@ -22,7 +22,6 @@ const FixedReplyTransition: React.FC<Props> = props => {
       position: 'absolute',
       width: '100%',
       height: '100%',
-      overflow: 'auto',
       opacity: 0,
     },
     leave: {

@@ -185,14 +185,12 @@ body {
 
   .conversation {
     display: flex;
-    margin: 0 0.5rem;
-    padding: 0.5rem 0;
     flex-direction: column;
 
     .conversation-body {
       flex-grow: 1;
-      -webkit-flex-grow: 1;
-      overflow-y: auto;
+      overflow-y: scroll;
+      padding: 0.5rem;
 
       .conversation-message {
         &.analyzing {
@@ -206,6 +204,7 @@ body {
     }
 
     .conversation-buttons {
+      padding: 0.5rem;
       display: flex;
       flex-grow: 0;
       flex-shrink: 0;
@@ -372,10 +371,10 @@ body {
 
     .panel-content {
       flex-grow: 1;
-      overflow: auto;
       position: relative;
       display: flex;
       justify-content: center;
+      -webkit-overflow-scrolling: touch;
 
       button {
         font-size: 1rem;
