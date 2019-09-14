@@ -262,13 +262,21 @@ Root
 - [ ] **[Phase 4] Refactor and Improvement**
   - [ ] Refactor
     - [ ] new resort algorism
+      - [ ] panel frame base on count of panels
+      - [ ] refactor minimize logic
+      - [ ] refactor position calculation base on panel frame
   - [ ] Improvement
-    - [ ] iPad
+    - [x] iPad
       - [x] message div overflow
       - [x] no keyboard to input date
       - [x] keywords align to bottom
-    - [ ] message for wait data from watson
+    - [x] message for wait data from watson
     - [x] play audio by user action
+    - [x] always shows the scroll bar
+    - [ ] more
+  - [ ] New features
+    - [ ] color changing
+    - [ ] improve color theme
 
 **UI Logic**
 
