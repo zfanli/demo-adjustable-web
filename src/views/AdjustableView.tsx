@@ -395,7 +395,7 @@ const AdjustableView: React.FC = () => {
         dispatch(handleFetchUserInfo(userInformationAdapter(res.data)))
       )
       .catch(() => {
-        message.warn('会員情報取得失敗、モックデータを表示しています。')
+        message.warn('Test users info data is showing.')
         dispatch(handleFetchUserInfo(users.user[fallback]))
       })
     // Get reply auto information.
@@ -404,7 +404,7 @@ const AdjustableView: React.FC = () => {
         dispatch(handleFetchReplyAuto(replyAutoInformationAdapter(res.data)))
       )
       .catch(() => {
-        message.warn('応対情報（自動）取得失敗、モックデータを表示しています。')
+        message.warn('Test info1 data is showing.')
         dispatch(handleFetchReplyAuto(users.reply[fallback]))
       })
     // Get reply input information.
@@ -413,9 +413,7 @@ const AdjustableView: React.FC = () => {
         dispatch(handleFetchReplyInput(replyInputInformationAdapter(res.data)))
       )
       .catch(() => {
-        message.warn(
-          '応対情報（手入力）取得失敗、モックデータを表示しています。'
-        )
+        message.warn('Test info2 data is showing.')
         dispatch(handleFetchReplyInput(users.replyInput[fallback]))
       })
   }, [dispatch, footerHeight, headerHeight, margin, userId])

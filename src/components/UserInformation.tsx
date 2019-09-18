@@ -47,89 +47,89 @@ const UserInformation: React.FC<Props> = props => {
         </colgroup>
         <tbody>
           <tr>
-            <th>カナ氏名</th>
+            <th>Name KN</th>
             <td className="center">{nameKn}</td>
-            <th>チーム</th>
+            <th>Team</th>
             <td className="center">{team}</td>
           </tr>
           <tr>
-            <th>漢字氏名</th>
+            <th>Name</th>
             <td className="center" colSpan={3}>
               {name}
             </td>
           </tr>
           <tr>
-            <th>会員番号</th>
+            <th>User ID</th>
             <td className="center">{userId}</td>
-            <th>性別</th>
+            <th>Gender</th>
             <td className="center">{gender}</td>
           </tr>
           <tr>
-            <th>生年月日</th>
+            <th>Birthday</th>
             <td className="center">{formatDate(birthday)}</td>
-            <th>年齢</th>
+            <th>Age</th>
             <td className="center">{age}</td>
           </tr>
           <tr className="special-start">
-            <th colSpan={4}>利用限度額・利率変更</th>
+            <th colSpan={4}>Information1</th>
           </tr>
           <tr>
-            <th colSpan={2}>希望利用限度額</th>
+            <th colSpan={2}>Information2</th>
             <td colSpan={2}>
               <input
                 className="inline-input amount"
                 readOnly // for now
                 value={loanLimit}
               />
-              万円
+              M
             </td>
           </tr>
           <tr>
-            <th colSpan={2}>契約上限額</th>
+            <th colSpan={2}>Information3</th>
             <td colSpan={2}>
               <input
                 className="inline-input amount"
                 disabled
                 value={contractLimit}
               />
-              万円
+              M
             </td>
           </tr>
           <tr>
-            <th colSpan={2}>書類受領時契約上限額</th>
+            <th colSpan={2}>Information4</th>
             <td colSpan={2}>
               <input
                 className="inline-input amount"
                 disabled
                 value={firstLoanLimit}
               />
-              万円
+              M
             </td>
           </tr>
           <tr className="special-end">
-            <th colSpan={2}>総量上限額</th>
+            <th colSpan={2}>Information5</th>
             <td colSpan={2}>
               <input
                 className="inline-input amount"
                 disabled
                 value={totalLimit}
               />
-              万円
+              M
             </td>
           </tr>
           <tr>
-            <th colSpan={2}>年収</th>
+            <th colSpan={2}>Information6</th>
             <td colSpan={2}>
               <input
                 className="inline-input amount"
                 readOnly // for now
                 value={annualIncome}
               />
-              万円
+              M
             </td>
           </tr>
           <tr>
-            <th colSpan={2}>勤務状況確認区分</th>
+            <th colSpan={2}>Information7</th>
             <td colSpan={2}>
               <select name="jobType" id="jobType" defaultValue={jobTypeCode}>
                 <option value={jobTypeCode}>{jobType}</option>
@@ -137,7 +137,7 @@ const UserInformation: React.FC<Props> = props => {
             </td>
           </tr>
           <tr>
-            <th colSpan={2}>支払方式</th>
+            <th colSpan={2}>Information8</th>
             <td colSpan={2}>
               <select
                 name="repayment"
@@ -149,7 +149,7 @@ const UserInformation: React.FC<Props> = props => {
             </td>
           </tr>
           <tr>
-            <th colSpan={2}>利用目的</th>
+            <th colSpan={2}>Information9</th>
             <td colSpan={2}>
               <select name="purpose" id="purpose" defaultValue={purposeCode}>
                 <option value={purposeCode}>{purpose}</option>

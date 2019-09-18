@@ -147,14 +147,9 @@ const Conversation: React.FC<Props> = props => {
       // ------------------------------------------------------------------------
       // ---------------------- Configure Watson Speech -------------------------
 
-      // const file1 = 'audio/ja-JP_Broadband_sample1.wav'
-      // const file2 = 'audio/ja-JP_Broadband_sample2.wav'
+      let file1 = 'audio/ja-JP_Broadband_sample1.wav'
+      let file2 = 'audio/ja-JP_Broadband_sample2.wav'
 
-      // const file1 = 'audio/speaker1s.wav'
-      // const file2 = 'audio/speaker2s.wav'
-
-      let file1 = 'audio/service.wav'
-      let file2 = 'audio/customer.wav'
       let source: string | undefined = undefined
 
       if (sstFlag === 'upload2') {
@@ -207,7 +202,7 @@ const Conversation: React.FC<Props> = props => {
       // ------------------------------------------------------------------------
       // ---------------------- Configure Watson Speech -------------------------
 
-      let file1 = 'audio/conversationSample.wav'
+      let file1 = 'audio/ja-JP_Broadband_sample1.wav'
       let source: string | undefined = undefined
 
       if (sstFlag === 'upload1') {

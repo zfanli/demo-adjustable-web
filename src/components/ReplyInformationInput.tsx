@@ -44,13 +44,13 @@ const ReplyInformationInput: React.FC<Props> = props => {
         <tbody>
           <tr>
             <th className="bold" colSpan={3}>
-              手入力
+              Input
             </th>
           </tr>
           <tr>
-            <th>日付</th>
-            <th>時間</th>
-            <th>処理</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Dealing</th>
           </tr>
           <tr>
             <td>
@@ -75,9 +75,9 @@ const ReplyInformationInput: React.FC<Props> = props => {
             </td>
           </tr>
           <tr>
-            <th>架電先</th>
-            <th>回線</th>
-            <th>相手</th>
+            <th>Information1</th>
+            <th>Information2</th>
+            <th>Information3</th>
           </tr>
           <tr>
             <td>
@@ -103,7 +103,7 @@ const ReplyInformationInput: React.FC<Props> = props => {
             </td>
           </tr>
           <tr>
-            <th>担当者</th>
+            <th>Information4</th>
             <td colSpan={2}>
               <input
                 className="inline-input"
@@ -113,7 +113,7 @@ const ReplyInformationInput: React.FC<Props> = props => {
             </td>
           </tr>
           <tr>
-            <th>チーム</th>
+            <th>Information5</th>
             <td colSpan={2}>
               <input
                 className="inline-input"
@@ -123,7 +123,7 @@ const ReplyInformationInput: React.FC<Props> = props => {
             </td>
           </tr>
           <tr>
-            <th>用件</th>
+            <th>Information6</th>
             <td colSpan={2}>
               <input
                 className="inline-input"
@@ -133,7 +133,7 @@ const ReplyInformationInput: React.FC<Props> = props => {
             </td>
           </tr>
           <tr>
-            <th>結果</th>
+            <th>Information7</th>
             <td colSpan={2}>
               <input
                 className="inline-input"
@@ -143,7 +143,7 @@ const ReplyInformationInput: React.FC<Props> = props => {
             </td>
           </tr>
           <tr>
-            <th>詳細・受付</th>
+            <th>Information8</th>
             <td colSpan={2}>
               <input
                 className="inline-input"
@@ -164,10 +164,10 @@ const ReplyInformationInput: React.FC<Props> = props => {
           <tr>
             <td className="reply-input-buttons" colSpan={3}>
               <Button type="primary" size="small">
-                確認
+                OK
               </Button>
               <Button size="small" onClick={handleReset}>
-                リセット
+                Reset
               </Button>
             </td>
           </tr>
@@ -177,13 +177,13 @@ const ReplyInformationInput: React.FC<Props> = props => {
           <tbody key={i}>
             <tr>
               <th className="bold" colSpan={3}>
-                履歴 No.{i + 1}
+                History No.{i + 1}
               </th>
             </tr>
             <tr>
-              <th>日付</th>
-              <th>時間</th>
-              <th>処理</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Dealing</th>
             </tr>
             <tr>
               <td>{formatDate(line.date)}</td>
@@ -191,9 +191,9 @@ const ReplyInformationInput: React.FC<Props> = props => {
               <td>{line.dealing}</td>
             </tr>
             <tr>
-              <th>架電先</th>
-              <th>回線</th>
-              <th>相手</th>
+              <th>Information1</th>
+              <th>Information2</th>
+              <th>Information3</th>
             </tr>
             <tr>
               <td>{line.contact}</td>
@@ -201,23 +201,23 @@ const ReplyInformationInput: React.FC<Props> = props => {
               <td>{line.target}</td>
             </tr>
             <tr>
-              <th>担当者</th>
+              <th>Information4</th>
               <td colSpan={2}>{line.staff}</td>
             </tr>
             <tr>
-              <th>チーム</th>
+              <th>Information5</th>
               <td colSpan={2}>{line.team}</td>
             </tr>
             <tr>
-              <th>用件</th>
+              <th>Information6</th>
               <td colSpan={2}>{line.business}</td>
             </tr>
             <tr>
-              <th>結果</th>
+              <th>Information7</th>
               <td colSpan={2}>{line.result}</td>
             </tr>
             <tr>
-              <th>詳細・受付</th>
+              <th>Information8</th>
               <td colSpan={2}>{line.detail}</td>
             </tr>
             <tr>

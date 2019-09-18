@@ -27,8 +27,8 @@ const ReplyInformationAuto: React.FC<Props> = props => {
         </colgroup>
         <thead>
           <tr>
-            <th>会員番号</th>
-            <th>氏名</th>
+            <th>User ID</th>
+            <th>Name</th>
           </tr>
         </thead>
         <tbody>
@@ -46,8 +46,8 @@ const ReplyInformationAuto: React.FC<Props> = props => {
         </colgroup>
         <thead>
           <tr>
-            <th>日時</th>
-            <th>用件</th>
+            <th>Datetime</th>
+            <th>Business</th>
           </tr>
         </thead>
         <tbody>

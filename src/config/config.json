@@ -1,12 +1,6 @@
 {
-  "defaultLang": "jp",
-  "panelKeys": [
-    "userInfo",
-    "replyInfo",
-    "fixedMenu",
-    "dynamicMenu",
-    "speechToTextPanel"
-  ],
+  "defaultLang": "en",
+  "panelKeys": ["panel1", "panel2", "panel3", "panel4", "panel5"],
   "margin": 5,
   "panelSizeRatio": {
     "normalWidth": 0.3,
@@ -22,7 +16,7 @@
     "userInformation": "/userinfo/",
     "replyAutoInformation": "/cotinfo/right/",
     "replyInputInformation": "/cotinfo/left/",
-    "timeout": 5000
+    "timeout": 1000
   },
   "availableUserId": ["10000000", "20000000", "30000000"],
   "userId": "10000000",
@@ -34,40 +28,39 @@
   "videoSrc": "/video/demo_200k.mp4",
   "watsonSpeech": {
     "defaultKeywords": [
-      "振込",
-      "振り込み",
-      "貸付",
-      "出金",
-      "完済",
-      "延滞",
-      "解約",
-      "返済額",
-      "返済日",
-      "返済回数",
-      "増額",
-      "契約額"
+      "Key1",
+      "Key2",
+      "Key3",
+      "Key4",
+      "Key5",
+      "Key6",
+      "Key7",
+      "Key8",
+      "Key9",
+      "Key10",
+      "Key11"
     ]
   },
   "fixedMenu": [
-    "振込貸付",
-    "書類発送",
-    "一時約束日",
-    "自宅/勤務先変更",
-    "利用限度額/利率変更受付",
-    "カード再発行受付"
+    "Menu item1",
+    "Menu item2",
+    "Menu item3",
+    "Menu item4",
+    "Menu item5",
+    "Menu item6"
   ],
   "defaultInputReply": {
     "date": "",
     "time": "",
-    "dealing": "架電",
-    "contact": "携帯電話",
-    "circuit": "正常",
-    "target": "本人",
-    "staff": "M05013 担当者13",
-    "team": "営業システム部",
-    "business": "架電反応13",
-    "result": "正常3",
-    "detail": "詳細・受付",
-    "information": "契約額変更3"
+    "dealing": "dealing",
+    "contact": "contact",
+    "circuit": "normal",
+    "target": "this guy",
+    "staff": "Someone",
+    "team": "Some team",
+    "business": "business",
+    "result": "normal",
+    "detail": "Some detail",
+    "information": "info"
   }
 }
